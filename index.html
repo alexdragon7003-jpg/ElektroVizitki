@@ -1,22 +1,1311 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="cyber">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">Электромонтаж — Частный мастер</title>
-  <meta name="description" id="page-desc" content="Инженерный электромонтаж без пыли с гарантией по договору. Онлайн-калькулятор цен.">
-  <meta property="og:title" id="og-title" content="Частный электромонтажник">
-  <meta property="og:description" id="og-desc" content="Сборка электрощитов, замена проводки, расчёт сметы онлайн.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title id="page-title">Электромонтаж в г. Екатеринбург — Частный мастер ЭлектроПрофи</title>
+  <meta name="description" id="page-desc" content="Инженерный электромонтаж без пыли по ПУЭ-7 и ГОСТ Р 50571 с гарантией 5 лет по договору. Онлайн-калькулятор сметы.">
+  <meta property="og:title" id="og-title" content="Инженерный электромонтаж — ЭлектроПрофи">
+  <meta property="og:description" id="og-desc" content="Сборка электрощитов, замена проводки без пыли, расчёт сметы онлайн.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       Дизайн-система: «Obsidian & Warm Amber» (Dark Architectural Tech)
+       Монолитная сборка: Клиентский сайт + Калькулятор + Облачная CMS в одном файле
+       ========================================================================== */
+    :root {
+      --bg-obsidian: #08090D;
+      --bg-surface: #0E1117;
+      --card-bg: rgba(20, 24, 34, 0.78);
+      --card-solid: #141822;
+      --card-inset: rgba(9, 11, 16, 0.72);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-top-highlight: rgba(255, 255, 255, 0.15);
+      --border-amber: rgba(245, 158, 11, 0.42);
+      --amber: #F59E0B;
+      --amber-bright: #FBBF24;
+      --amber-glow: rgba(245, 158, 11, 0.16);
+      --emerald: #10B981;
+      --danger: #EF4444;
+      --text-main: #F3F4F6;
+      --text-secondary: #9CA3AF;
+      --text-muted: #6B7280;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-card: 0 20px 40px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.11);
+      --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      background-color: var(--bg-obsidian);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.55;
+      -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-obsidian);
+      background-image:
+        radial-gradient(ellipse 85% 45% at 50% -8%, rgba(245, 158, 11, 0.13), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 90% 25%, rgba(59, 130, 246, 0.06), transparent 65%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+      color: var(--text-main);
+      position: relative;
+      overflow-x: hidden;
+      padding-bottom: 76px;
+    }
+
+    /* Тонкая лазерная линия прогресса чтения сверху экрана */
+    .scroll-laser {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      z-index: 950;
+      background: rgba(255, 255, 255, 0.05);
+      pointer-events: none;
+    }
+
+    .scroll-laser-bar {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, var(--amber), var(--amber-bright));
+      box-shadow: 0 0 12px var(--amber);
+      transform-origin: left center;
+      transform: scaleX(0.02);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (min-width: 640px) {
+      .container { padding: 0 24px; }
+    }
+
+    section {
+      padding: 56px 0;
+    }
+
+    @media (min-width: 768px) {
+      section { padding: 80px 0; }
+    }
+
+    .section-head {
+      margin-bottom: 32px;
+      max-width: 700px;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--amber-bright);
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      padding: 5px 12px;
+      border-radius: 99px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(1.55rem, 3.4vw, 2.35rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.18;
+      margin-bottom: 10px;
+      color: #FFFFFF;
+    }
+
+    .section-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+    }
+
+    a, button, input, textarea, select {
+      font-family: inherit;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--amber-bright);
+      outline-offset: 2px;
+    }
+
+    .num-mono {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .is-hidden {
+      display: none !important;
+    }
+
+    /* ==========================================================================
+       Кнопки и капсулы мессенджеров
+       ========================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 46px;
+      padding: 11px 20px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.94rem;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease, border-color 0.16s ease;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: linear-gradient(180deg, var(--amber-bright) 0%, var(--amber) 100%);
+      color: #090A0F;
+      font-weight: 800;
+      box-shadow: 0 8px 24px -4px rgba(245, 158, 11, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(180deg, #FDE047 0%, var(--amber-bright) 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px -4px rgba(245, 158, 11, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+    }
+
+    .btn-glass:hover {
+      border-color: var(--border-amber);
+      background: rgba(245, 158, 11, 0.08);
+      color: var(--amber-bright);
+    }
+
+    /* Сетка мессенджеров: 2x2 на мобильном, в ряд на ПК */
+    .messenger-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    @media (min-width: 540px) {
+      .messenger-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+    }
+
+    .btn-msg {
+      min-height: 44px;
+      padding: 9px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(20, 24, 34, 0.85);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+    }
+
+    .btn-msg svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .btn-msg:hover { transform: translateY(-2px); }
+
+    .btn-tg { color: #67C7FF; border-color: rgba(42, 171, 238, 0.3); background: rgba(42, 171, 238, 0.1); }
+    .btn-tg:hover { background: rgba(42, 171, 238, 0.22); border-color: rgba(42, 171, 238, 0.6); }
+
+    .btn-wa { color: #5CE690; border-color: rgba(37, 211, 102, 0.3); background: rgba(37, 211, 102, 0.1); }
+    .btn-wa:hover { background: rgba(37, 211, 102, 0.22); border-color: rgba(37, 211, 102, 0.6); }
+
+    .btn-max { color: #C4B5FD; border-color: rgba(139, 92, 246, 0.38); background: linear-gradient(135deg, rgba(124, 58, 237, 0.16), rgba(59, 130, 246, 0.16)); }
+    .btn-max:hover { border-color: rgba(167, 139, 250, 0.7); background: linear-gradient(135deg, rgba(124, 58, 237, 0.28), rgba(59, 130, 246, 0.28)); }
+
+    .btn-vk { color: #75B6FF; border-color: rgba(0, 119, 255, 0.32); background: rgba(0, 119, 255, 0.12); }
+    .btn-vk:hover { background: rgba(0, 119, 255, 0.24); border-color: rgba(0, 119, 255, 0.6); }
+
+    /* ==========================================================================
+       Шапка (Header) — идеально адаптирована под 360px
+       ========================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 800;
+      background: rgba(8, 9, 13, 0.84);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 66px;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      min-width: 0;
+    }
+
+    .brand-emblem {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(245, 158, 11, 0.06));
+      border: 1px solid var(--border-amber);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      display: grid;
+      place-items: center;
+      color: var(--amber-bright);
+      flex-shrink: 0;
+    }
+
+    .brand-text-wrap {
+      min-width: 0;
+    }
+
+    .brand-title {
+      display: block;
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+      display: inline-block;
+      animation: pulseDot 2.2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.88); }
+    }
+
+    .main-nav {
+      display: none;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .main-nav a {
+      text-decoration: none;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+
+    .main-nav a:hover { color: #FFFFFF; }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .hdr-call-btn {
+      min-height: 40px;
+      padding: 8px 14px;
+      font-size: 0.84rem;
+      border-radius: 10px;
+    }
+
+    .hdr-phone-desktop {
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .hdr-phone-desktop { display: inline; }
+      .hdr-phone-mobile { display: none; }
+    }
+
+    .burger-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-main);
+    }
+
+    @media (min-width: 1024px) {
+      .main-nav { display: flex; }
+      .burger-btn { display: none; }
+    }
+
+    /* Мобильное шторка-меню */
+    .mobile-drawer {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      background: rgba(8, 9, 13, 0.97);
+      backdrop-filter: blur(20px);
+      padding: 20px 20px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform: translateX(100%);
+      transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .mobile-drawer.is-open { transform: translateX(0); }
+
+    .mobile-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .mobile-nav-list a {
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* ==========================================================================
+       Bento Card базовая поверхность
+       ========================================================================== */
+    .bento-card {
+      background: linear-gradient(180deg, rgba(24, 29, 42, 0.78) 0%, rgba(14, 17, 24, 0.9) 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ==========================================================================
+       Hero секция (Первый экран)
+       ========================================================================== */
+    .hero {
+      padding: 32px 0 56px;
+    }
+
+    @media (min-width: 768px) {
+      .hero { padding: 56px 0 76px; }
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    @media (min-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1.18fr 0.82fr;
+        gap: 32px;
+      }
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 13px;
+      border-radius: 99px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      color: #6EE7B7;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.75rem, 4.2vw, 2.95rem);
+      font-weight: 800;
+      line-height: 1.13;
+      letter-spacing: -0.025em;
+      margin-bottom: 16px;
+      color: #FFFFFF;
+    }
+
+    .text-gradient-amber {
+      background: linear-gradient(95deg, #FFFFFF 0%, #FDE68A 45%, #F59E0B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-lead {
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+      margin-bottom: 22px;
+      max-width: 620px;
+    }
+
+    .hero-cta-group {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    @media (min-width: 480px) {
+      .hero-cta-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+    }
+
+    .trust-bento-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    @media (min-width: 640px) {
+      .trust-bento-row { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .trust-mini-card {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--border-subtle);
+      border-top-color: var(--border-top-highlight);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+    }
+
+    .trust-val {
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--amber-bright);
+      margin-bottom: 2px;
+    }
+
+    .trust-lbl {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    /* Правая приборная панель Hero: Технический регламент */
+    .reglament-panel {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-color: rgba(245, 158, 11, 0.22);
+    }
+
+    .reglament-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .spec-slots {
+      display: grid;
+      gap: 10px;
+    }
+
+    .spec-slot {
+      background: var(--card-inset);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      transition: border-color 0.2s;
+    }
+
+    .spec-slot:hover {
+      border-color: rgba(245, 158, 11, 0.35);
+    }
+
+    .spec-slot-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .spec-code-badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--amber-bright);
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .spec-status-ok {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--emerald);
+      letter-spacing: 0.04em;
+    }
+
+    /* ==========================================================================
+       Услуги (Bento Grid)
+       ========================================================================== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 600px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .services-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
+
+    .service-card {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-amber);
+    }
+
+    .service-card.in-cart {
+      border-color: rgba(16, 185, 129, 0.5);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(14, 17, 24, 0.92) 100%);
+    }
+
+    .service-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .service-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 11px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      color: var(--amber-bright);
+      display: grid;
+      place-items: center;
+    }
+
+    .service-unit-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .service-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #FFFFFF;
+    }
+
+    .service-desc {
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+    }
+
+    .service-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .service-price {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1.08rem;
+      color: var(--amber-bright);
+    }
+
+    /* ==========================================================================
+       Умный калькулятор с 1-клик пресетами
+       ========================================================================== */
+    .preset-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .preset-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: 99px;
+      padding: 8px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .preset-chip:hover,
+    .preset-chip.active {
+      background: rgba(245, 158, 11, 0.14);
+      border-color: var(--amber);
+      color: var(--amber-bright);
+    }
+
+    .calc-wrapper {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    @media (min-width: 992px) {
+      .calc-wrapper { grid-template-columns: 1.42fr 0.98fr; }
+    }
+
+    .calc-panel, .calc-summary {
+      padding: 20px;
+    }
+
+    @media (min-width: 640px) {
+      .calc-panel, .calc-summary { padding: 26px; }
+    }
+
+    .calc-summary {
+      position: sticky;
+      top: 86px;
+      border-color: var(--border-amber);
+    }
+
+    .calc-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+    }
+
+    .calc-row.is-active {
+      background: rgba(245, 158, 11, 0.07);
+    }
+
+    .calc-row-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .calc-row-title {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: #FFFFFF;
+    }
+
+    .calc-row-meta {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .stepper {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-obsidian);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .stepper button {
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      color: var(--amber-bright);
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .stepper button:hover {
+      background: rgba(245, 158, 11, 0.14);
+    }
+
+    .stepper input {
+      width: 52px;
+      height: 40px;
+      text-align: center;
+      background: transparent;
+      border: none;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.92rem;
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+
+    .stepper input::-webkit-outer-spin-button,
+    .stepper input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .toggle-pills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      background: var(--bg-obsidian);
+      padding: 5px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      margin: 12px 0;
+    }
+
+    .toggle-pill {
+      min-height: 40px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.82rem;
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 6px 8px;
+      transition: all 0.15s;
+    }
+
+    .toggle-pill.active {
+      background: var(--card-solid);
+      color: var(--amber-bright);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .summary-lines {
+      margin: 14px 0;
+      max-height: 230px;
+      overflow-y: auto;
+      font-size: 0.85rem;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+    }
+
+    .summary-total-box {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(245, 158, 11, 0.04));
+      border: 1px solid var(--border-amber);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin: 16px 0;
+    }
+
+    .summary-range {
+      font-family: var(--font-mono);
+      font-size: clamp(1.25rem, 2.5vw, 1.55rem);
+      font-weight: 800;
+      color: var(--amber-bright);
+    }
+
+    /* Мобильная нижняя плашка живой сметы (Sticky Bottom Bar) */
+    .mobile-calc-dock {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 810;
+      background: rgba(14, 17, 24, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-amber);
+      border-radius: 14px;
+      padding: 10px 14px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transform: translateY(130%);
+      transition: transform 0.25s ease;
+    }
+
+    .mobile-calc-dock.is-visible {
+      transform: translateY(0);
+    }
+
+    @media (min-width: 992px) {
+      .mobile-calc-dock { display: none; }
+    }
+
+    /* ==========================================================================
+       Портфолио: «Инженерные паспорта объектов»
+       ========================================================================== */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .cases-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .case-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .case-photo-box {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-subtle);
+      position: relative;
+    }
+
+    .case-photo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .case-passport-bar {
+      padding: 14px 20px;
+      background: rgba(9, 11, 16, 0.65);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .case-badge {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--amber-bright);
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.28);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .case-equip {
+      font-family: var(--font-mono);
+      font-size: 0.73rem;
+      color: var(--text-secondary);
+    }
+
+    .case-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+      gap: 16px;
+    }
+
+    .case-checklist {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: var(--card-inset);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+    }
+
+    .case-checklist li {
+      font-size: 0.84rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: var(--text-main);
+    }
+
+    .case-check-mark {
+      color: var(--emerald);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .case-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    /* ==========================================================================
+       Таймлайн (6 шагов), Отзывы, FAQ, Контакты
+       ========================================================================== */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 640px) { .steps-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .steps-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .step-card {
+      padding: 20px;
+    }
+
+    .step-num-badge {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--amber-bright);
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.28);
+      padding: 4px 10px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .reviews-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 22px;
+      margin-bottom: 20px;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 768px) { .reviews-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .review-card { padding: 20px; }
+    .stars { color: var(--amber-bright); letter-spacing: 2px; font-size: 0.95rem; }
+
+    .star-picker { display: inline-flex; gap: 6px; }
+    .star-btn { background: transparent; border: none; font-size: 1.6rem; color: #374151; cursor: pointer; padding: 2px 4px; }
+    .star-btn.active { color: var(--amber-bright); }
+
+    .faq-list { display: flex; flex-direction: column; gap: 12px; max-width: 880px; }
+    .faq-item { border-radius: var(--radius-md); overflow: hidden; }
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 18px 20px;
+      background: transparent;
+      border: none;
+      font-weight: 700;
+      font-size: 0.98rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      color: #FFFFFF;
+    }
+    .faq-answer {
+      padding: 0 20px 18px;
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      display: none;
+    }
+    .faq-item.is-open .faq-answer { display: block; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr; gap: 22px; }
+    @media (min-width: 920px) { .form-grid { grid-template-columns: 1fr 1.15fr; } }
+
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 0.84rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+
+    .input, .textarea {
+      width: 100%;
+      background: var(--bg-obsidian);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: var(--text-main);
+      font-size: 0.94rem;
+      transition: border-color 0.15s;
+    }
+
+    .input:focus, .textarea:focus { border-color: var(--amber); outline: none; }
+    .field-error { color: var(--danger); font-size: 0.78rem; margin-top: 4px; min-height: 16px; }
+
+    /* ==========================================================================
+       Плавающая кнопка связи (FAB) и Тост
+       ========================================================================== */
+    .fab-container {
+      position: fixed;
+      right: 16px;
+      bottom: 84px;
+      z-index: 820;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    @media (min-width: 992px) {
+      .fab-container { bottom: 24px; right: 24px; }
+    }
+
+    .fab-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: all 0.2s ease;
+    }
+
+    .fab-container.is-open .fab-menu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .fab-trigger {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, var(--amber-bright), var(--amber));
+      color: #090A0F;
+      border: none;
+      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.45);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    /* Модальные окна и Встроенная Админ-Панель (CMS) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 960;
+      background: rgba(4, 6, 10, 0.86);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.is-open { display: flex; }
+
+    .modal-window {
+      background: var(--card-solid);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      max-width: 680px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+    }
+
+    /* Полноэкранный режим встроенной Админ-панели (#admin-overlay) */
+    .admin-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 940;
+      background: var(--bg-obsidian);
+      overflow-y: auto;
+      display: none;
+      padding-bottom: 60px;
+    }
+
+    .admin-overlay.is-open {
+      display: block;
+    }
+
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 24px 0 48px;
+    }
+
+    @media (min-width: 960px) {
+      .admin-layout { grid-template-columns: 260px 1fr; }
+    }
+
+    .admin-sidebar {
+      background: var(--card-solid);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .admin-tab-btn {
+      text-align: left;
+      padding: 11px 14px;
+      border-radius: 10px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    .admin-tab-btn.active {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--amber-bright);
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+
+    .admin-table th, .admin-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: var(--emerald);
+      color: #042319;
+      font-weight: 800;
+      font-size: 0.88rem;
+      padding: 12px 22px;
+      border-radius: 99px;
+      z-index: 999;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      transition: transform 0.25s ease;
+      max-width: 92vw;
+      text-align: center;
+    }
+
+    .toast.is-visible { transform: translateX(-50%) translateY(0); }
+  </style>
 </head>
 <body>
 
-  <!-- Скрытый спрайт SVG-иконок (Telegram, WhatsApp, MAX, ВКонтакте, телефон) -->
+  <!-- Векторный спрайт иконок -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="i-bolt" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M13 2L4 14h7l-2 8 9-12h-7l2-8z"/>
+    </symbol>
     <symbol id="i-tg" viewBox="0 0 24 24" fill="currentColor">
       <path d="M21.9 4.4c.3-1.3-.9-2.3-2.1-1.8L2.6 9.3c-1.3.5-1.3 2.4.1 2.8l4.4 1.4 1.7 5.3c.4 1.1 1.8 1.4 2.6.6l2.5-2.5 4.6 3.4c1 .7 2.4.2 2.7-1l.7-14.9zM8.3 12.9l8.6-5.4c.2-.1.4.2.2.3l-7.1 6.4-.3 3.2-1.4-4.5z"/>
     </symbol>
@@ -29,57 +1318,50 @@
     <symbol id="i-vk" viewBox="0 0 24 24" fill="currentColor">
       <path d="M13.2 17.5c-5.8 0-9.1-4-9.2-10.6h2.9c.1 4.9 2.2 6.9 3.9 7.3V6.9h2.7v4.2c1.7-.2 3.4-2.1 4-4.2h2.7c-.5 2.6-2.3 4.5-3.6 5.3 1.3.6 3.4 2.2 4.2 5.3h-3c-.6-2-2.2-3.5-4.3-3.7v3.7h-.3z"/>
     </symbol>
-    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z"/>
     </symbol>
   </svg>
 
-  <!-- LED-лента по периметру экрана -->
-  <div class="led-frame" aria-hidden="true">
-    <div class="led-bar led-top" id="led-top"></div>
-    <div class="led-bar led-right" id="led-right"></div>
-    <div class="led-bar led-bottom" id="led-bottom"></div>
-    <div class="led-bar led-left" id="led-left"></div>
+  <!-- Лазерный индикатор прогресса скролла -->
+  <div class="scroll-laser" aria-hidden="true">
+    <div class="scroll-laser-bar" id="scroll-laser-bar"></div>
   </div>
 
-  <!-- Параллакс SVG-фон и Canvas -->
-  <div class="bg-circuit" id="bg-circuit" aria-hidden="true"></div>
-  <canvas id="sparks-canvas" aria-hidden="true"></canvas>
-
-  <!-- Шапка сайта -->
+  <!-- Мобильная компактная шапка (ничего не ломается на 360px) -->
   <header class="site-header">
     <div class="container header-inner">
       <a href="#top" class="brand-logo" aria-label="Наверх страницы">
-        <span class="brand-bolt" aria-hidden="true">⚡</span>
-        <span>
-          <span id="hdr-brand">ЭлектроПрофи</span>
-          <span class="brand-city-pill" id="hdr-city">Екатеринбург</span>
+        <span class="brand-emblem" aria-hidden="true">
+          <svg width="20" height="20"><use href="#i-bolt"/></svg>
+        </span>
+        <span class="brand-text-wrap">
+          <span class="brand-title" id="hdr-brand">ЭлектроПрофи</span>
+          <span class="brand-meta">
+            <span class="status-dot"></span>
+            <span id="hdr-city">Екатеринбург</span>
+          </span>
         </span>
       </a>
 
       <nav class="main-nav" aria-label="Основная навигация">
         <a href="#services">Услуги</a>
         <a href="#calculator">Калькулятор</a>
-        <a href="#cases">Работы</a>
+        <a href="#cases">Объекты</a>
+        <a href="#process">Этапы</a>
         <a href="#reviews">Отзывы</a>
         <a href="#faq">Вопросы</a>
         <a href="#contacts">Контакты</a>
       </nav>
 
       <div class="header-actions">
-        <!-- Переключатель 3 фирменных тем -->
-        <div class="theme-switcher header-theme-desktop" role="group" aria-label="Выбор темы оформления">
-          <button type="button" class="theme-btn js-theme-btn" data-set-theme="cyber" title="Тема Кибер-Вольт (Ультра-Неон)">⚡ Кибер</button>
-          <button type="button" class="theme-btn js-theme-btn" data-set-theme="fluke" title="Тема Индустриальный Fluke">🛠 Fluke</button>
-          <button type="button" class="theme-btn js-theme-btn" data-set-theme="outdoor" title="Боевой режим На объекте (Антиблик на солнце)">☀️ На солнце</button>
-        </div>
-
-        <a href="tel:+79123456789" class="btn btn-primary" id="hdr-phone-btn" style="padding:9px 16px;">
-          <svg width="18" height="18"><use href="#i-phone"/></svg>
-          <span id="hdr-phone-txt">Позвонить</span>
+        <a href="tel:+79123456789" class="btn btn-primary hdr-call-btn" id="hdr-phone-btn">
+          <svg width="16" height="16"><use href="#i-phone"/></svg>
+          <span class="hdr-phone-desktop" id="hdr-phone-txt">+7 (912) 345-67-89</span>
+          <span class="hdr-phone-mobile">Позвонить</span>
         </a>
-        <button type="button" class="burger-btn" id="burger-open" aria-label="Открыть меню" aria-expanded="false">
-          <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
+        <button type="button" class="burger-btn" id="burger-open" aria-label="Открыть меню">
+          <svg width="22" height="22" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
             <path d="M4 7h16M4 12h16M4 17h16"/>
           </svg>
         </button>
@@ -87,209 +1369,213 @@
     </div>
   </header>
 
-  <!-- Полноэкранное мобильное меню -->
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <!-- Мобильное полноэкранное меню -->
+  <div class="mobile-drawer" id="mobile-menu" aria-hidden="true">
     <div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
-        <strong style="font-size:1.2rem;color:var(--accent);" id="mob-brand">ЭлектроПрофи</strong>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <strong style="font-size:1.15rem;color:var(--amber-bright);" id="mob-brand">ЭлектроПрофи</strong>
         <button type="button" class="burger-btn" id="burger-close" aria-label="Закрыть меню">✕</button>
       </div>
-
-      <div style="margin-bottom:24px;">
-        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:8px;font-weight:700;">РЕЖИМ ОТОБРАЖЕНИЯ ЭКРАНА:</p>
-        <div class="theme-switcher" style="width:100%;justify-content:space-between;">
-          <button type="button" class="theme-btn js-theme-btn" data-set-theme="cyber" style="flex:1;justify-content:center;">⚡ Кибер</button>
-          <button type="button" class="theme-btn js-theme-btn" data-set-theme="fluke" style="flex:1;justify-content:center;">🛠 Fluke</button>
-          <button type="button" class="theme-btn js-theme-btn" data-set-theme="outdoor" style="flex:1;justify-content:center;">☀️ Антиблик</button>
-        </div>
-      </div>
-
-      <nav class="mobile-nav-links">
-        <a href="#services" class="mob-link">Услуги и прайс</a>
-        <a href="#calculator" class="mob-link">Калькулятор сметы</a>
-        <a href="#cases" class="mob-link">Выполненные работы</a>
-        <a href="#reviews" class="mob-link">Отзывы клиентов</a>
-        <a href="#faq" class="mob-link">Частые вопросы</a>
-        <a href="#contacts" class="mob-link">Контакты</a>
+      <nav class="mobile-nav-list">
+        <a href="#services" class="mob-link"><span>Услуги и прайс-лист</span><span>→</span></a>
+        <a href="#calculator" class="mob-link"><span>Калькулятор сметы</span><span>→</span></a>
+        <a href="#cases" class="mob-link"><span>Инженерные паспорта работ</span><span>→</span></a>
+        <a href="#process" class="mob-link"><span>Этапы работы</span><span>→</span></a>
+        <a href="#reviews" class="mob-link"><span>Отзывы заказчиков</span><span>→</span></a>
+        <a href="#faq" class="mob-link"><span>Частые вопросы (FAQ)</span><span>→</span></a>
+        <a href="#contacts" class="mob-link"><span>Контакты и вызов мастера</span><span>→</span></a>
       </nav>
     </div>
     <div>
-      <p style="color:var(--text-muted);font-size:0.88rem;margin-bottom:10px;">Написать напрямую мастеру:</p>
+      <p style="color:var(--text-secondary);font-size:0.84rem;margin-bottom:10px;">Быстрая связь в мессенджерах:</p>
       <div class="messenger-grid" id="mob-messengers"></div>
+      <button type="button" class="btn btn-glass" id="mob-open-admin-btn" style="width:100%;margin-top:14px;font-size:0.82rem;">
+        ⚙ Панель управления мастера
+      </button>
     </div>
   </div>
 
+  <!-- ОСНОВНОЙ САЙТ -->
   <main id="top">
-    <!-- 3. HERO -->
+    <!-- 1. ПЕРВЫЙ ЭКРАН (HERO) -->
     <section class="hero">
       <div class="container hero-grid">
-        <div class="reveal is-visible">
-          <div class="hero-location">
-            <span>📍</span>
-            <span id="hero-region">Екатеринбург и пригород</span>
+        <div>
+          <div class="hero-pill">
+            <span class="status-dot"></span>
+            <span id="hero-region">Екатеринбург и пригород (до 30 км)</span>
           </div>
-          <h1 id="hero-tagline">Инженерный электромонтаж без пыли с гарантией 5 лет по договору</h1>
+          <h1 id="hero-tagline" class="text-gradient-amber">Инженерный электромонтаж без пыли с гарантией 5 лет по договору</h1>
           <p class="hero-lead">
-            Частный мастер <strong id="hero-master" style="color:var(--text-main);">Алексей Громов</strong>.
-            <span id="hero-lead-text">Работаю без посредников и накруток диспетчеров: от срочного поиска короткого замыкания до полной сборки щитов и разводки в новостройках.</span>
+            Частный мастер <strong id="hero-master" style="color:#FFFFFF;">Алексей Громов</strong>. <span id="hero-subtitle-txt">Работаю без посредников и накруток диспетчеров: от срочной диагностики КЗ до сборки трёхфазных щитов и разводки в новостройках.</span>
           </p>
 
-          <div class="hero-cta-row">
-            <a href="#calculator" class="btn btn-primary">Рассчитать стоимость онлайн</a>
-            <a href="#request-section" class="btn btn-outline">Вызвать мастера на осмотр</a>
+          <div class="hero-cta-group">
+            <a href="#calculator" class="btn btn-primary">Рассчитать смету онлайн</a>
+            <a href="#request-section" class="btn btn-glass">Вызвать мастера на осмотр</a>
           </div>
 
-          <p style="font-size:0.84rem;color:var(--text-muted);margin-bottom:10px;">Быстрая связь в удобном мессенджере:</p>
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px;">Прямая связь с мастером без диспетчеров:</p>
           <div class="messenger-grid" id="hero-messengers"></div>
 
-          <div class="trust-badges">
-            <div class="trust-card">
+          <div class="trust-bento-row">
+            <div class="trust-mini-card">
               <div class="trust-val" id="trust-exp">12 лет</div>
-              <div class="trust-lbl">реального стажа</div>
+              <div class="trust-lbl">инженерного стажа</div>
             </div>
-            <div class="trust-card">
+            <div class="trust-mini-card">
               <div class="trust-val" id="trust-war">5 лет</div>
               <div class="trust-lbl">гарантия по договору</div>
             </div>
-            <div class="trust-card">
+            <div class="trust-mini-card">
               <div class="trust-val" id="trust-arr">от 45 мин</div>
               <div class="trust-lbl">аварийный выезд</div>
             </div>
-            <div class="trust-card">
-              <div class="trust-val" id="trust-norm">ПУЭ-7 и ГОСТ</div>
+            <div class="trust-mini-card">
+              <div class="trust-val" id="trust-norm">ПУЭ-7 / ГОСТ</div>
               <div class="trust-lbl">строгий стандарт</div>
             </div>
           </div>
         </div>
 
-        <!-- Правая карточка в Hero: Технический регламент мастера (или его реальное фото из админки) -->
-        <div class="hero-visual-card reveal is-visible">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:8px;flex-wrap:wrap;">
-            <span style="font-size:0.82rem;color:var(--accent);font-weight:800;" id="hero-visual-badge">⚡ ТЕХНИЧЕСКИЙ РЕГЛАМЕНТ МОНТАЖА</span>
-            <span style="font-size:0.78rem;color:var(--success);font-weight:700;" id="hero-visual-status">● Допуск IV группы до 1000В</span>
+        <!-- Приборная панель: Технический регламент монтажа -->
+        <aside class="bento-card reglament-panel">
+          <div>
+            <div class="reglament-head">
+              <span class="num-mono" style="font-size:0.8rem;color:var(--amber-bright);font-weight:700;">⚡ ТЕХНИЧЕСКИЙ РЕГЛАМЕНТ</span>
+              <span class="num-mono" style="font-size:0.74rem;color:var(--emerald);font-weight:700;">● ДОПУСК IV ГРУППЫ ДО 1000В</span>
+            </div>
+            <div class="spec-slots" id="hero-tech-specs"></div>
           </div>
-          <div id="hero-svg-box"></div>
-          <p style="font-size:0.83rem;color:var(--text-muted);margin-top:14px;border-top:1px solid var(--border-subtle);padding-top:10px;" id="hero-visual-caption">
-            Никаких скруток и дешёвого кабеля ТУ — монтаж строго по ПУЭ-7, ГОСТ Р 50571 и проекту.
+          <p id="hero-card-caption" style="font-size:0.78rem;color:var(--text-secondary);margin-top:14px;padding-top:12px;border-top:1px solid var(--border-subtle);">
+            Соблюдение ПУЭ-7 и ГОСТ Р 50571. Исполнительная схема скрытых трасс и акт замера сопротивления изоляции в подарок.
           </p>
-        </div>
+        </aside>
       </div>
     </section>
 
-    <!-- 4. УСЛУГИ -->
+    <!-- 2. УСЛУГИ (BENTO GRID) -->
     <section id="services">
       <div class="container">
-        <div class="section-head reveal">
-          <span class="section-badge">Прайс-лист</span>
+        <div class="section-head">
+          <span class="section-eyebrow">Прайс-лист 2026</span>
           <h2 class="section-title">Основные услуги и расценки</h2>
-          <p class="section-subtitle">Нажмите «Рассчитать» на нужной карточке — позиция сразу добавится в калькулятор сметы ниже.</p>
+          <p class="section-subtitle">Нажмите «+ В смету» на нужной карточке — услуга сразу добавится в калькулятор ниже.</p>
         </div>
         <div class="services-grid" id="services-grid"></div>
       </div>
     </section>
 
-    <!-- 5. КАЛЬКУЛЯТОР -->
+    <!-- 3. УМНЫЙ КАЛЬКУЛЯТОР С БЫСТРЫМИ ПРЕСЕТАМИ -->
     <section id="calculator">
       <div class="container">
-        <div class="section-head reveal">
-          <span class="section-badge">Онлайн-смета</span>
-          <h2 class="section-title">Калькулятор стоимости электромонтажа</h2>
-          <p class="section-subtitle">Выберите нужные работы и материалы. Смета мгновенно пересчитывается и готова к отправке в мессенджер.</p>
+        <div class="section-head">
+          <span class="section-eyebrow">Интерактивный конфигуратор</span>
+          <h2 class="section-title">Онлайн-калькулятор сметы</h2>
+          <p class="section-subtitle">Выберите готовый сценарий в 1 клик или настройте точное количество точек вручную.</p>
+        </div>
+
+        <!-- Быстрые сценарии (Пресеты) -->
+        <div class="preset-bar" role="group" aria-label="Быстрые сценарии расчёта">
+          <button type="button" class="preset-chip" data-preset="flat1">🏢 1-комн. квартира (база)</button>
+          <button type="button" class="preset-chip" data-preset="flat2">🏗 2-комн. новостройка</button>
+          <button type="button" class="preset-chip" data-preset="kitchen">🍳 Электрика под кухню</button>
+          <button type="button" class="preset-chip" data-preset="shield">🛡 Сборка электрощита</button>
         </div>
 
         <div class="calc-wrapper">
-          <div class="calc-panel reveal">
-            <h3 style="margin-bottom:12px;font-size:1.15rem;">1. Выберите виды работ и объём</h3>
+          <div class="bento-card calc-panel">
+            <h3 style="margin-bottom:12px;font-size:1.08rem;color:#FFFFFF;">1. Виды электромонтажных работ</h3>
             <div id="calc-works-list"></div>
 
-            <h3 style="margin:26px 0 8px;font-size:1.15rem;">2. Материалы и комплектующие</h3>
-            <div class="toggle-pills" role="tablist" aria-label="Режим материалов">
-              <button type="button" class="toggle-pill active" id="mat-mode-own" data-mode="own">Свои материалы</button>
-              <button type="button" class="toggle-pill" id="mat-mode-calc" data-mode="calc">Нужен расчёт материалов мастера</button>
+            <h3 style="margin:24px 0 8px;font-size:1.08rem;color:#FFFFFF;">2. Комплектация материалами</h3>
+            <div class="toggle-pills" role="tablist">
+              <button type="button" class="toggle-pill active" id="mat-mode-own">Мои материалы</button>
+              <button type="button" class="toggle-pill" id="mat-mode-calc">Материалы мастера (ГОСТ)</button>
             </div>
             <div id="calc-materials-box" class="is-hidden"></div>
 
-            <h3 style="margin:26px 0 8px;font-size:1.15rem;">3. Срочность выполнения</h3>
-            <div class="toggle-pills" role="tablist" aria-label="Режим срочности">
-              <button type="button" class="toggle-pill active" id="urg-normal" data-urgent="false">Плановый выезд (без наценки)</button>
-              <button type="button" class="toggle-pill" id="urg-fast" data-urgent="true">Срочно сегодня (+30%)</button>
+            <h3 style="margin:24px 0 8px;font-size:1.08rem;color:#FFFFFF;">3. Срочность выезда</h3>
+            <div class="toggle-pills" role="tablist">
+              <button type="button" class="toggle-pill active" id="urg-normal">Плановый выезд</button>
+              <button type="button" class="toggle-pill" id="urg-fast">Срочно сегодня (+30%)</button>
             </div>
           </div>
 
-          <aside class="calc-summary reveal" aria-live="polite">
+          <aside class="bento-card calc-summary" aria-live="polite">
             <div style="display:flex;justify-content:space-between;align-items:center;">
-              <h3 style="font-size:1.2rem;">Предварительная смета</h3>
-              <button type="button" class="btn btn-outline" id="calc-reset-btn" style="min-height:34px;padding:4px 12px;font-size:0.8rem;">Сбросить</button>
+              <h3 style="font-size:1.15rem;color:#FFFFFF;">Детализация сметы</h3>
+              <button type="button" class="btn btn-glass" id="calc-reset-btn" style="min-height:32px;padding:4px 12px;font-size:0.78rem;">Очистить</button>
             </div>
 
             <div class="summary-lines" id="calc-summary-lines"></div>
 
-            <div style="font-size:0.88rem;color:var(--text-muted);display:grid;gap:4px;">
-              <div style="display:flex;justify-content:space-between;"><span>Сумма работ:</span><strong id="sum-works">0 ₽</strong></div>
-              <div style="display:flex;justify-content:space-between;"><span>Материалы:</span><strong id="sum-materials">0 ₽</strong></div>
-              <div style="display:flex;justify-content:space-between;" id="sum-urgent-row" class="is-hidden"><span id="sum-urgent-lbl">Срочность (+30%):</span><strong id="sum-urgent">0 ₽</strong></div>
-              <div style="display:flex;justify-content:space-between;color:var(--accent);" id="sum-min-note" class="is-hidden"><span>Минимальный заказ:</span><strong id="sum-min-val">2 500 ₽</strong></div>
+            <div style="font-size:0.86rem;color:var(--text-secondary);display:grid;gap:5px;">
+              <div style="display:flex;justify-content:space-between;"><span>Работы по прайсу:</span><strong class="num-mono" id="sum-works" style="color:#FFFFFF;">0 ₽</strong></div>
+              <div style="display:flex;justify-content:space-between;"><span>Материалы ГОСТ:</span><strong class="num-mono" id="sum-materials" style="color:#FFFFFF;">0 ₽</strong></div>
+              <div style="display:flex;justify-content:space-between;" id="sum-urgent-row" class="is-hidden"><span id="sum-urgent-lbl">Срочность (+30%):</span><strong class="num-mono" id="sum-urgent" style="color:var(--amber-bright);">0 ₽</strong></div>
+              <div style="display:flex;justify-content:space-between;color:var(--amber-bright);" id="sum-min-note" class="is-hidden"><span>Порог мин. заказа:</span><strong class="num-mono" id="sum-min-val">2 500 ₽</strong></div>
             </div>
 
             <div class="summary-total-box">
-              <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">Итоговый ориентир (±15%):</div>
+              <div style="font-size:0.76rem;color:var(--text-secondary);margin-bottom:4px;">Ориентир стоимости (±15%):</div>
               <div class="summary-range" id="sum-total-range">0 ₽</div>
             </div>
 
-            <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:14px;">
-              Предварительный расчёт. Точная стоимость фиксируется в договоре после уточнения задачи и осмотра.
+            <p style="font-size:0.76rem;color:var(--text-secondary);margin-bottom:14px;">
+              Точная сумма фиксируется в договоре до начала работ и не меняется в процессе монтажа.
             </p>
 
             <button type="button" class="btn btn-primary" id="calc-to-order-btn" style="width:100%;">
-              Получить точную смету →
+              Перенести смету в заявку →
             </button>
           </aside>
         </div>
       </div>
     </section>
 
-    <!-- 6. ВЫПОЛНЕННЫЕ РАБОТЫ (Инженерные паспорта объектов) -->
+    <!-- 4. ПОРТФОЛИО: ИНЖЕНЕРНЫЕ ПАСПОРТА ОБЪЕКТОВ -->
     <section id="cases">
       <div class="container">
-        <div class="section-head reveal">
-          <span class="section-badge">Портфолио объектов</span>
-          <h2 class="section-title">Примеры выполненных работ и смет</h2>
-          <p class="section-subtitle">Инженерные паспорта реальных объектов: состав выполненных работ, применённая защита, сроки и итоговая стоимость.</p>
+        <div class="section-head">
+          <span class="section-eyebrow">Инженерные паспорта</span>
+          <h2 class="section-title">Выполненные объекты</h2>
+          <p class="section-subtitle">Технические спецификации реальных заказов с проверкой изоляции, списком автоматики и сроками.</p>
         </div>
         <div class="cases-grid" id="cases-grid"></div>
       </div>
     </section>
 
-    <!-- 7. КАК Я РАБОТАЮ -->
+    <!-- 5. ЭТАПЫ РАБОТЫ -->
     <section id="process">
       <div class="container">
-        <div class="section-head reveal">
-          <span class="section-badge">Этапы</span>
+        <div class="section-head">
+          <span class="section-eyebrow">Прозрачный регламент</span>
           <h2 class="section-title">Как строится работа</h2>
         </div>
-        <div class="steps-grid reveal" id="steps-grid"></div>
+        <div class="steps-grid" id="steps-grid"></div>
       </div>
     </section>
 
-    <!-- 8. ОТЗЫВЫ -->
+    <!-- 6. ОТЗЫВЫ КЛИЕНТОВ -->
     <section id="reviews">
       <div class="container">
-        <div class="section-head reveal">
-          <span class="section-badge">Репутация</span>
+        <div class="section-head">
+          <span class="section-eyebrow">Проверенная репутация</span>
           <h2 class="section-title">Отзывы заказчиков</h2>
         </div>
 
-        <div class="reviews-header-bar reveal">
+        <div class="bento-card reviews-bar">
           <div>
-            <div style="font-size:1.5rem;font-weight:800;color:var(--accent);" id="rev-avg-score">★ 4.9 / 5.0</div>
-            <div style="font-size:0.88rem;color:var(--text-muted);" id="rev-total-count">На основе 8 проверенных отзывов</div>
+            <div class="num-mono" style="font-size:1.45rem;font-weight:800;color:var(--amber-bright);" id="rev-avg-score">★ 4.9 / 5.0</div>
+            <div style="font-size:0.84rem;color:var(--text-secondary);" id="rev-total-count">На основе 8 проверенных отзывов</div>
           </div>
-          <button type="button" class="btn btn-outline" id="toggle-review-form-btn">Оставить свой отзыв</button>
+          <button type="button" class="btn btn-glass" id="toggle-review-form-btn">Написать отзыв</button>
         </div>
 
-        <form id="review-form" class="card-box is-hidden" style="margin-bottom:24px;" novalidate>
-          <h3 style="margin-bottom:14px;">Поделитесь впечатлением о работе</h3>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
+        <form id="review-form" class="bento-card is-hidden" style="padding:22px;margin-bottom:22px;" novalidate>
+          <h3 style="margin-bottom:14px;font-size:1.1rem;">Оставить отзыв о работе мастера</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
             <div class="field">
               <label for="rev-name">Ваше имя *</label>
               <input type="text" id="rev-name" class="input" placeholder="Например, Андрей К." required>
@@ -299,14 +1585,14 @@
               <input type="text" id="rev-district" class="input" placeholder="Например, р-н Академический">
             </div>
             <div class="field">
-              <label for="rev-service">Какую задачу выполняли?</label>
-              <input type="text" id="rev-service" class="input" placeholder="Сборка щита / Замена розеток">
+              <label for="rev-service">Выполненная услуга</label>
+              <input type="text" id="rev-service" class="input" placeholder="Сборка щита / Замена проводки">
             </div>
           </div>
 
           <div class="field">
-            <label>Ваша оценка *</label>
-            <div class="star-picker" id="star-picker" role="radiogroup" aria-label="Оценка от 1 до 5 звезд">
+            <label>Оценка работы *</label>
+            <div class="star-picker" id="star-picker" role="radiogroup" aria-label="Оценка от 1 до 5">
               <button type="button" class="star-btn active" data-val="1" aria-label="1 звезда">★</button>
               <button type="button" class="star-btn active" data-val="2" aria-label="2 звезды">★</button>
               <button type="button" class="star-btn active" data-val="3" aria-label="3 звезды">★</button>
@@ -317,65 +1603,67 @@
 
           <div class="field">
             <label for="rev-text">Текст отзыва *</label>
-            <textarea id="rev-text" class="textarea" rows="3" placeholder="Расскажите, как прошёл монтаж..." required></textarea>
+            <textarea id="rev-text" class="textarea" rows="3" placeholder="Поделитесь впечатлениями о чистоте монтажа и соблюдении сроков..." required></textarea>
             <div class="field-error" id="rev-error"></div>
           </div>
 
-          <button type="submit" class="btn btn-primary">Отправить отзыв на проверку</button>
-          <div id="rev-pending-msg" style="margin-top:12px;color:var(--success);font-weight:600;" class="is-hidden"></div>
+          <button type="submit" class="btn btn-primary">Отправить отзыв</button>
+          <div id="rev-pending-msg" style="margin-top:12px;color:var(--emerald);font-weight:600;font-size:0.88rem;" class="is-hidden"></div>
         </form>
 
         <div class="reviews-grid" id="reviews-grid"></div>
       </div>
     </section>
 
-    <!-- 9. FAQ -->
+    <!-- 7. ЧАСТЫЕ ВОПРОСЫ (FAQ) -->
     <section id="faq">
       <div class="container">
-        <div class="section-head reveal">
-          <span class="section-badge">Ответы мастера</span>
+        <div class="section-head">
+          <span class="section-eyebrow">Ответы инженера</span>
           <h2 class="section-title">Частые вопросы перед началом работ</h2>
         </div>
         <div class="faq-list" id="faq-list"></div>
       </div>
     </section>
 
-    <!-- 10 & 11. КОНТАКТЫ И ФОРМА ЗАЯВКИ -->
+    <!-- 8. КОНТАКТЫ И ФОРМА ЗАЯВКИ -->
     <section id="request-section">
       <div class="container">
         <div class="form-grid" id="contacts">
-          <div class="card-box reveal">
-            <span class="section-badge">Прямая связь</span>
-            <h2 style="font-size:1.65rem;margin-bottom:14px;">Контакты мастера</h2>
-            <p style="color:var(--text-muted);margin-bottom:20px;">
-              Звоните напрямую или пишите в удобный мессенджер — отвечаю лично, без операторов. Присылайте фото щита или план квартиры для быстрой оценки.
+          <!-- Контакты -->
+          <div class="bento-card" style="padding:24px;">
+            <span class="section-eyebrow">Прямой контакт</span>
+            <h2 style="font-size:1.55rem;margin-bottom:12px;color:#FFFFFF;">Связь с мастером</h2>
+            <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:20px;">
+              Отвечаю лично без посредников. Присылайте фото щита, проект кухни или план квартиры в любой удобный мессенджер для быстрой оценки.
             </p>
 
             <div style="margin-bottom:20px;">
-              <div style="font-size:0.82rem;color:var(--text-muted);">Телефон для связи:</div>
-              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:4px;">
-                <a href="tel:+79123456789" id="cnt-phone-link" style="font-size:1.55rem;font-weight:800;font-family:var(--font-num);color:var(--accent);text-decoration:none;">+7 (912) 345-67-89</a>
-                <button type="button" class="btn btn-outline" id="copy-phone-btn" style="min-height:36px;padding:6px 12px;font-size:0.82rem;">Скопировать</button>
+              <div style="font-size:0.78rem;color:var(--text-secondary);">Прямой номер телефона:</div>
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:4px;">
+                <a href="tel:+79123456789" id="cnt-phone-link" class="num-mono" style="font-size:1.45rem;font-weight:800;color:var(--amber-bright);text-decoration:none;">+7 (912) 345-67-89</a>
+                <button type="button" class="btn btn-glass" id="copy-phone-btn" style="min-height:34px;padding:5px 12px;font-size:0.78rem;">Скопировать</button>
               </div>
             </div>
 
             <div style="margin-bottom:22px;">
-              <div style="font-size:0.84rem;color:var(--text-muted);margin-bottom:8px;">Написать в один клик (Telegram, WhatsApp, MAX, ВК):</div>
+              <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px;">Написать в один клик (Telegram, WhatsApp, MAX, ВК):</div>
               <div class="messenger-grid" id="contacts-messengers"></div>
             </div>
 
-            <div style="display:grid;gap:12px;font-size:0.92rem;border-top:1px solid var(--border-subtle);padding-top:16px;">
-              <div><strong>График работы:</strong> <span id="cnt-schedule">Ежедневно 08:00–22:00</span></div>
-              <div><strong>Город и выезд:</strong> <span id="cnt-region">Екатеринбург и пригород</span></div>
-              <div><strong>Районы обслуживания:</strong> <span id="cnt-districts" style="color:var(--text-muted);">Все районы города</span></div>
-              <div><strong>E-mail для проектов:</strong> <a href="mailto:master@electro-profi.ru" id="cnt-email" style="color:var(--accent);">master@electro-profi.ru</a></div>
+            <div style="display:grid;gap:10px;font-size:0.88rem;border-top:1px solid var(--border-subtle);padding-top:16px;">
+              <div><strong style="color:#FFFFFF;">График работы:</strong> <span id="cnt-schedule" style="color:var(--text-secondary);">Ежедневно 08:00–22:00</span></div>
+              <div><strong style="color:#FFFFFF;">Зона выезда:</strong> <span id="cnt-region" style="color:var(--text-secondary);">Екатеринбург и пригород</span></div>
+              <div><strong style="color:#FFFFFF;">Районы:</strong> <span id="cnt-districts" style="color:var(--text-secondary);">Все районы города</span></div>
+              <div><strong style="color:#FFFFFF;">E-mail для проектов:</strong> <a href="mailto:master@electro-profi.ru" id="cnt-email" style="color:var(--amber-bright);">master@electro-profi.ru</a></div>
             </div>
           </div>
 
-          <form id="lead-form" class="card-box reveal" novalidate>
-            <h2 style="font-size:1.55rem;margin-bottom:8px;">Оставить заявку или отправить смету</h2>
-            <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:18px;">
-              Заполните контакты и выберите мессенджер — смета автоматически подставится в сообщение.
+          <!-- Форма заявки -->
+          <form id="lead-form" class="bento-card" style="padding:24px;" novalidate>
+            <h2 style="font-size:1.45rem;margin-bottom:6px;color:#FFFFFF;">Отправить смету или вызвать на замер</h2>
+            <p style="font-size:0.88rem;color:var(--text-secondary);margin-bottom:16px;">
+              Заполните имя и телефон, затем нажмите кнопку удобного мессенджера — смета прикрепится автоматически.
             </p>
 
             <input type="text" id="lead-hp" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;">
@@ -387,71 +1675,68 @@
             </div>
 
             <div class="field">
-              <label for="lead-phone">Телефон для связи *</label>
-              <input type="tel" id="lead-phone" class="input" placeholder="+7 (___) ___-__-__" required>
+              <label for="lead-phone">Контактный телефон *</label>
+              <input type="tel" id="lead-phone" class="input num-mono" placeholder="+7 (___) ___-__-__" required>
               <div class="field-error" id="err-lead-phone"></div>
             </div>
 
             <div class="field">
-              <label for="lead-comment">Описание задачи или смета из калькулятора</label>
-              <textarea id="lead-comment" class="textarea" rows="4" placeholder="Опишите задачу или нажмите «Получить точную смету» в калькуляторе выше..."></textarea>
+              <label for="lead-comment">Описание задачи или расчёт из калькулятора</label>
+              <textarea id="lead-comment" class="textarea" rows="4" placeholder="Опишите задачу или рассчитайте смету в калькуляторе выше..."></textarea>
             </div>
 
             <div class="field" style="display:flex;align-items:flex-start;gap:10px;">
-              <input type="checkbox" id="lead-consent" checked style="width:18px;height:18px;margin-top:3px;accent-color:var(--accent);">
-              <label for="lead-consent" style="font-size:0.82rem;color:var(--text-muted);font-weight:400;">
-                Я согласен на обработку персональных данных в соответствии с <button type="button" id="open-privacy-inline" style="background:none;border:none;color:var(--accent);text-decoration:underline;cursor:pointer;padding:0;">Политикой конфиденциальности</button>.
+              <input type="checkbox" id="lead-consent" checked style="width:18px;height:18px;margin-top:2px;accent-color:var(--amber);">
+              <label for="lead-consent" style="font-size:0.78rem;color:var(--text-secondary);font-weight:400;">
+                Согласен на обработку персональных данных согласно <button type="button" id="open-privacy-inline" style="background:none;border:none;color:var(--amber-bright);text-decoration:underline;cursor:pointer;padding:0;">Политике конфиденциальности</button>.
               </label>
             </div>
             <div class="field-error" id="err-lead-consent"></div>
 
-            <div style="font-size:0.84rem;color:var(--text-muted);margin:10px 0 8px;">Выберите, куда отправить заявку со сметой:</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin:8px 0;">Куда отправить заявку со сметой:</div>
             <div class="messenger-grid">
-              <button type="submit" data-channel="telegram" class="btn-msg btn-tg"><svg><use href="#i-tg"/></svg> В Telegram</button>
-              <button type="submit" data-channel="whatsapp" class="btn-msg btn-wa"><svg><use href="#i-wa"/></svg> В WhatsApp</button>
-              <button type="submit" data-channel="max" class="btn-msg btn-max"><svg><use href="#i-max"/></svg> В MAX</button>
-              <button type="submit" data-channel="vk" class="btn-msg btn-vk"><svg><use href="#i-vk"/></svg> ВКонтакте</button>
+              <button type="submit" data-channel="telegram" class="btn-msg btn-tg"><svg><use href="#i-tg"/></svg><span>В Telegram</span></button>
+              <button type="submit" data-channel="whatsapp" class="btn-msg btn-wa"><svg><use href="#i-wa"/></svg><span>В WhatsApp</span></button>
+              <button type="submit" data-channel="max" class="btn-msg btn-max"><svg><use href="#i-max"/></svg><span>В MAX</span></button>
+              <button type="submit" data-channel="vk" class="btn-msg btn-vk"><svg><use href="#i-vk"/></svg><span>ВКонтакте</span></button>
             </div>
 
-            <div id="lead-success-box" class="is-hidden" style="margin-top:14px;padding:12px;border-radius:10px;background:rgba(16,185,129,0.16);border:1px solid var(--success);color:var(--success);font-size:0.88rem;font-weight:700;"></div>
+            <div id="lead-success-box" class="is-hidden" style="margin-top:14px;padding:12px;border-radius:10px;background:rgba(16,185,129,0.14);border:1px solid var(--emerald);color:#6EE7B7;font-size:0.86rem;"></div>
           </form>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- 12. ПОДВАЛ -->
-  <footer style="border-top:var(--card-border-width) solid var(--border-subtle);padding:32px 0;background:var(--footer-bg);position:relative;z-index:2;">
-    <div class="container" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;font-size:0.88rem;color:var(--text-muted);">
+  <!-- ПОДВАЛ -->
+  <footer style="border-top:1px solid var(--border-subtle);padding:28px 0;background:#050609;position:relative;z-index:2;">
+    <div class="container" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;font-size:0.84rem;color:var(--text-secondary);">
       <div>
-        © <span id="ftr-year">2026</span> <strong id="ftr-brand" style="color:var(--text-main);">ЭлектроПрофи</strong> (<span id="ftr-city">Екатеринбург</span>). Все права защищены.
+        © <span id="ftr-year">2026</span> <strong id="ftr-brand" style="color:#FFFFFF;">ЭлектроПрофи</strong> (<span id="ftr-city">Екатеринбург</span>). Инженерный электромонтаж.
       </div>
-      <div style="display:flex;gap:18px;align-items:center;">
-        <button type="button" id="open-privacy-btn" style="background:none;border:none;color:var(--text-muted);text-decoration:underline;cursor:pointer;">Политика конфиденциальности (152-ФЗ)</button>
-        <a href="admin.html" style="color:var(--text-muted);text-decoration:none;opacity:0.8;font-weight:700;">Панель мастера ⚙</a>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;">
+        <button type="button" id="open-privacy-btn" style="background:none;border:none;color:var(--text-secondary);text-decoration:underline;cursor:pointer;">Политика ПДн (152-ФЗ)</button>
+        <button type="button" id="open-admin-btn" style="background:none;border:1px solid var(--border-subtle);border-radius:8px;padding:5px 12px;color:var(--text-secondary);cursor:pointer;">⚙ Панель мастера</button>
       </div>
     </div>
   </footer>
 
-  <!-- Левый нижний виджет «Совет дня: Контрастная тема на солнце» -->
-  <aside class="outdoor-tip-widget" id="outdoor-tip-widget" aria-label="Переключение антибликового режима">
-    <div class="outdoor-tip-head">
-      <span id="outdoor-tip-title">☀️ Совет дня: На объекте</span>
-      <button type="button" class="outdoor-tip-close" id="outdoor-tip-close" aria-label="Скрыть подсказку">✕</button>
+  <!-- Прилипающая мобильная плашка живой сметы (показывается на смартфоне, когда в калькуляторе выбраны позиции) -->
+  <div class="mobile-calc-dock" id="mobile-calc-dock">
+    <div>
+      <div style="font-size:0.7rem;color:var(--text-secondary);">Предварительная смета:</div>
+      <div class="num-mono" style="font-size:0.98rem;font-weight:800;color:var(--amber-bright);" id="mob-dock-range">0 ₽</div>
     </div>
-    <p style="color:var(--text-muted);line-height:1.35;" id="outdoor-tip-desc">
-      Используйте контрастную тему на солнце для лучшей читаемости цен и сечений.
-    </p>
-    <button type="button" class="outdoor-tip-btn" id="outdoor-tip-toggle">
-      ☀️ Включить антиблик «На объекте»
+    <button type="button" class="btn btn-primary" id="mob-dock-order-btn" style="min-height:38px;padding:8px 14px;font-size:0.82rem;">
+      В заявку →
     </button>
-  </aside>
+  </div>
 
   <!-- Плавающая мульти-кнопка связи (FAB) -->
   <div class="fab-container" id="fab-container">
     <div class="fab-menu" id="fab-menu"></div>
-    <button type="button" class="fab-trigger" id="fab-trigger" aria-label="Быстрая связь с мастером" aria-expanded="false">
-      <svg width="26" height="26"><use href="#i-phone"/></svg>
+    <button type="button" class="fab-trigger" id="fab-trigger" aria-label="Быстрая связь с мастером">
+      <svg width="24" height="24"><use href="#i-phone"/></svg>
     </button>
   </div>
 
@@ -460,21 +1745,2319 @@
     <div class="modal-window">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
         <h3 id="privacy-title">Политика обработки персональных данных (152-ФЗ)</h3>
-        <button type="button" class="btn btn-outline" id="close-privacy-btn" style="min-height:36px;padding:4px 12px;">Закрыть (Esc)</button>
+        <button type="button" class="btn btn-glass" id="close-privacy-btn" style="min-height:34px;padding:4px 12px;font-size:0.82rem;">Закрыть</button>
       </div>
-      <div style="font-size:0.88rem;color:var(--text-muted);display:grid;gap:10px;">
+      <div style="font-size:0.86rem;color:var(--text-secondary);display:grid;gap:10px;">
         <p>1. Настоящая Политика определяет порядок обработки и защиты информации о физических лицах, пользующихся формами обратной связи и расчёта стоимости на сайте электромонтажных услуг.</p>
         <p>2. <strong>Состав данных:</strong> Имя пользователя, контактный номер телефона и текст комментария со сметой электромонтажных работ.</p>
         <p>3. <strong>Цель обработки:</strong> Консультация по вопросам электромонтажа, расчёт предварительной сметы и согласование времени выезда мастера на объект.</p>
-        <p>4. <strong>Хранение и передача:</strong> Сайт работает без сторонних рекламных трекеров. Введённые данные сохраняются локально в вашем браузере и передаются напрямую выбранному вами мессенджеру (Telegram, WhatsApp, MAX или ВКонтакте) исключительно для связи с мастером.</p>
-        <p>5. Вы можете в любой момент отозвать согласие, направив запрос по контактам мастера, указанным на сайте.</p>
+        <p>4. <strong>Хранение и передача:</strong> Сайт работает без сторонних рекламных трекеров. Введённые данные передаются выбранному вами мессенджеру (Telegram, WhatsApp, MAX или ВКонтакте) исключительно для связи с мастером.</p>
       </div>
     </div>
   </div>
 
-  <div class="toast" id="toast" role="status" aria-live="polite">Скопировано!</div>
+  <!-- Модальное окно подтверждения действия (вместо системного confirm) -->
+  <div class="modal-backdrop" id="confirm-modal" role="dialog" aria-modal="true">
+    <div class="modal-window" style="max-width:420px;">
+      <h3 style="margin-bottom:10px;font-size:1.15rem;" id="confirm-modal-title">Подтверждение</h3>
+      <p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:18px;" id="confirm-modal-text">Вы уверены?</p>
+      <div style="display:flex;justify-content:flex-end;gap:10px;">
+        <button type="button" class="btn btn-glass" id="confirm-cancel-btn" style="min-height:38px;padding:6px 14px;">Отмена</button>
+        <button type="button" class="btn btn-primary" id="confirm-ok-btn" style="min-height:38px;padding:6px 16px;">Подтвердить</button>
+      </div>
+    </div>
+  </div>
 
-  <script src="store.js"></script>
-  <script src="script.js"></script>
+  <!-- ==========================================================================
+       ВСТРОЕННАЯ ОБЛАЧНАЯ ПАНЕЛЬ УПРАВЛЕНИЯ МАСТЕРА (CMS ВНУТРИ ЭТОГО ЖЕ ФАЙЛА)
+       ========================================================================== -->
+  <div class="admin-overlay" id="admin-overlay" aria-hidden="true">
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand-logo">
+          <span class="brand-emblem">⚙</span>
+          <span class="brand-text-wrap">
+            <span class="brand-title">Панель управления мастера</span>
+            <span class="brand-meta">Облачная синхронизация GitHub Gist</span>
+          </span>
+        </div>
+        <div class="header-actions">
+          <button type="button" class="btn btn-glass" id="close-admin-overlay-btn" style="min-height:38px;padding:6px 14px;font-size:0.84rem;">← Вернуться на сайт</button>
+          <button type="button" class="btn btn-glass is-hidden" id="admin-logout-btn" style="min-height:38px;padding:6px 12px;font-size:0.84rem;">Выйти</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Экран входа по паролю -->
+      <section id="login-screen" style="max-width:420px;margin:48px auto;">
+        <form id="login-form" class="bento-card" style="padding:26px;">
+          <h2 style="font-size:1.4rem;margin-bottom:6px;color:#FFFFFF;">Вход в панель мастера</h2>
+          <p style="font-size:0.86rem;color:var(--text-secondary);margin-bottom:18px;">
+            Пароль по умолчанию: <code class="num-mono" style="color:var(--amber-bright);">admin</code>
+          </p>
+          <div class="field">
+            <label for="admin-pass-input">Пароль доступа</label>
+            <input type="password" id="admin-pass-input" class="input" placeholder="Введите пароль..." required>
+            <div class="field-error" id="login-error"></div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Войти в настройки</button>
+        </form>
+      </section>
+
+      <!-- Интерфейс CMS после входа -->
+      <div id="admin-app" class="is-hidden">
+        <div class="bento-card" style="margin-top:20px;padding:18px 22px;border-color:var(--border-amber);background:rgba(245,158,11,0.06);">
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+            <div>
+              <strong style="color:var(--amber-bright);font-size:0.95rem;">☁ Живая облачная админка + выгрузка единого файла:</strong>
+              <p style="font-size:0.82rem;color:var(--text-secondary);margin-top:3px;">
+                При нажатии <strong>«Сохранить»</strong> цены и контакты сразу обновляются в облаке Gist. А кнопка справа скачивает готовый единый файл <code>index.html</code> со всеми вшитыми настройками для загрузки на GitHub Pages.
+              </p>
+            </div>
+            <button type="button" class="btn btn-primary" id="download-ready-html-top" style="font-size:0.84rem;">⬇ Скачать готовый index.html</button>
+          </div>
+        </div>
+
+        <div class="admin-layout">
+          <aside class="admin-sidebar" role="tablist">
+            <button type="button" class="admin-tab-btn active" data-tab="tab-brand">1. Бренд и первый экран</button>
+            <button type="button" class="admin-tab-btn" data-tab="tab-contacts">2. Контакты (TG, WA, MAX, ВК)</button>
+            <button type="button" class="admin-tab-btn" data-tab="tab-services">3. Услуги, описания и цены</button>
+            <button type="button" class="admin-tab-btn" data-tab="tab-materials">4. Материалы калькулятора</button>
+            <button type="button" class="admin-tab-btn" data-tab="tab-cases">5. Паспорта объектов и фото</button>
+            <button type="button" class="admin-tab-btn" data-tab="tab-steps-faq">6. Этапы работы и FAQ</button>
+            <button type="button" class="admin-tab-btn" data-tab="tab-reviews">7. Отзывы и добавление</button>
+            <button type="button" class="admin-tab-btn" data-tab="tab-requests">8. Заявки клиентов</button>
+            <button type="button" class="admin-tab-btn" data-tab="tab-settings">9. Облако, экспорт и пароль</button>
+          </aside>
+
+          <div class="bento-card" style="padding:22px;">
+            <!-- Вкладка 1 -->
+            <div class="admin-tab-pane" id="tab-brand">
+              <h2 style="margin-bottom:16px;font-size:1.3rem;">Бренд, город и первый экран</h2>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;">
+                <div class="field"><label>Название бренда</label><input type="text" id="b-name" class="input"></div>
+                <div class="field"><label>Имя и фамилия мастера</label><input type="text" id="b-master" class="input"></div>
+                <div class="field"><label>Город</label><input type="text" id="b-city" class="input"></div>
+                <div class="field"><label>Зона выезда (регион)</label><input type="text" id="b-region" class="input"></div>
+              </div>
+              <div class="field"><label>Главный заголовок H1 на первом экране</label><input type="text" id="b-tagline" class="input"></div>
+              <div class="field"><label>Подзаголовок после имени мастера</label><textarea id="b-hero-subtitle" class="textarea" rows="2"></textarea></div>
+              <div class="field"><label>Подпись под блоком «Технический регламент»</label><input type="text" id="b-hero-caption" class="input"></div>
+              <div class="field"><label>Районы обслуживания</label><input type="text" id="b-districts" class="input"></div>
+              <div class="field"><label>График работы</label><input type="text" id="b-schedule" class="input"></div>
+
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;">
+                <div class="field"><label>Стаж (плашка 1)</label><input type="text" id="b-exp" class="input"></div>
+                <div class="field"><label>Гарантия (плашка 2)</label><input type="text" id="b-war" class="input"></div>
+                <div class="field"><label>Время выезда (плашка 3)</label><input type="text" id="b-arr" class="input"></div>
+                <div class="field"><label>Стандарт (плашка 4)</label><input type="text" id="b-norm" class="input"></div>
+                <div class="field"><label>Минимальный заказ (₽)</label><input type="number" id="b-minorder" class="input"></div>
+                <div class="field"><label>Наценка за срочность (%)</label><input type="number" id="b-urgent-pct" class="input"></div>
+              </div>
+              <button type="button" class="btn btn-primary js-save-all">Сохранить в облако</button>
+            </div>
+
+            <!-- Вкладка 2 -->
+            <div class="admin-tab-pane is-hidden" id="tab-contacts">
+              <h2 style="margin-bottom:12px;font-size:1.3rem;">Контакты и мессенджеры РФ</h2>
+              <p style="font-size:0.84rem;color:var(--text-secondary);margin-bottom:16px;">Пустые поля мессенджеров автоматически скрываются на сайте.</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;">
+                <div class="field"><label>Телефон</label><input type="text" id="c-phone" class="input"></div>
+                <div class="field"><label>E-mail</label><input type="email" id="c-email" class="input"></div>
+                <div class="field"><label>Ссылка на Telegram</label><input type="url" id="c-tg" class="input" placeholder="https://t.me/username"></div>
+                <div class="field"><label>Ссылка на WhatsApp</label><input type="url" id="c-wa" class="input" placeholder="https://wa.me/79123456789"></div>
+                <div class="field"><label>Ссылка на MAX</label><input type="url" id="c-max" class="input" placeholder="https://max.ru/username"></div>
+                <div class="field"><label>Ссылка на ВКонтакте</label><input type="url" id="c-vk" class="input" placeholder="https://vk.com/username"></div>
+              </div>
+              <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border-subtle);">
+                <h3 style="font-size:1rem;margin-bottom:8px;">Уведомления о заявках в Telegram-бот (опционально)</h3>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;">
+                  <div class="field"><label>Telegram Bot Token (@BotFather)</label><input type="text" id="c-bot-token" class="input"></div>
+                  <div class="field"><label>Telegram Chat ID</label><input type="text" id="c-chat-id" class="input"></div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary js-save-all">Сохранить контакты</button>
+            </div>
+
+            <!-- Вкладка 3 -->
+            <div class="admin-tab-pane is-hidden" id="tab-services">
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px;">
+                <h2 style="font-size:1.3rem;">Услуги, описания и расценки</h2>
+                <button type="button" class="btn btn-glass" id="add-service-btn">+ Добавить услугу</button>
+              </div>
+              <div id="admin-services-list" style="display:grid;gap:12px;"></div>
+              <button type="button" class="btn btn-primary js-save-all" style="margin-top:16px;">Сохранить прайс</button>
+            </div>
+
+            <!-- Вкладка 4 -->
+            <div class="admin-tab-pane is-hidden" id="tab-materials">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                <h2 style="font-size:1.3rem;">Материалы для калькулятора</h2>
+                <button type="button" class="btn btn-glass" id="add-material-btn">+ Добавить материал</button>
+              </div>
+              <div id="admin-materials-list"></div>
+              <button type="button" class="btn btn-primary js-save-all" style="margin-top:16px;">Сохранить материалы</button>
+            </div>
+
+            <!-- Вкладка 5 -->
+            <div class="admin-tab-pane is-hidden" id="tab-cases">
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px;">
+                <h2 style="font-size:1.3rem;">Инженерные паспорта объектов (Портфолио)</h2>
+                <button type="button" class="btn btn-glass" id="add-case-btn">+ Добавить объект</button>
+              </div>
+              <div id="admin-cases-list" style="display:grid;gap:16px;"></div>
+              <button type="button" class="btn btn-primary js-save-all" style="margin-top:16px;">Сохранить объекты</button>
+            </div>
+
+            <!-- Вкладка 6 -->
+            <div class="admin-tab-pane is-hidden" id="tab-steps-faq">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <h2 style="font-size:1.25rem;">Этапы работы</h2>
+                <button type="button" class="btn btn-glass" id="add-step-btn">+ Добавить этап</button>
+              </div>
+              <div id="admin-steps-list" style="display:grid;gap:10px;margin-bottom:24px;"></div>
+
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-top:18px;border-top:1px solid var(--border-subtle);">
+                <h2 style="font-size:1.25rem;">Частые вопросы (FAQ)</h2>
+                <button type="button" class="btn btn-glass" id="add-faq-btn">+ Добавить вопрос</button>
+              </div>
+              <div id="admin-faqs-list" style="display:grid;gap:12px;"></div>
+              <button type="button" class="btn btn-primary js-save-all" style="margin-top:16px;">Сохранить этапы и FAQ</button>
+            </div>
+
+            <!-- Вкладка 7 -->
+            <div class="admin-tab-pane is-hidden" id="tab-reviews">
+              <h2 style="margin-bottom:14px;font-size:1.3rem;">Отзывы клиентов и ручное добавление</h2>
+              <div class="bento-card" style="padding:16px;margin-bottom:18px;background:var(--card-inset);">
+                <h3 style="font-size:0.96rem;margin-bottom:10px;color:var(--amber-bright);">+ Добавить новый отзыв вручную (с Авито / мессенджера)</h3>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:8px;">
+                  <input type="text" id="adm-rev-name" class="input" placeholder="Имя клиента *">
+                  <input type="text" id="adm-rev-district" class="input" placeholder="Район / ЖК">
+                  <input type="text" id="adm-rev-service" class="input" placeholder="Услуга">
+                  <input type="text" id="adm-rev-date" class="input" placeholder="Дата (напр. 15 мая 2026)">
+                  <select id="adm-rev-rating" class="input">
+                    <option value="5">5 ★</option>
+                    <option value="4">4 ★</option>
+                    <option value="3">3 ★</option>
+                  </select>
+                </div>
+                <textarea id="adm-rev-text" class="textarea" rows="2" placeholder="Текст отзыва *" style="margin-bottom:8px;"></textarea>
+                <button type="button" class="btn btn-primary" id="adm-add-rev-btn" style="min-height:38px;padding:6px 16px;font-size:0.84rem;">Опубликовать отзыв</button>
+              </div>
+              <div id="admin-reviews-list" style="display:grid;gap:10px;"></div>
+              <button type="button" class="btn btn-primary js-save-all" style="margin-top:14px;">Сохранить отзывы</button>
+            </div>
+
+            <!-- Вкладка 8 -->
+            <div class="admin-tab-pane is-hidden" id="tab-requests">
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;">
+                <h2 style="font-size:1.3rem;">Заявки клиентов</h2>
+                <div style="display:flex;gap:8px;">
+                  <button type="button" class="btn btn-glass" id="refresh-requests-btn" style="min-height:36px;padding:6px 12px;font-size:0.8rem;">↻ Обновить из облака</button>
+                  <button type="button" class="btn btn-glass" id="clear-requests-btn" style="min-height:36px;padding:6px 12px;font-size:0.8rem;color:var(--danger);">Очистить все</button>
+                </div>
+              </div>
+              <div id="admin-requests-list"></div>
+            </div>
+
+            <!-- Вкладка 9 -->
+            <div class="admin-tab-pane is-hidden" id="tab-settings">
+              <h2 style="margin-bottom:14px;font-size:1.3rem;">Облачная синхронизация (GitHub Gist), экспорт и пароль</h2>
+
+              <div class="bento-card" style="padding:18px;margin-bottom:18px;background:var(--card-inset);border-color:rgba(59,130,246,0.35);">
+                <h3 style="margin-bottom:6px;font-size:1rem;color:#93C5FD;">☁ Облачная база GitHub Gist (Работает в РФ без VPN)</h3>
+                <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:12px;">
+                  Ваш активный Gist ID уже подключён. Для нового покупателя просто сотрите поле ID базы и нажмите «Создать новую облачную базу в 1 клик».
+                </p>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:12px;">
+                  <div class="field" style="margin:0;"><label>GitHub Token (с правом gist)</label><input type="text" id="cloud-api-key" class="input num-mono" placeholder="ghp_..."></div>
+                  <div class="field" style="margin:0;"><label>ID облачной базы (Gist ID)</label><input type="text" id="cloud-bin-id" class="input num-mono" placeholder="0ad0938b..."></div>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:10px;">
+                  <button type="button" class="btn btn-primary" id="create-cloud-bin-btn" style="font-size:0.84rem;">☁ Создать новую облачную базу в 1 клик</button>
+                  <button type="button" class="btn btn-glass js-save-all" style="font-size:0.84rem;">Сохранить и перезаписать облако</button>
+                </div>
+              </div>
+
+              <div class="bento-card" style="padding:18px;margin-bottom:18px;background:var(--card-inset);">
+                <h3 style="margin-bottom:6px;font-size:1rem;">Выгрузка готового сайта</h3>
+                <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:12px;">
+                  Скачайте единый файл <code>index.html</code> со всеми вшитыми ценами, контактами и зашифрованным ключом облака для загрузки на GitHub Pages.
+                </p>
+                <div style="display:flex;flex-wrap:wrap;gap:10px;">
+                  <button type="button" class="btn btn-primary" id="download-ready-html-btn" style="font-size:0.84rem;">⬇ Скачать готовый index.html</button>
+                  <button type="button" class="btn btn-glass" id="export-json-btn" style="font-size:0.84rem;">Скачать JSON-бэкап</button>
+                  <label class="btn btn-glass" style="cursor:pointer;font-size:0.84rem;">
+                    Загрузить JSON
+                    <input type="file" id="import-json-input" accept=".json" style="display:none;">
+                  </label>
+                </div>
+              </div>
+
+              <div class="field" style="max-width:320px;">
+                <label>Сменить пароль входа в админку</label>
+                <input type="text" id="set-new-pass" class="input">
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;">
+                <button type="button" class="btn btn-primary js-save-all">Сохранить пароль</button>
+                <button type="button" class="btn btn-glass" id="reset-factory-btn" style="color:var(--danger);border-color:rgba(239,68,68,0.35);">Сбросить к заводским настройкам</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Сохранено!</div>
+
+  <!-- ЕДИНЫЙ СКРИПТ: ХРАНИЛИЩЕ STORE + КЛИЕНТСКИЙ САЙТ + КАЛЬКУЛЯТОР + CMS АДМИНКА -->
+  <script id="app-main-script">
+  (function (window) {
+    'use strict';
+
+    const STORAGE_KEY = 'electro_pro_config_v2';
+    const LEGACY_KEY = 'electro_pro_config_v1';
+    const REQUESTS_KEY = 'electro_pro_requests_v1';
+    const SESSION_KEY = 'electro_admin_logged_in';
+
+    /* __DEFAULT_CONFIG_START__ */
+    const DEFAULT_CONFIG = {
+      cloud: {
+        binId: '0ad0938b127beb5081fea3d7b1812fde',
+        apiKey: ''
+      },
+      brand: {
+        name: 'ЭлектроПрофи',
+        masterName: 'Алексей Громов',
+        city: 'Екатеринбург',
+        region: 'Екатеринбург и пригород (до 30 км)',
+        districts: 'Академический, ВИЗ, Центр, Ботаника, Уралмаш, Солнечный, Втузгородок',
+        tagline: 'Инженерный электромонтаж без пыли с гарантией 5 лет по договору',
+        heroSubtitle: 'Работаю без посредников и накруток диспетчеров: от срочной диагностики КЗ до сборки трёхфазных щитов и разводки в новостройках.',
+        heroCardCaption: 'Соблюдение ПУЭ-7 и ГОСТ Р 50571. Исполнительная схема скрытых трасс и акт замера сопротивления изоляции в подарок.',
+        schedule: 'Ежедневно с 08:00 до 22:00 (аварийный выезд — 24/7)',
+        experienceYears: '12 лет',
+        warrantyYears: '5 лет',
+        arrivalTime: 'от 45 мин',
+        normative: 'ПУЭ-7 / ГОСТ',
+        minOrder: 2500,
+        urgentMultiplier: 30
+      },
+      techSpecs: [
+        { code: 'ГОСТ 31996-2012', title: 'Кабельные трассы ВВГнг(А)-LS', desc: 'Честное сечение жилы по ГОСТ. Прокладка строго под 90° по лазерному нивелиру.' },
+        { code: 'ПУЭ-7 п. 2.1.21', title: 'Опрессовка гильзами ГМЛ-П', desc: 'Никаких скруток в коробках — только гидравлическая опрессовка в клеевой термоусадке.' },
+        { code: 'ГОСТ Р 50571', title: 'Инженерная сборка щитов', desc: 'Реле контроля напряжения по фазам, селективное УЗО и дифзащита типа «А» на мокрые зоны.' },
+        { code: 'БЕЗ ПЫЛИ 95%', title: 'Алмазное бурение и штробление', desc: 'Резка штроборезом и коронками с прямым подключением к промышленному пылесосу.' }
+      ],
+      contacts: {
+        phone: '+7 (912) 345-67-89',
+        phoneClean: '+79123456789',
+        telegram: 'https://t.me/electro_master_rf',
+        whatsapp: 'https://wa.me/79123456789',
+        max: 'https://max.ru/electro_master_rf',
+        vk: 'https://vk.com/electro_master_rf',
+        email: 'master@electro-profi.ru',
+        tgBotToken: '',
+        tgChatId: ''
+      },
+      seo: {
+        titleTemplate: 'Электромонтаж в г. {city} — Частный мастер {brandName}',
+        description: 'Услуги частного электрика с допуском IV группы. Сборка электрощитов, полная замена проводки без пыли, поиск КЗ. Честный калькулятор цен онлайн.'
+      },
+      adminPassword: 'admin',
+      services: [
+        { id: 's1', name: 'Прокладка кабеля (ВВГнг-LS)', unit: 'м.п.', price: 180, icon: 'cable', active: true, desc: 'Монтаж силового кабеля по потолку или в гофре с креплением площадками.' },
+        { id: 's2', name: 'Установка подрозетника и розетки', unit: 'шт.', price: 650, icon: 'socket', active: true, desc: 'Алмазное бурение с пылесосом, вмазка подрозетника и чистовое подключение.' },
+        { id: 's3', name: 'Монтаж выключателя света', unit: 'шт.', price: 600, icon: 'switch', active: true, desc: 'Установка одно-, двухклавишных и проходных выключателей освещения.' },
+        { id: 's4', name: 'Установка светильников и люстр', unit: 'шт.', price: 900, icon: 'lamp', active: true, desc: 'Монтаж точечных светильников, трековых систем, бра и потолочных люстр.' },
+        { id: 's5', name: 'Инженерная сборка электрощита', unit: 'модуль', price: 550, icon: 'shield', active: true, desc: 'Расключение автоматов, УЗО, реле напряжения с заводской маркировкой линий.' },
+        { id: 's6', name: 'Штробление стен без пыли', unit: 'м.п.', price: 450, icon: 'drill', active: true, desc: 'Резка штроборезом со строительным пылесосом по бетону, кирпичу и газоблоку.' },
+        { id: 's7', name: 'Поиск и устранение КЗ / обрыва', unit: 'услуга', price: 3000, icon: 'search', active: true, desc: 'Трассоискатель, тепловизор и мегаомметр. Локализация без вскрытия всех обоев.' },
+        { id: 's8', name: 'Подключение варочной / духовки', unit: 'шт.', price: 2200, icon: 'stove', active: true, desc: 'Силовое подключение техники с обжимом наконечников НШВИ и проверкой земли.' }
+      ],
+      materials: [
+        { id: 'm1', name: 'Кабель силовой ВВГнг(А)-LS 3×2.5 (ГОСТ)', unit: 'м.п.', price: 135, active: true },
+        { id: 'm2', name: 'Кабель освещения ВВГнг(А)-LS 3×1.5 (ГОСТ)', unit: 'м.п.', price: 85, active: true },
+        { id: 'm3', name: 'Подрозетник глубокий 68×60 мм (усиленный)', unit: 'шт.', price: 45, active: true },
+        { id: 'm4', name: 'Автоматический выключатель 1P 16A / 10A', unit: 'шт.', price: 490, active: true },
+        { id: 'm5', name: 'Реле контроля напряжения с дисплеем 63А', unit: 'шт.', price: 3600, active: true },
+        { id: 'm6', name: 'Гофра ПВХ с протяжкой + клипсы крепежа', unit: 'м.п.', price: 40, active: true }
+      ],
+      cases: [
+        {
+          id: 'c1',
+          badge: 'Коттедж 180 м² • 3 фазы 15 кВт',
+          equipment: 'Щит 48 мод. • УЗО тип «А» • 3×РКН 63А',
+          title: 'Сборка трёхфазного щита на 48 модулей в коттедже',
+          done: 'Установлены 3 реле контроля напряжения по фазам, противопожарное селективное УЗО, раздельные дифавтоматы на мокрые зоны, выделена неотключаемая линия (котёл и холодильник).',
+          checklist: [
+            'Балансировка нагрузки по 3 фазам (L1, L2, L3)',
+            'Обжим многожильных перемычек ПУГВ наконечниками НШВИ',
+            'Перекидной рубильник резервного питания от генератора'
+          ],
+          duration: '2 рабочих дня',
+          cost: '38 500 ₽',
+          customPhoto: ''
+        },
+        {
+          id: 'c2',
+          badge: '2-комн. новостройка • 64 м²',
+          equipment: 'ВВГнг(А)-LS ГОСТ • 58 точек • ГМЛ-П',
+          title: 'Черновой электромонтаж «под ключ» в новостройке (64 м²)',
+          done: 'Проложено 420 м кабеля ГОСТ строго под 90° по потолку, высверлено 58 подрозетников алмазной коронкой с пылесосом, выведены отдельные линии под кухню, кондиционеры и тёплые полы.',
+          checklist: [
+            'Штробление и алмазное бурение без пыли с пылесосом',
+            'Опрессовка 14 распределительных коробок гильзами ГМЛ-П',
+            'Сдача исполнительной фото-схемы скрытых трасс с размерами'
+          ],
+          duration: '5 рабочих дней',
+          cost: '94 000 ₽',
+          customPhoto: ''
+        },
+        {
+          id: 'c3',
+          badge: 'Кухня по проекту • Вторичка',
+          equipment: 'Линия 3×6 мм² • Глубокие подрозетники',
+          title: 'Подготовка силовой электрики под кухонный гарнитур',
+          done: 'Перенос силового вывода для индукционной варочной панели (кабель 3×6 мм²), монтаж блока из 4 розеток над столешницей, отдельные выводы под посудомойку и духовой шкаф.',
+          checklist: [
+            'Точная разметка по чертежу мебельщиков до миллиметра',
+            'Вмазка глубоких подрозетников 68×60 мм на гипсовый состав',
+            'Проверка срабатывания УЗО 30мА под нагрузкой'
+          ],
+          duration: '1 день (6 часов)',
+          cost: '14 800 ₽',
+          customPhoto: ''
+        },
+        {
+          id: 'c4',
+          badge: 'Аварийный выезд • За 45 минут',
+          equipment: 'Тепловизор • Мегаомметр • Автоматика',
+          title: 'Аварийный поиск обрыва нуля и замена сгоревших автоматов',
+          done: 'Бесконтактная диагностика распределительных коробок тепловизором и трассоискателем, локализация и восстановление отгоревшего нулевого проводника без вскрытия всех обоев.',
+          checklist: [
+            'Замер сопротивления изоляции мегаомметром (R > 50 МОм)',
+            'Восстановление соединения медными лужёными гильзами ГМЛ',
+            'Замена старых пробок на модульные автоматы'
+          ],
+          duration: '2.5 часа',
+          cost: '5 500 ₽',
+          customPhoto: ''
+        }
+      ],
+      steps: [
+        { title: 'Заявка и смета', desc: 'Обсуждаем задачу по телефону или в мессенджере, называю честную вилку цен.' },
+        { title: 'Осмотр и замер', desc: 'Осматриваю щит и стены на объекте, составляю точную спецификацию работ и материалов.' },
+        { title: 'Официальный договор', desc: 'Фиксируем итоговую стоимость и сроки на бумаге. Цена не вырастет в процессе.' },
+        { title: 'Закупка по ГОСТ', desc: 'Заказываю проверенный кабель ГОСТ и оригинальную автоматику со скидкой и чеками.' },
+        { title: 'Чистый монтаж', desc: 'Штробление с пылесосом, опрессовка гильзами ГМЛ-П, аккуратная сборка щита.' },
+        { title: 'Проверка и гарантия', desc: 'Тестируем каждую линию под нагрузкой, передаю схему трасс и гарантию 5 лет.' }
+      ],
+      reviews: [
+        { id: 'r1', name: 'Дмитрий Ковалёв', district: 'р-н Академический', service: 'Полная разводка в двушке', date: '14 февраля 2026', rating: 5, text: 'Алексей делал всю черновую электрику в нашей новостройке. Главное, что поразило — идеальная чистота после штробления, реально работал с промышленным пылесосом. Все трассы ровные, сдал исполнительную схему с размерами до каждого кабеля.', approved: true },
+        { id: 'r2', name: 'Марина С.', district: 'р-н Ботаника', service: 'Переделка розеток под кухню', date: '28 января 2026', rating: 5, text: 'Мебельщики прислали схему розеток за три дня до установки гарнитура. Алексей выручил, приехал на следующий день, аккуратно перенёс 7 точек и вывел силовой кабель под варочную панель. Цена совпала с расчётом в калькуляторе.', approved: true },
+        { id: 'r3', name: 'Игорь Плотников', district: 'р-н ВИЗ', service: 'Сборка квартирного щита', date: '09 марта 2026', rating: 5, text: 'Вместо застройщицкого ужаса из трёх дешёвых автоматов собрал нормальный щит с реле напряжения и УЗО на ванную. Внутри всё уложено по линеечке, каждая группа подписана понятным языком. Рекомендую как грамотного инженера.', approved: true },
+        { id: 'r4', name: 'Елена Викторовна', district: 'Центр', service: 'Поиск короткого замыкания', date: '19 декабря 2025', rating: 5, text: 'Вечером пропал свет в половине квартиры и запахло горелым пластиком в коридоре. Мастер приехал за 50 минут, прибором нашёл скрутку под обоями, обжал гильзами и поставил нормальный автомат. Спасли от пожара!', approved: true },
+        { id: 'r5', name: 'Артём и Ксения', district: 'р-н Солнечный', service: 'Чистовая установка 45 точек', date: '02 апреля 2026', rating: 4, text: 'По качеству монтажа розеток, проходных выключателей и трековых светильников — твёрдая пятёрка, ни одной щели на обоях. Снял балл только за то, что из-за высокой загрузки приступил к работе на день позже, чем изначально планировали.', approved: true },
+        { id: 'r6', name: 'Сергей В.', district: 'р-н Уралмаш', service: 'Замена алюминиевой проводки', date: '21 мая 2026', rating: 5, text: 'Меняли старый советский алюминий в хрущёвке на медь ВВГнг-LS. Алексей сам закупил кабель ГОСТ по оптовой скидке, отчитался по каждому чеку. Договор и гарантийный талон на руках.', approved: true },
+        { id: 'r7', name: 'Ольга Романова', district: 'р-н Втузгородок', service: 'Подключение техники и бра', date: '11 июля 2026', rating: 5, text: 'Нужен был небольшой объём: подключить духовой шкаф, варочную панель и повесить две сложные люстры. Многие электрики отказывались от мелкого заказа, а Алексей приехал вовремя и сделал всё за два часа.', approved: true },
+        { id: 'r8', name: 'Константин Б.', district: 'КП Образцово', service: 'Щит ввода и заземление в доме', date: '18 сентября 2026', rating: 5, text: 'Забивали модульное штыревое заземление около дома и собирали трёхфазный щит с переключателем на бензогенератор. Замерили сопротивление контура прибором — всё уложилось в нормативы ПУЭ с запасом.', approved: true }
+      ],
+      faqs: [
+        { q: 'Правда ли штробление проходит без пыли, или вся квартира будет в белом налёте?', a: 'Работаю профессиональным штроборезом и алмазной дрелью с прямым подключением к строительному пылесосу с автоочисткой фильтра. До 95% бетонной и кирпичной пыли сразу уходит в мешок пылесоса — можно работать даже в жилой квартире.' },
+        { q: 'Кто закупает кабель, автоматы и подрозетники?', a: 'На ваш выбор. Вы можете купить материалы сами по моему списку, либо я закажу проверенный кабель строго по ГОСТ (не заниженное сечение ТУ) и оригинальную автоматику у профильных поставщиков со своей скидкой и предоставлю все чеки.' },
+        { q: 'Изменится ли цена из онлайн-калькулятора в процессе работы?', a: 'Калькулятор считает по реальному прайсу с погрешностью ±15% на нюансы стен. Перед началом работ я фиксирую точную смету в договоре — в процессе монтажа стоимость не вырастет ни на рубль, если вы сами не добавите новые точки.' },
+        { q: 'Какую гарантию вы даёте и как она оформляется?', a: 'Заключаем официальный письменный договор. На все электромонтажные работы и собранные щиты действует гарантия 5 лет. Также вы получаете фото-схему скрытых трасс проводки, чтобы при монтаже мебели не пробить кабель.' },
+        { q: 'Как соединяются провода в распределительных коробках? Скрутки делаете?', a: 'Обычные скрутки запрещены правилами ПУЭ и опасны возгоранием. Все соединения выполняются только опрессовкой медными гильзами ГМЛ-П с помощью гидравлического пресса или сваркой, с изоляцией клеевой термоусадкой.' },
+        { q: 'Выезжаете ли вы на небольшие заказы (починить розетку, повесить люстру)?', a: 'Да, выезжаю. Единственное условие — действует порог минимального заказа (указан в калькуляторе), в который уже входит выезд и до 1.5–2 часов мелких электромонтажных работ.' }
+      ],
+      requests: []
+    };
+    /* __DEFAULT_CONFIG_END__ */
+
+    function deepClone(obj) { return JSON.parse(JSON.stringify(obj)); }
+
+    function encodeToken(raw) {
+      const s = String(raw || '').trim();
+      if (!s) return '';
+      if (s.indexOf('b64:') === 0) return s;
+      try { return 'b64:' + btoa(s); } catch (e) { return s; }
+    }
+
+    function decodeToken(stored) {
+      const s = String(stored || '').trim();
+      if (!s) return '';
+      if (s.indexOf('b64:') === 0) {
+        try { return atob(s.slice(4)); } catch (e) { return s; }
+      }
+      return s;
+    }
+
+    function notifyUpdate() {
+      window.dispatchEvent(new CustomEvent('store:updated'));
+    }
+
+    const Store = {
+      getDefaultConfig: function () { return deepClone(DEFAULT_CONFIG); },
+
+      getConfig: function () {
+        try {
+          let raw = localStorage.getItem(STORAGE_KEY);
+          let legacyRaw = null;
+          try { legacyRaw = localStorage.getItem(LEGACY_KEY); } catch (e) {}
+
+          if (!raw && legacyRaw) {
+            raw = legacyRaw;
+          }
+          if (!raw) {
+            const d = deepClone(DEFAULT_CONFIG);
+            if (d.cloud && d.cloud.apiKey) d.cloud.apiKey = decodeToken(d.cloud.apiKey);
+            return d;
+          }
+          const saved = JSON.parse(raw);
+          const merged = {
+            ...deepClone(DEFAULT_CONFIG),
+            ...saved,
+            cloud: { ...DEFAULT_CONFIG.cloud, ...(saved.cloud || {}) },
+            brand: { ...DEFAULT_CONFIG.brand, ...(saved.brand || {}) },
+            contacts: { ...DEFAULT_CONFIG.contacts, ...(saved.contacts || {}) },
+            seo: { ...DEFAULT_CONFIG.seo, ...(saved.seo || {}) }
+          };
+
+          // Подхватываем ключ из старого хранилища, если он там был
+          if (!merged.cloud.apiKey && legacyRaw) {
+            try {
+              const oldParsed = JSON.parse(legacyRaw);
+              if (oldParsed && oldParsed.cloud && oldParsed.cloud.apiKey) {
+                merged.cloud.apiKey = oldParsed.cloud.apiKey;
+              }
+            } catch (e) {}
+          }
+
+          if (!Array.isArray(merged.techSpecs) || merged.techSpecs.length === 0) {
+            merged.techSpecs = deepClone(DEFAULT_CONFIG.techSpecs);
+          }
+          if (!Array.isArray(merged.steps) || merged.steps.length === 0) {
+            merged.steps = deepClone(DEFAULT_CONFIG.steps);
+          }
+          if (!Array.isArray(merged.requests)) {
+            merged.requests = [];
+          }
+          if (Array.isArray(merged.cases)) {
+            merged.cases = merged.cases.map(function (c, idx) {
+              const defCase = DEFAULT_CONFIG.cases[idx] || DEFAULT_CONFIG.cases[0];
+              return {
+                ...defCase,
+                ...c,
+                badge: c.badge || defCase.badge,
+                equipment: c.equipment || defCase.equipment,
+                checklist: Array.isArray(c.checklist) && c.checklist.length > 0 ? c.checklist : defCase.checklist
+              };
+            });
+          }
+          merged.cloud.apiKey = decodeToken(merged.cloud.apiKey || DEFAULT_CONFIG.cloud.apiKey);
+          merged.cloud.binId = (merged.cloud.binId || DEFAULT_CONFIG.cloud.binId || '').trim();
+          return merged;
+        } catch (e) {
+          return deepClone(DEFAULT_CONFIG);
+        }
+      },
+
+      saveConfig: function (newConfig, skipCloud) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(newConfig));
+          localStorage.setItem(LEGACY_KEY, JSON.stringify(newConfig));
+        } catch (e) {}
+        notifyUpdate();
+        if (!skipCloud && newConfig.cloud && newConfig.cloud.binId && newConfig.cloud.apiKey) {
+          this.pushToCloud(newConfig);
+        }
+        return true;
+      },
+
+      pushToCloud: function (cfg) {
+        const gistId = ((cfg.cloud && cfg.cloud.binId) || '').trim();
+        const token = decodeToken((cfg.cloud && cfg.cloud.apiKey) || '');
+        if (!gistId || !token) return Promise.resolve(false);
+
+        const cleanPayload = deepClone(cfg);
+        cleanPayload.cloud = { binId: gistId, apiKey: '' };
+
+        return fetch('https://api.github.com/gists/' + encodeURIComponent(gistId), {
+          method: 'PATCH',
+          headers: {
+            'Accept': 'application/vnd.github+json',
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            description: 'Облачная база сайта электрика (' + (cfg.brand && cfg.brand.name || 'ЭлектроПрофи') + ')',
+            files: {
+              'electro_config.json': {
+                content: JSON.stringify(cleanPayload, null, 2)
+              }
+            }
+          })
+        }).then(function (res) { return res.ok; }).catch(function () { return false; });
+      },
+
+      pullFromCloud: function () {
+        const cfg = this.getConfig();
+        const gistId = ((cfg.cloud && cfg.cloud.binId) || DEFAULT_CONFIG.cloud.binId || '').trim();
+        const savedKey = (cfg.cloud && cfg.cloud.apiKey) || decodeToken(DEFAULT_CONFIG.cloud.apiKey) || '';
+        if (!gistId) return Promise.resolve(false);
+
+        const self = this;
+        return fetch('https://api.github.com/gists/' + encodeURIComponent(gistId) + '?_t=' + Date.now(), {
+          method: 'GET',
+          headers: { 'Accept': 'application/vnd.github+json' }
+        })
+          .then(function (res) { return res.ok ? res.json() : null; })
+          .then(function (data) {
+            if (data && data.files && data.files['electro_config.json'] && data.files['electro_config.json'].content) {
+              const remote = JSON.parse(data.files['electro_config.json'].content);
+              if (remote && remote.brand) {
+                remote.cloud = { binId: gistId, apiKey: savedKey };
+                if (!Array.isArray(remote.techSpecs) || remote.techSpecs.length === 0) {
+                  remote.techSpecs = deepClone(DEFAULT_CONFIG.techSpecs);
+                }
+                if (!Array.isArray(remote.steps) || remote.steps.length === 0) {
+                  remote.steps = deepClone(DEFAULT_CONFIG.steps);
+                }
+                if (Array.isArray(remote.cases)) {
+                  remote.cases = remote.cases.map(function (c, idx) {
+                    const defCase = DEFAULT_CONFIG.cases[idx] || DEFAULT_CONFIG.cases[0];
+                    return {
+                      ...defCase,
+                      ...c,
+                      badge: c.badge || defCase.badge,
+                      equipment: c.equipment || defCase.equipment,
+                      checklist: Array.isArray(c.checklist) && c.checklist.length > 0 ? c.checklist : defCase.checklist
+                    };
+                  });
+                }
+                self.saveConfig(remote, true);
+                return true;
+              }
+            }
+            return false;
+          })
+          .catch(function () { return false; });
+      },
+
+      resetConfig: function () {
+        const current = this.getConfig();
+        const preservedCloud = current.cloud || DEFAULT_CONFIG.cloud;
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+          localStorage.removeItem(LEGACY_KEY);
+        } catch (e) {}
+        const fresh = deepClone(DEFAULT_CONFIG);
+        fresh.cloud = preservedCloud;
+        this.saveConfig(fresh);
+        return fresh;
+      },
+
+      getRequests: function () {
+        const cfg = this.getConfig();
+        return Array.isArray(cfg.requests) ? cfg.requests : [];
+      },
+
+      addRequest: function (req) {
+        const cfg = this.getConfig();
+        if (!Array.isArray(cfg.requests)) cfg.requests = [];
+        const item = {
+          id: 'req_' + Date.now(),
+          createdAt: new Date().toLocaleString('ru-RU'),
+          name: req.name || 'Без имени',
+          phone: req.phone || '',
+          channel: req.channel || 'whatsapp',
+          comment: req.comment || ''
+        };
+        cfg.requests.unshift(item);
+        this.saveConfig(cfg);
+        return item;
+      },
+
+      deleteRequest: function (id) {
+        const cfg = this.getConfig();
+        cfg.requests = (cfg.requests || []).filter(function (r) { return r.id !== id; });
+        this.saveConfig(cfg);
+      },
+
+      clearRequests: function () {
+        const cfg = this.getConfig();
+        cfg.requests = [];
+        try { localStorage.removeItem(REQUESTS_KEY); } catch (e) {}
+        this.saveConfig(cfg);
+      },
+
+      getReviews: function (onlyApproved) {
+        const all = this.getConfig().reviews || [];
+        return onlyApproved ? all.filter(function (r) { return r.approved !== false; }) : all;
+      },
+
+      addReview: function (reviewObj) {
+        const cfg = this.getConfig();
+        const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+        const now = new Date();
+        const defaultDate = now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
+        const item = {
+          id: 'rev_' + Date.now(),
+          name: (reviewObj.name || 'Клиент').trim(),
+          district: (reviewObj.district || 'Город').trim(),
+          service: (reviewObj.service || 'Электромонтаж').trim(),
+          date: (reviewObj.date || defaultDate).trim(),
+          rating: Math.min(5, Math.max(1, Number(reviewObj.rating) || 5)),
+          text: (reviewObj.text || '').trim(),
+          approved: reviewObj.approved === true
+        };
+        cfg.reviews.unshift(item);
+        this.saveConfig(cfg);
+        return item;
+      },
+
+      approveReview: function (id) {
+        const cfg = this.getConfig();
+        cfg.reviews = cfg.reviews.map(function (r) { if (r.id === id) r.approved = true; return r; });
+        this.saveConfig(cfg);
+      },
+
+      deleteReview: function (id) {
+        const cfg = this.getConfig();
+        cfg.reviews = cfg.reviews.filter(function (r) { return r.id !== id; });
+        this.saveConfig(cfg);
+      },
+
+      exportJSON: function () { return JSON.stringify(this.getConfig(), null, 2); },
+
+      importJSON: function (jsonString) {
+        const parsed = JSON.parse(jsonString);
+        if (!parsed || !parsed.brand || !parsed.services) throw new Error('Некорректный JSON');
+        this.saveConfig(parsed);
+        return parsed;
+      }
+    };
+
+    window.Store = Store;
+
+    /* ==========================================================================
+       КЛИЕНТСКАЯ ЛОГИКА И КАЛЬКУЛЯТОР
+       ========================================================================== */
+    const calcState = {
+      works: {},
+      materials: {},
+      matMode: 'own',
+      urgent: false,
+      selectedRating: 5,
+      activePreset: ''
+    };
+
+    // Готовые сценарии (пресеты) для 1-клик расчёта
+    const PRESET_SCENARIOS = {
+      flat1: {
+        works: { s1: 180, s2: 28, s3: 6, s5: 18, s6: 22 },
+        materials: { m1: 120, m2: 60, m3: 34, m4: 10, m5: 1 }
+      },
+      flat2: {
+        works: { s1: 360, s2: 48, s3: 10, s5: 28, s6: 38 },
+        materials: { m1: 240, m2: 120, m3: 58, m4: 16, m5: 1 }
+      },
+      kitchen: {
+        works: { s1: 35, s2: 9, s6: 8, s8: 2 },
+        materials: { m1: 35, m3: 9, m4: 3 }
+      },
+      shield: {
+        works: { s5: 24 },
+        materials: { m4: 12, m5: 1 }
+      }
+    };
+
+    const SERVICE_ICONS = {
+      cable: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9h16M4 15h16M8 5v4M16 15v4"/></svg>',
+      socket: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9.5" cy="12" r="1.5" fill="currentColor"/><circle cx="14.5" cy="12" r="1.5" fill="currentColor"/></svg>',
+      switch: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="3"/><line x1="12" y1="7" x2="12" y2="17"/></svg>',
+      lamp: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>',
+      shield: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M13 8l-3 5h4l-3 5"/></svg>',
+      drill: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4l6 6-8 8-6-6 8-8zM4 20l4-4"/></svg>',
+      search: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M11 7l-2 4h4l-2 4"/></svg>',
+      stove: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="2"/><circle cx="15.5" cy="8.5" r="2"/><rect x="6" y="14" width="12" height="4" rx="1"/></svg>'
+    };
+
+    function formatRub(num) {
+      return Math.round(Number(num) || 0).toLocaleString('ru-RU') + ' ₽';
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      if (!t) return;
+      t.textContent = msg;
+      t.classList.add('is-visible');
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(function () {
+        t.classList.remove('is-visible');
+      }, 2800);
+    }
+
+    function copyTextSafe(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(function () {});
+        return;
+      }
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      } catch (e) {}
+    }
+
+    let confirmCallback = null;
+    function openConfirmModal(title, text, onConfirm) {
+      setText('confirm-modal-title', title);
+      setText('confirm-modal-text', text);
+      confirmCallback = onConfirm;
+      document.getElementById('confirm-modal').classList.add('is-open');
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function setText(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val || '';
+    }
+
+    function setHtml(id, html) {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = html || '';
+    }
+
+    function buildMessengerButtons(contacts) {
+      const items = [];
+      if (contacts.telegram && contacts.telegram.trim()) {
+        items.push(`<a href="${escapeHtml(contacts.telegram)}" target="_blank" rel="noopener" class="btn-msg btn-tg"><svg><use href="#i-tg"/></svg><span>Telegram</span></a>`);
+      }
+      if (contacts.whatsapp && contacts.whatsapp.trim()) {
+        items.push(`<a href="${escapeHtml(contacts.whatsapp)}" target="_blank" rel="noopener" class="btn-msg btn-wa"><svg><use href="#i-wa"/></svg><span>WhatsApp</span></a>`);
+      }
+      if (contacts.max && contacts.max.trim()) {
+        items.push(`<a href="${escapeHtml(contacts.max)}" target="_blank" rel="noopener" class="btn-msg btn-max"><svg><use href="#i-max"/></svg><span>MAX</span></a>`);
+      }
+      if (contacts.vk && contacts.vk.trim()) {
+        items.push(`<a href="${escapeHtml(contacts.vk)}" target="_blank" rel="noopener" class="btn-msg btn-vk"><svg><use href="#i-vk"/></svg><span>ВКонтакте</span></a>`);
+      }
+      return items.join('');
+    }
+
+    function renderSite() {
+      const cfg = window.Store.getConfig();
+      const b = cfg.brand;
+      const c = cfg.contacts;
+
+      const pageTitle = (cfg.seo.titleTemplate || 'Электромонтаж в г. {city} — {brandName}')
+        .replace('{city}', b.city)
+        .replace('{brandName}', b.name);
+      document.title = pageTitle;
+
+      setText('hdr-brand', b.name);
+      setText('mob-brand', b.name);
+      setText('ftr-brand', b.name);
+      setText('hdr-city', b.city);
+      setText('ftr-city', b.city);
+      setText('hero-region', b.region);
+      setText('hero-tagline', b.tagline);
+      setText('hero-master', b.masterName);
+      if (b.heroSubtitle) setText('hero-subtitle-txt', b.heroSubtitle);
+      if (b.heroCardCaption) setText('hero-card-caption', b.heroCardCaption);
+
+      setText('trust-exp', b.experienceYears);
+      setText('trust-war', b.warrantyYears);
+      setText('trust-arr', b.arrivalTime);
+      setText('trust-norm', b.normative);
+
+      const urgPct = Math.max(0, Number(b.urgentMultiplier) || 30);
+      setText('urg-fast', `Срочно сегодня (+${urgPct}%)`);
+      setText('sum-urgent-lbl', `Срочность (+${urgPct}%):`);
+
+      const cleanTel = 'tel:' + (c.phoneClean || c.phone.replace(/[^\d+]/g, ''));
+      const hdrPhoneBtn = document.getElementById('hdr-phone-btn');
+      if (hdrPhoneBtn) hdrPhoneBtn.setAttribute('href', cleanTel);
+      setText('hdr-phone-txt', c.phone);
+
+      const cntPhoneLink = document.getElementById('cnt-phone-link');
+      if (cntPhoneLink) {
+        cntPhoneLink.setAttribute('href', cleanTel);
+        cntPhoneLink.textContent = c.phone;
+      }
+
+      setText('cnt-schedule', b.schedule);
+      setText('cnt-region', b.region);
+      setText('cnt-districts', b.districts);
+
+      const emailEl = document.getElementById('cnt-email');
+      if (emailEl) {
+        emailEl.textContent = c.email;
+        emailEl.setAttribute('href', 'mailto:' + c.email);
+      }
+
+      renderTechSpecs(cfg.techSpecs || []);
+
+      const msgHtml = buildMessengerButtons(c);
+      setHtml('hero-messengers', msgHtml);
+      setHtml('mob-messengers', msgHtml);
+      setHtml('contacts-messengers', msgHtml);
+      setHtml('fab-menu', msgHtml + `<a href="${escapeHtml(cleanTel)}" class="btn-msg" style="background:var(--amber);color:#090A0F;border:none;"><svg><use href="#i-phone"/></svg><span>Позвонить</span></a>`);
+
+      renderServices(cfg.services || []);
+      renderCalculatorInputs(cfg);
+      recalcEstimate();
+      renderCases(cfg.cases || []);
+      renderSteps(cfg.steps || []);
+      renderReviews();
+      renderFaq(cfg.faqs || []);
+    }
+
+    function renderTechSpecs(specs) {
+      const box = document.getElementById('hero-tech-specs');
+      if (!box) return;
+      box.innerHTML = specs.map(function (sp) {
+        return `
+          <div class="spec-slot">
+            <div class="spec-slot-top">
+              <span class="spec-code-badge">${escapeHtml(sp.code)}</span>
+              <span class="spec-status-ok">✓ НОРМА</span>
+            </div>
+            <div style="font-weight:700;font-size:0.92rem;color:#FFFFFF;margin-bottom:2px;">${escapeHtml(sp.title)}</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);">${escapeHtml(sp.desc)}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderServices(services) {
+      const grid = document.getElementById('services-grid');
+      if (!grid) return;
+      const activeList = services.filter(function (s) { return s.active !== false; });
+
+      grid.innerHTML = activeList.map(function (s) {
+        const iconSvg = SERVICE_ICONS[s.icon] || SERVICE_ICONS.shield;
+        const inCartQty = Number(calcState.works[s.id]) || 0;
+        return `
+          <article class="bento-card service-card ${inCartQty > 0 ? 'in-cart' : ''}">
+            <div>
+              <div class="service-card-top">
+                <div class="service-icon-box" aria-hidden="true">${iconSvg}</div>
+                <span class="service-unit-tag">за ${escapeHtml(s.unit)}</span>
+              </div>
+              <h3 class="service-title">${escapeHtml(s.name)}</h3>
+              <p class="service-desc">${escapeHtml(s.desc || '')}</p>
+            </div>
+            <div class="service-footer">
+              <div>
+                <div style="font-size:0.7rem;color:var(--text-secondary);">Тариф</div>
+                <div class="service-price">от ${formatRub(s.price)}</div>
+              </div>
+              <button type="button" class="btn ${inCartQty > 0 ? 'btn-primary' : 'btn-glass'} js-pick-service" data-id="${escapeHtml(s.id)}" style="min-height:36px;padding:6px 12px;font-size:0.8rem;">
+                ${inCartQty > 0 ? '✓ В смете (' + inCartQty + ')' : '+ В смету'}
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderCalculatorInputs(cfg) {
+      const worksBox = document.getElementById('calc-works-list');
+      const matsBox = document.getElementById('calc-materials-box');
+      if (!worksBox || !matsBox) return;
+
+      const activeWorks = (cfg.services || []).filter(function (s) { return s.active !== false; });
+      worksBox.innerHTML = activeWorks.map(function (s) {
+        const qty = Number(calcState.works[s.id]) || 0;
+        return `
+          <div class="calc-row ${qty > 0 ? 'is-active' : ''}">
+            <div class="calc-row-info">
+              <div class="calc-row-title">${escapeHtml(s.name)}</div>
+              <div class="calc-row-meta">${formatRub(s.price)} / ${escapeHtml(s.unit)}</div>
+            </div>
+            <div class="stepper">
+              <button type="button" class="js-step" data-type="work" data-id="${escapeHtml(s.id)}" data-delta="-1" aria-label="Уменьшить">−</button>
+              <input type="number" min="0" max="9999" value="${qty}" class="js-qty-input" data-type="work" data-id="${escapeHtml(s.id)}" aria-label="${escapeHtml(s.name)}">
+              <button type="button" class="js-step" data-type="work" data-id="${escapeHtml(s.id)}" data-delta="1" aria-label="Увеличить">+</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const activeMats = (cfg.materials || []).filter(function (m) { return m.active !== false; });
+      matsBox.innerHTML = activeMats.map(function (m) {
+        const qty = Number(calcState.materials[m.id]) || 0;
+        return `
+          <div class="calc-row ${qty > 0 ? 'is-active' : ''}">
+            <div class="calc-row-info">
+              <div class="calc-row-title">${escapeHtml(m.name)}</div>
+              <div class="calc-row-meta">${formatRub(m.price)} / ${escapeHtml(m.unit)}</div>
+            </div>
+            <div class="stepper">
+              <button type="button" class="js-step" data-type="mat" data-id="${escapeHtml(m.id)}" data-delta="-1" aria-label="Уменьшить">−</button>
+              <input type="number" min="0" max="9999" value="${qty}" class="js-qty-input" data-type="mat" data-id="${escapeHtml(m.id)}" aria-label="${escapeHtml(m.name)}">
+              <button type="button" class="js-step" data-type="mat" data-id="${escapeHtml(m.id)}" data-delta="1" aria-label="Увеличить">+</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function recalcEstimate() {
+      const cfg = window.Store.getConfig();
+      const minOrder = Math.max(0, Number(cfg.brand.minOrder) || 2500);
+      const urgentPct = Math.max(0, Number(cfg.brand.urgentMultiplier) || 30);
+
+      let worksSum = 0;
+      let matsSum = 0;
+      const summaryLines = [];
+
+      (cfg.services || []).forEach(function (s) {
+        if (s.active === false) return;
+        const q = Math.max(0, Number(calcState.works[s.id]) || 0);
+        if (q > 0) {
+          const lineTotal = q * Number(s.price);
+          worksSum += lineTotal;
+          summaryLines.push({ title: `${s.name} (${q} ${s.unit})`, cost: lineTotal });
+        }
+      });
+
+      if (calcState.matMode === 'calc') {
+        (cfg.materials || []).forEach(function (m) {
+          if (m.active === false) return;
+          const q = Math.max(0, Number(calcState.materials[m.id]) || 0);
+          if (q > 0) {
+            const lineTotal = q * Number(m.price);
+            matsSum += lineTotal;
+            summaryLines.push({ title: `[Мат.] ${m.name} (${q} ${m.unit})`, cost: lineTotal });
+          }
+        });
+      }
+
+      const urgentAdd = calcState.urgent ? Math.round(worksSum * (urgentPct / 100)) : 0;
+      let rawTotal = worksSum + matsSum + urgentAdd;
+      let appliedMinOrder = false;
+
+      if (rawTotal > 0 && rawTotal < minOrder) {
+        rawTotal = minOrder;
+        appliedMinOrder = true;
+      }
+
+      const round50 = function (v) { return Math.round(v / 50) * 50; };
+      const lowRange = rawTotal > 0 ? round50(rawTotal * 0.85) : 0;
+      const highRange = rawTotal > 0 ? round50(rawTotal * 1.15) : 0;
+
+      const linesEl = document.getElementById('calc-summary-lines');
+      if (linesEl) {
+        if (summaryLines.length === 0) {
+          linesEl.innerHTML = `<div style="color:var(--text-secondary);padding:10px 0;">Выберите готовый сценарий выше или нажмите «+» напротив нужных работ.</div>`;
+        } else {
+          linesEl.innerHTML = summaryLines.map(function (ln) {
+            return `<div class="summary-line"><span>${escapeHtml(ln.title)}</span><strong class="num-mono" style="color:#FFFFFF;">${formatRub(ln.cost)}</strong></div>`;
+          }).join('');
+        }
+      }
+
+      setText('sum-works', formatRub(worksSum));
+      setText('sum-materials', calcState.matMode === 'calc' ? formatRub(matsSum) : 'Свои (0 ₽)');
+
+      const urgRow = document.getElementById('sum-urgent-row');
+      if (urgRow) {
+        urgRow.classList.toggle('is-hidden', !calcState.urgent);
+        setText('sum-urgent', '+' + formatRub(urgentAdd));
+      }
+
+      const minRow = document.getElementById('sum-min-note');
+      if (minRow) {
+        minRow.classList.toggle('is-hidden', !appliedMinOrder);
+        setText('sum-min-val', formatRub(minOrder));
+      }
+
+      const rangeStr = rawTotal > 0 ? `от ${formatRub(lowRange)} до ${formatRub(highRange)}` : '0 ₽';
+      setText('sum-total-range', rangeStr);
+      setText('mob-dock-range', rangeStr);
+
+      const mobDock = document.getElementById('mobile-calc-dock');
+      if (mobDock) {
+        mobDock.classList.toggle('is-visible', rawTotal > 0);
+      }
+
+      calcState._formattedText = summaryLines.length > 0
+        ? [
+            'Расчёт из онлайн-калькулятора:',
+            ...summaryLines.map(function (l) { return `• ${l.title} — ${formatRub(l.cost)}`; }),
+            calcState.urgent ? `• Срочный выезд (+${urgentPct}%): +${formatRub(urgentAdd)}` : null,
+            appliedMinOrder ? `• Учтён минимальный заказ: ${formatRub(minOrder)}` : null,
+            `Итого ориентир: ${rangeStr}`
+          ].filter(Boolean).join('\n')
+        : '';
+    }
+
+    function renderCases(cases) {
+      const grid = document.getElementById('cases-grid');
+      if (!grid) return;
+
+      grid.innerHTML = cases.map(function (c, idx) {
+        const photoHtml = c.customPhoto
+          ? `<div class="case-photo-box"><img src="${escapeHtml(c.customPhoto)}" alt="${escapeHtml(c.title)}" loading="lazy"></div>`
+          : '';
+
+        const checklistArr = Array.isArray(c.checklist) ? c.checklist : [];
+        const checklistHtml = checklistArr.length > 0
+          ? `<ul class="case-checklist">${checklistArr.map(function (item) {
+              return `<li><span class="case-check-mark">✓</span><span>${escapeHtml(item)}</span></li>`;
+            }).join('')}</ul>`
+          : '';
+
+        return `
+          <article class="bento-card case-card">
+            <div>
+              ${photoHtml}
+              <div class="case-passport-bar">
+                <span class="case-badge">${escapeHtml(c.badge || ('Объект #' + (idx + 1)))}</span>
+                <span class="case-equip">${escapeHtml(c.equipment || 'ПУЭ-7 / ГОСТ')}</span>
+              </div>
+              <div class="case-body">
+                <div>
+                  <h3 style="font-size:1.12rem;margin-bottom:8px;color:#FFFFFF;">${escapeHtml(c.title)}</h3>
+                  <p style="font-size:0.88rem;color:var(--text-secondary);">${escapeHtml(c.done)}</p>
+                  ${checklistHtml}
+                </div>
+                <div class="case-meta">
+                  <div>
+                    <div style="font-size:0.74rem;color:var(--text-secondary);">Срок: ${escapeHtml(c.duration)}</div>
+                    <div class="num-mono" style="font-size:1.18rem;font-weight:800;color:var(--amber-bright);">${escapeHtml(c.cost)}</div>
+                  </div>
+                  <button type="button" class="btn btn-glass js-want-same" data-title="${escapeHtml(c.title)}" style="min-height:38px;padding:7px 14px;font-size:0.82rem;">
+                    Хочу так же →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderSteps(steps) {
+      const grid = document.getElementById('steps-grid');
+      if (!grid) return;
+
+      grid.innerHTML = steps.map(function (st, idx) {
+        return `
+          <div class="bento-card step-card">
+            <span class="step-num-badge">ЭТАП 0${idx + 1}</span>
+            <h3 style="font-size:1.04rem;color:#FFFFFF;margin-bottom:6px;">${escapeHtml(st.title)}</h3>
+            <p style="font-size:0.86rem;color:var(--text-secondary);">${escapeHtml(st.desc)}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderReviews() {
+      const approved = window.Store.getReviews(true);
+      const grid = document.getElementById('reviews-grid');
+      if (!grid) return;
+
+      const total = approved.length;
+      const avg = total > 0
+        ? (approved.reduce(function (acc, r) { return acc + (Number(r.rating) || 5); }, 0) / total).toFixed(1)
+        : '5.0';
+
+      setText('rev-avg-score', `★ ${avg} / 5.0`);
+      setText('rev-total-count', `На основе ${total} проверенных отзывов`);
+
+      grid.innerHTML = approved.map(function (r) {
+        const ratingNum = Math.min(5, Math.max(1, Number(r.rating) || 5));
+        const starsStr = '★'.repeat(ratingNum) + '☆'.repeat(5 - ratingNum);
+        return `
+          <article class="bento-card review-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px;">
+              <div>
+                <strong style="color:#FFFFFF;">${escapeHtml(r.name)}</strong>
+                <div style="font-size:0.78rem;color:var(--text-secondary);">${escapeHtml(r.district)} • ${escapeHtml(r.service)}</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;">
+                <div class="stars" aria-label="Рейтинг ${ratingNum} из 5">${starsStr}</div>
+                <div style="font-size:0.72rem;color:var(--text-secondary);">${escapeHtml(r.date)}</div>
+              </div>
+            </div>
+            <p style="font-size:0.88rem;color:var(--text-main);">${escapeHtml(r.text)}</p>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderFaq(faqs) {
+      const box = document.getElementById('faq-list');
+      if (!box) return;
+
+      box.innerHTML = faqs.map(function (f, idx) {
+        return `
+          <div class="bento-card faq-item ${idx === 0 ? 'is-open' : ''}">
+            <button type="button" class="faq-question" aria-expanded="${idx === 0 ? 'true' : 'false'}">
+              <span>${escapeHtml(f.q)}</span>
+              <span style="color:var(--amber-bright);font-size:1.25rem;">${idx === 0 ? '−' : '+'}</span>
+            </button>
+            <div class="faq-answer">${escapeHtml(f.a)}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function initPhoneMask() {
+      const input = document.getElementById('lead-phone');
+      if (!input) return;
+
+      input.addEventListener('input', function (e) {
+        let digits = e.target.value.replace(/\D/g, '');
+        if (!digits) {
+          e.target.value = '';
+          return;
+        }
+        if (digits[0] === '8' || digits[0] === '7') {
+          digits = digits.substring(1);
+        }
+        digits = digits.substring(0, 10);
+
+        let formatted = '+7';
+        if (digits.length > 0) formatted += ' (' + digits.substring(0, 3);
+        if (digits.length >= 4) formatted += ') ' + digits.substring(3, 6);
+        if (digits.length >= 7) formatted += '-' + digits.substring(6, 8);
+        if (digits.length >= 9) formatted += '-' + digits.substring(8, 10);
+        e.target.value = formatted;
+      });
+    }
+
+    function initScrollLaser() {
+      const bar = document.getElementById('scroll-laser-bar');
+      if (!bar) return;
+      function updateLaser() {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const p = Math.min(1, Math.max(0.02, scrollTop / maxScroll));
+        bar.style.transform = `scaleX(${p.toFixed(4)})`;
+      }
+      window.addEventListener('scroll', updateLaser, { passive: true });
+      window.addEventListener('resize', updateLaser, { passive: true });
+      updateLaser();
+    }
+
+    function transferEstimateToOrder() {
+      const commentEl = document.getElementById('lead-comment');
+      if (commentEl && calcState._formattedText) {
+        commentEl.value = calcState._formattedText;
+      }
+      document.getElementById('request-section').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(function () {
+        document.getElementById('lead-name').focus();
+      }, 450);
+    }
+
+    /* ==========================================================================
+       ЛОГИКА ВСТРОЕННОЙ CMS АДМИН-ПАНЕЛИ
+       ========================================================================== */
+    let workingConfig = null;
+    const ICON_OPTIONS = [
+      { val: 'cable', label: 'Кабель / Проводка' },
+      { val: 'socket', label: 'Розетка / Точка' },
+      { val: 'switch', label: 'Выключатель' },
+      { val: 'lamp', label: 'Светильник / Люстра' },
+      { val: 'shield', label: 'Электрощит / Автоматы' },
+      { val: 'drill', label: 'Штробление / Перфоратор' },
+      { val: 'search', label: 'Диагностика / Поиск КЗ' },
+      { val: 'stove', label: 'Варочная / Техника' }
+    ];
+
+    function setVal(id, v) {
+      const el = document.getElementById(id);
+      if (el) el.value = v !== undefined && v !== null ? v : '';
+    }
+
+    function getVal(id) {
+      const el = document.getElementById(id);
+      return el ? el.value.trim() : '';
+    }
+
+    function openAdminOverlay() {
+      document.getElementById('admin-overlay').classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      checkAdminAuth();
+    }
+
+    function closeAdminOverlay() {
+      document.getElementById('admin-overlay').classList.remove('is-open');
+      document.body.style.overflow = '';
+      if (window.location.hash === '#admin') {
+        try { history.replaceState(null, '', window.location.pathname + window.location.search); } catch (e) {}
+      }
+    }
+
+    function checkAdminAuth() {
+      let isLogged = false;
+      try { isLogged = sessionStorage.getItem(SESSION_KEY) === '1'; } catch (e) {}
+      document.getElementById('login-screen').classList.toggle('is-hidden', isLogged);
+      document.getElementById('admin-app').classList.toggle('is-hidden', !isLogged);
+      document.getElementById('admin-logout-btn').classList.toggle('is-hidden', !isLogged);
+      if (isLogged) {
+        loadConfigToAdminForm();
+      }
+    }
+
+    function loadConfigToAdminForm() {
+      workingConfig = window.Store.getConfig();
+      const b = workingConfig.brand;
+      const c = workingConfig.contacts;
+
+      setVal('b-name', b.name);
+      setVal('b-master', b.masterName);
+      setVal('b-city', b.city);
+      setVal('b-region', b.region);
+      setVal('b-tagline', b.tagline);
+      setVal('b-hero-subtitle', b.heroSubtitle || '');
+      setVal('b-hero-caption', b.heroCardCaption || '');
+      setVal('b-districts', b.districts);
+      setVal('b-schedule', b.schedule);
+      setVal('b-exp', b.experienceYears);
+      setVal('b-war', b.warrantyYears);
+      setVal('b-arr', b.arrivalTime);
+      setVal('b-norm', b.normative);
+      setVal('b-minorder', b.minOrder);
+      setVal('b-urgent-pct', b.urgentMultiplier !== undefined ? b.urgentMultiplier : 30);
+
+      setVal('c-phone', c.phone);
+      setVal('c-email', c.email);
+      setVal('c-tg', c.telegram);
+      setVal('c-wa', c.whatsapp);
+      setVal('c-max', c.max);
+      setVal('c-vk', c.vk);
+      setVal('c-bot-token', c.tgBotToken || '');
+      setVal('c-chat-id', c.tgChatId || '');
+
+      setVal('set-new-pass', workingConfig.adminPassword || 'admin');
+      setVal('cloud-api-key', (workingConfig.cloud && workingConfig.cloud.apiKey) || '');
+      setVal('cloud-bin-id', (workingConfig.cloud && workingConfig.cloud.binId) || '');
+
+      renderAdminServices();
+      renderAdminMaterials();
+      renderAdminCases();
+      renderAdminSteps();
+      renderAdminFaqs();
+      renderAdminReviews();
+      renderAdminRequests();
+    }
+
+    function renderAdminServices() {
+      const box = document.getElementById('admin-services-list');
+      if (!box) return;
+      box.innerHTML = (workingConfig.services || []).map(function (s, idx) {
+        const iconOpts = ICON_OPTIONS.map(function (o) {
+          return `<option value="${o.val}" ${s.icon === o.val ? 'selected' : ''}>${o.label}</option>`;
+        }).join('');
+        return `
+          <div class="bento-card" style="padding:14px;background:var(--card-inset);">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:8px;">
+              <input type="text" class="input js-srv-name" data-idx="${idx}" value="${escapeHtml(s.name)}" placeholder="Название услуги">
+              <input type="text" class="input js-srv-unit" data-idx="${idx}" value="${escapeHtml(s.unit)}" placeholder="Ед. изм.">
+              <input type="number" class="input js-srv-price" data-idx="${idx}" value="${Number(s.price) || 0}" placeholder="Цена ₽">
+              <select class="input js-srv-icon" data-idx="${idx}">${iconOpts}</select>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+              <input type="text" class="input js-srv-desc" data-idx="${idx}" value="${escapeHtml(s.desc || '')}" placeholder="Описание услуги" style="flex:1;min-width:200px;">
+              <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:var(--text-secondary);cursor:pointer;">
+                <input type="checkbox" class="js-srv-active" data-idx="${idx}" ${s.active !== false ? 'checked' : ''} style="accent-color:var(--amber);">
+                Активна
+              </label>
+              <button type="button" class="btn btn-glass js-del-srv" data-idx="${idx}" style="min-height:34px;padding:4px 10px;color:var(--danger);">✕</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAdminMaterials() {
+      const box = document.getElementById('admin-materials-list');
+      if (!box) return;
+      box.innerHTML = (workingConfig.materials || []).map(function (m, idx) {
+        return `
+          <div style="display:grid;grid-template-columns:2fr 80px 100px auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border-subtle);">
+            <input type="text" class="input js-mat-name" data-idx="${idx}" value="${escapeHtml(m.name)}" placeholder="Материал">
+            <input type="text" class="input js-mat-unit" data-idx="${idx}" value="${escapeHtml(m.unit)}" placeholder="Ед.">
+            <input type="number" class="input js-mat-price" data-idx="${idx}" value="${Number(m.price) || 0}" placeholder="Цена ₽">
+            <button type="button" class="btn btn-glass js-del-mat" data-idx="${idx}" style="min-height:36px;padding:6px 10px;color:var(--danger);">✕</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAdminCases() {
+      const box = document.getElementById('admin-cases-list');
+      if (!box) return;
+      box.innerHTML = (workingConfig.cases || []).map(function (c, idx) {
+        const checklistStr = Array.isArray(c.checklist) ? c.checklist.join('\n') : '';
+        return `
+          <div class="bento-card" style="padding:16px;background:var(--card-inset);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <strong style="color:var(--amber-bright);">Паспорт объекта #${idx + 1}</strong>
+              <button type="button" class="btn btn-glass js-del-case" data-idx="${idx}" style="min-height:30px;padding:4px 10px;font-size:0.78rem;color:var(--danger);">Удалить ✕</button>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:8px;">
+              <input type="text" class="input js-case-badge" data-idx="${idx}" value="${escapeHtml(c.badge || '')}" placeholder="Бейдж (Коттедж 180 м² • 15 кВт)">
+              <input type="text" class="input js-case-equip" data-idx="${idx}" value="${escapeHtml(c.equipment || '')}" placeholder="Оборудование (Щит 48 мод.)">
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:8px;">
+              <input type="text" class="input js-case-title" data-idx="${idx}" value="${escapeHtml(c.title)}" placeholder="Название работы">
+              <input type="text" class="input js-case-dur" data-idx="${idx}" value="${escapeHtml(c.duration)}" placeholder="Срок">
+              <input type="text" class="input js-case-cost" data-idx="${idx}" value="${escapeHtml(c.cost)}" placeholder="Стоимость">
+            </div>
+            <textarea class="textarea js-case-done" data-idx="${idx}" rows="2" placeholder="Описание задачи" style="margin-bottom:8px;">${escapeHtml(c.done)}</textarea>
+            <textarea class="textarea js-case-checklist" data-idx="${idx}" rows="3" placeholder="Чек-лист проверок (каждый пункт с новой строки)" style="margin-bottom:8px;">${escapeHtml(checklistStr)}</textarea>
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;">
+              <label class="btn btn-glass" style="min-height:34px;padding:5px 12px;font-size:0.8rem;cursor:pointer;">
+                📷 Загрузить реальное фото
+                <input type="file" accept="image/*" class="js-case-photo" data-idx="${idx}" style="display:none;">
+              </label>
+              ${c.customPhoto ? `<button type="button" class="btn btn-glass js-clear-photo" data-idx="${idx}" style="min-height:34px;padding:5px 12px;font-size:0.8rem;">Убрать фото</button><span style="color:var(--emerald);font-size:0.78rem;">✓ Фото загружено</span>` : `<span style="color:var(--text-secondary);font-size:0.78rem;">Отображается как строгий инженерный паспорт</span>`}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAdminSteps() {
+      const box = document.getElementById('admin-steps-list');
+      if (!box) return;
+      box.innerHTML = (workingConfig.steps || []).map(function (st, idx) {
+        return `
+          <div style="display:grid;grid-template-columns:1fr 2fr auto;gap:8px;align-items:center;background:var(--card-inset);padding:10px;border-radius:10px;">
+            <input type="text" class="input js-step-title" data-idx="${idx}" value="${escapeHtml(st.title)}" placeholder="Этап">
+            <input type="text" class="input js-step-desc" data-idx="${idx}" value="${escapeHtml(st.desc)}" placeholder="Описание">
+            <button type="button" class="btn btn-glass js-del-step" data-idx="${idx}" style="min-height:36px;padding:6px 10px;color:var(--danger);">✕</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAdminFaqs() {
+      const box = document.getElementById('admin-faqs-list');
+      if (!box) return;
+      box.innerHTML = (workingConfig.faqs || []).map(function (f, idx) {
+        return `
+          <div class="bento-card" style="padding:14px;background:var(--card-inset);">
+            <div style="display:flex;gap:8px;margin-bottom:8px;">
+              <input type="text" class="input js-faq-q" data-idx="${idx}" value="${escapeHtml(f.q)}" placeholder="Вопрос">
+              <button type="button" class="btn btn-glass js-del-faq" data-idx="${idx}" style="min-height:36px;padding:6px 10px;color:var(--danger);">✕</button>
+            </div>
+            <textarea class="textarea js-faq-a" data-idx="${idx}" rows="2" placeholder="Ответ">${escapeHtml(f.a)}</textarea>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAdminReviews() {
+      const box = document.getElementById('admin-reviews-list');
+      if (!box) return;
+      box.innerHTML = (workingConfig.reviews || []).map(function (r, idx) {
+        return `
+          <div class="bento-card" style="padding:14px;background:var(--card-inset);">
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+              <div style="display:flex;flex-wrap:wrap;gap:6px;flex:1;">
+                <input type="text" class="input js-rev-name" data-idx="${idx}" value="${escapeHtml(r.name)}" style="max-width:150px;padding:6px 10px;">
+                <input type="text" class="input js-rev-district" data-idx="${idx}" value="${escapeHtml(r.district)}" style="max-width:140px;padding:6px 10px;">
+                <input type="text" class="input js-rev-service" data-idx="${idx}" value="${escapeHtml(r.service)}" style="max-width:170px;padding:6px 10px;">
+                <input type="text" class="input js-rev-date" data-idx="${idx}" value="${escapeHtml(r.date)}" style="max-width:130px;padding:6px 10px;">
+                <select class="input js-rev-rating" data-idx="${idx}" style="max-width:80px;padding:6px;">
+                  <option value="5" ${Number(r.rating) === 5 ? 'selected' : ''}>5 ★</option>
+                  <option value="4" ${Number(r.rating) === 4 ? 'selected' : ''}>4 ★</option>
+                  <option value="3" ${Number(r.rating) === 3 ? 'selected' : ''}>3 ★</option>
+                </select>
+              </div>
+              <div style="display:flex;gap:6px;">
+                ${r.approved === false ? `<button type="button" class="btn btn-primary js-rev-approve" data-id="${escapeHtml(r.id)}" style="min-height:32px;padding:4px 10px;font-size:0.78rem;">Одобрить</button>` : ''}
+                <button type="button" class="btn btn-glass js-rev-del" data-id="${escapeHtml(r.id)}" style="min-height:32px;padding:4px 10px;font-size:0.78rem;color:var(--danger);">Удалить</button>
+              </div>
+            </div>
+            <textarea class="textarea js-rev-text" data-idx="${idx}" rows="2">${escapeHtml(r.text)}</textarea>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAdminRequests() {
+      const box = document.getElementById('admin-requests-list');
+      if (!box) return;
+      const list = window.Store.getRequests();
+      if (list.length === 0) {
+        box.innerHTML = `<p style="color:var(--text-secondary);">Заявок пока нет.</p>`;
+        return;
+      }
+      box.innerHTML = `
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Дата</th><th>Клиент</th><th>Телефон</th><th>Канал</th><th>Смета / Комментарий</th><th></th></tr>
+            </thead>
+            <tbody>
+              ${list.map(function (r) {
+                const digits = (r.phone || '').replace(/\D/g, '');
+                return `
+                  <tr>
+                    <td>${escapeHtml(r.createdAt)}</td>
+                    <td><strong>${escapeHtml(r.name)}</strong></td>
+                    <td><a href="tel:+${digits}" style="color:var(--amber-bright);">${escapeHtml(r.phone)}</a></td>
+                    <td>${escapeHtml(r.channel)}</td>
+                    <td style="white-space:pre-wrap;font-size:0.8rem;max-width:340px;">${escapeHtml(r.comment)}</td>
+                    <td><button type="button" class="btn btn-glass js-req-del" data-id="${escapeHtml(r.id)}" style="min-height:28px;padding:3px 8px;color:var(--danger);">✕</button></td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function collectAdminDom() {
+      if (!workingConfig) workingConfig = window.Store.getConfig();
+      workingConfig.brand.name = getVal('b-name') || 'ЭлектроПрофи';
+      workingConfig.brand.masterName = getVal('b-master');
+      workingConfig.brand.city = getVal('b-city');
+      workingConfig.brand.region = getVal('b-region');
+      workingConfig.brand.tagline = getVal('b-tagline');
+      workingConfig.brand.heroSubtitle = getVal('b-hero-subtitle');
+      workingConfig.brand.heroCardCaption = getVal('b-hero-caption');
+      workingConfig.brand.districts = getVal('b-districts');
+      workingConfig.brand.schedule = getVal('b-schedule');
+      workingConfig.brand.experienceYears = getVal('b-exp');
+      workingConfig.brand.warrantyYears = getVal('b-war');
+      workingConfig.brand.arrivalTime = getVal('b-arr');
+      workingConfig.brand.normative = getVal('b-norm');
+      workingConfig.brand.minOrder = Number(getVal('b-minorder')) || 2500;
+      workingConfig.brand.urgentMultiplier = Number(getVal('b-urgent-pct')) || 30;
+
+      workingConfig.contacts.phone = getVal('c-phone');
+      workingConfig.contacts.phoneClean = '+' + getVal('c-phone').replace(/\D/g, '');
+      workingConfig.contacts.email = getVal('c-email');
+      workingConfig.contacts.telegram = getVal('c-tg');
+      workingConfig.contacts.whatsapp = getVal('c-wa');
+      workingConfig.contacts.max = getVal('c-max');
+      workingConfig.contacts.vk = getVal('c-vk');
+      workingConfig.contacts.tgBotToken = getVal('c-bot-token');
+      workingConfig.contacts.tgChatId = getVal('c-chat-id');
+
+      const newPass = getVal('set-new-pass');
+      if (newPass) workingConfig.adminPassword = newPass;
+
+      workingConfig.cloud = {
+        apiKey: getVal('cloud-api-key'),
+        binId: getVal('cloud-bin-id')
+      };
+
+      document.querySelectorAll('.js-srv-name').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.services[i]) workingConfig.services[i].name = el.value.trim();
+      });
+      document.querySelectorAll('.js-srv-unit').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.services[i]) workingConfig.services[i].unit = el.value.trim();
+      });
+      document.querySelectorAll('.js-srv-price').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.services[i]) workingConfig.services[i].price = Number(el.value) || 0;
+      });
+      document.querySelectorAll('.js-srv-icon').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.services[i]) workingConfig.services[i].icon = el.value;
+      });
+      document.querySelectorAll('.js-srv-desc').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.services[i]) workingConfig.services[i].desc = el.value.trim();
+      });
+      document.querySelectorAll('.js-srv-active').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.services[i]) workingConfig.services[i].active = el.checked;
+      });
+
+      document.querySelectorAll('.js-mat-name').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.materials[i]) workingConfig.materials[i].name = el.value.trim();
+      });
+      document.querySelectorAll('.js-mat-unit').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.materials[i]) workingConfig.materials[i].unit = el.value.trim();
+      });
+      document.querySelectorAll('.js-mat-price').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.materials[i]) workingConfig.materials[i].price = Number(el.value) || 0;
+      });
+
+      document.querySelectorAll('.js-case-badge').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.cases[i]) workingConfig.cases[i].badge = el.value.trim();
+      });
+      document.querySelectorAll('.js-case-equip').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.cases[i]) workingConfig.cases[i].equipment = el.value.trim();
+      });
+      document.querySelectorAll('.js-case-title').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.cases[i]) workingConfig.cases[i].title = el.value.trim();
+      });
+      document.querySelectorAll('.js-case-dur').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.cases[i]) workingConfig.cases[i].duration = el.value.trim();
+      });
+      document.querySelectorAll('.js-case-cost').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.cases[i]) workingConfig.cases[i].cost = el.value.trim();
+      });
+      document.querySelectorAll('.js-case-done').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.cases[i]) workingConfig.cases[i].done = el.value.trim();
+      });
+      document.querySelectorAll('.js-case-checklist').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.cases[i]) {
+          workingConfig.cases[i].checklist = el.value.split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+        }
+      });
+
+      document.querySelectorAll('.js-step-title').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.steps[i]) workingConfig.steps[i].title = el.value.trim();
+      });
+      document.querySelectorAll('.js-step-desc').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.steps[i]) workingConfig.steps[i].desc = el.value.trim();
+      });
+
+      document.querySelectorAll('.js-faq-q').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.faqs[i]) workingConfig.faqs[i].q = el.value.trim();
+      });
+      document.querySelectorAll('.js-faq-a').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.faqs[i]) workingConfig.faqs[i].a = el.value.trim();
+      });
+
+      document.querySelectorAll('.js-rev-name').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.reviews[i]) workingConfig.reviews[i].name = el.value.trim();
+      });
+      document.querySelectorAll('.js-rev-district').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.reviews[i]) workingConfig.reviews[i].district = el.value.trim();
+      });
+      document.querySelectorAll('.js-rev-service').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.reviews[i]) workingConfig.reviews[i].service = el.value.trim();
+      });
+      document.querySelectorAll('.js-rev-date').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.reviews[i]) workingConfig.reviews[i].date = el.value.trim();
+      });
+      document.querySelectorAll('.js-rev-rating').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.reviews[i]) workingConfig.reviews[i].rating = Number(el.value) || 5;
+      });
+      document.querySelectorAll('.js-rev-text').forEach(function (el) {
+        const i = Number(el.getAttribute('data-idx'));
+        if (workingConfig.reviews[i]) workingConfig.reviews[i].text = el.value.trim();
+      });
+    }
+
+    function saveAllAdmin() {
+      collectAdminDom();
+      window.Store.saveConfig(workingConfig);
+      showToast('✓ Изменения сохранены и отправлены в облако!');
+    }
+
+    function compressImageFile(file, callback) {
+      const reader = new FileReader();
+      reader.onload = function (ev) {
+        const img = new Image();
+        img.onload = function () {
+          const maxSide = 1200;
+          let w = img.width;
+          let h = img.height;
+          if (w > maxSide || h > maxSide) {
+            if (w > h) { h = Math.round((h * maxSide) / w); w = maxSide; }
+            else { w = Math.round((w * maxSide) / h); h = maxSide; }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          callback(canvas.toDataURL('image/jpeg', 0.75));
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Генерация готового монолитного index.html со вшитым конфигом и зашифрованным ключом
+    function downloadReadyHtmlFile() {
+      saveAllAdmin();
+      const exportCfg = window.Store.getConfig();
+      if (exportCfg.cloud && exportCfg.cloud.apiKey) {
+        exportCfg.cloud.apiKey = encodeToken(exportCfg.cloud.apiKey);
+      }
+      const replacementBlock = '/* __DEFAULT_CONFIG_START__ */\n    const DEFAULT_CONFIG = ' + JSON.stringify(exportCfg, null, 2) + ';\n    /* __DEFAULT_CONFIG_END__ */';
+      const fullDoc = '<!DOCTYPE html>\n' + document.documentElement.outerHTML.replace(
+        /\/\* __DEFAULT_CONFIG_START__ \*\/[\s\S]*?\/\* __DEFAULT_CONFIG_END__ \*\//,
+        replacementBlock
+      );
+      const blob = new Blob([fullDoc], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'index.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Готовый единый файл index.html скачан!');
+    }
+
+    /* ==========================================================================
+       ОБРАБОТЧИКИ СОБЫТИЙ
+       ========================================================================== */
+    function bindEvents() {
+      document.addEventListener('click', function (e) {
+        // Быстрые пресеты калькулятора
+        const presetBtn = e.target.closest('[data-preset]');
+        if (presetBtn) {
+          const key = presetBtn.getAttribute('data-preset');
+          const preset = PRESET_SCENARIOS[key];
+          if (preset) {
+            calcState.works = deepClone(preset.works || {});
+            calcState.materials = deepClone(preset.materials || {});
+            document.querySelectorAll('[data-preset]').forEach(function (b) {
+              b.classList.toggle('active', b === presetBtn);
+            });
+            renderServices(window.Store.getConfig().services || []);
+            renderCalculatorInputs(window.Store.getConfig());
+            recalcEstimate();
+            showToast('Применён сценарий: ' + presetBtn.textContent.trim());
+          }
+          return;
+        }
+
+        // Добавление услуги из карточки
+        const pickBtn = e.target.closest('.js-pick-service');
+        if (pickBtn) {
+          const id = pickBtn.getAttribute('data-id');
+          calcState.works[id] = (Number(calcState.works[id]) || 0) + 1;
+          renderServices(window.Store.getConfig().services || []);
+          renderCalculatorInputs(window.Store.getConfig());
+          recalcEstimate();
+          showToast('Услуга добавлена в смету');
+          return;
+        }
+
+        // Степперы +/- в калькуляторе
+        const stepBtn = e.target.closest('.js-step');
+        if (stepBtn) {
+          const type = stepBtn.getAttribute('data-type');
+          const id = stepBtn.getAttribute('data-id');
+          const delta = Number(stepBtn.getAttribute('data-delta')) || 0;
+          const dict = type === 'work' ? calcState.works : calcState.materials;
+          dict[id] = Math.max(0, (Number(dict[id]) || 0) + delta);
+          renderServices(window.Store.getConfig().services || []);
+          renderCalculatorInputs(window.Store.getConfig());
+          recalcEstimate();
+          return;
+        }
+
+        // Кнопка «Хочу так же» в паспортах объектов
+        const sameBtn = e.target.closest('.js-want-same');
+        if (sameBtn) {
+          const title = sameBtn.getAttribute('data-title');
+          const commentEl = document.getElementById('lead-comment');
+          if (commentEl) {
+            commentEl.value = `Здравствуйте! Интересует аналогичный объект: «${title}». Прошу сориентировать по стоимости и срокам.`;
+          }
+          document.getElementById('request-section').scrollIntoView({ behavior: 'smooth' });
+          setTimeout(function () { document.getElementById('lead-name').focus(); }, 450);
+          return;
+        }
+
+        // Аккордеон FAQ
+        const faqBtn = e.target.closest('.faq-question');
+        if (faqBtn) {
+          const item = faqBtn.parentElement;
+          const isOpen = item.classList.toggle('is-open');
+          faqBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          const sign = faqBtn.querySelector('span:last-child');
+          if (sign) sign.textContent = isOpen ? '−' : '+';
+          return;
+        }
+
+        // Удаление элементов в админке
+        const delSrv = e.target.closest('.js-del-srv');
+        if (delSrv) {
+          collectAdminDom();
+          workingConfig.services.splice(Number(delSrv.getAttribute('data-idx')), 1);
+          renderAdminServices();
+          return;
+        }
+        const delMat = e.target.closest('.js-del-mat');
+        if (delMat) {
+          collectAdminDom();
+          workingConfig.materials.splice(Number(delMat.getAttribute('data-idx')), 1);
+          renderAdminMaterials();
+          return;
+        }
+        const delCase = e.target.closest('.js-del-case');
+        if (delCase) {
+          collectAdminDom();
+          workingConfig.cases.splice(Number(delCase.getAttribute('data-idx')), 1);
+          renderAdminCases();
+          return;
+        }
+        const delStep = e.target.closest('.js-del-step');
+        if (delStep) {
+          collectAdminDom();
+          workingConfig.steps.splice(Number(delStep.getAttribute('data-idx')), 1);
+          renderAdminSteps();
+          return;
+        }
+        const delFaq = e.target.closest('.js-del-faq');
+        if (delFaq) {
+          collectAdminDom();
+          workingConfig.faqs.splice(Number(delFaq.getAttribute('data-idx')), 1);
+          renderAdminFaqs();
+          return;
+        }
+        const clearPhoto = e.target.closest('.js-clear-photo');
+        if (clearPhoto) {
+          collectAdminDom();
+          workingConfig.cases[Number(clearPhoto.getAttribute('data-idx'))].customPhoto = '';
+          window.Store.saveConfig(workingConfig);
+          renderAdminCases();
+          return;
+        }
+        const revApp = e.target.closest('.js-rev-approve');
+        if (revApp) {
+          collectAdminDom();
+          window.Store.saveConfig(workingConfig, true);
+          window.Store.approveReview(revApp.getAttribute('data-id'));
+          workingConfig = window.Store.getConfig();
+          renderAdminReviews();
+          showToast('Отзыв опубликован');
+          return;
+        }
+        const revDel = e.target.closest('.js-rev-del');
+        if (revDel) {
+          collectAdminDom();
+          window.Store.saveConfig(workingConfig, true);
+          window.Store.deleteReview(revDel.getAttribute('data-id'));
+          workingConfig = window.Store.getConfig();
+          renderAdminReviews();
+          showToast('Отзыв удалён');
+          return;
+        }
+        const reqDel = e.target.closest('.js-req-del');
+        if (reqDel) {
+          window.Store.deleteRequest(reqDel.getAttribute('data-id'));
+          workingConfig = window.Store.getConfig();
+          renderAdminRequests();
+          showToast('Заявка удалена');
+          return;
+        }
+      });
+
+      document.addEventListener('input', function (e) {
+        if (e.target.classList.contains('js-qty-input')) {
+          const type = e.target.getAttribute('data-type');
+          const id = e.target.getAttribute('data-id');
+          const val = Math.max(0, Math.min(9999, parseInt(e.target.value, 10) || 0));
+          if (type === 'work') calcState.works[id] = val;
+          else calcState.materials[id] = val;
+          renderServices(window.Store.getConfig().services || []);
+          recalcEstimate();
+        }
+      });
+
+      document.getElementById('mat-mode-own').addEventListener('click', function () {
+        calcState.matMode = 'own';
+        this.classList.add('active');
+        document.getElementById('mat-mode-calc').classList.remove('active');
+        document.getElementById('calc-materials-box').classList.add('is-hidden');
+        recalcEstimate();
+      });
+
+      document.getElementById('mat-mode-calc').addEventListener('click', function () {
+        calcState.matMode = 'calc';
+        this.classList.add('active');
+        document.getElementById('mat-mode-own').classList.remove('active');
+        document.getElementById('calc-materials-box').classList.remove('is-hidden');
+        recalcEstimate();
+      });
+
+      document.getElementById('urg-normal').addEventListener('click', function () {
+        calcState.urgent = false;
+        this.classList.add('active');
+        document.getElementById('urg-fast').classList.remove('active');
+        recalcEstimate();
+      });
+
+      document.getElementById('urg-fast').addEventListener('click', function () {
+        calcState.urgent = true;
+        this.classList.add('active');
+        document.getElementById('urg-normal').classList.remove('active');
+        recalcEstimate();
+      });
+
+      document.getElementById('calc-reset-btn').addEventListener('click', function () {
+        calcState.works = {};
+        calcState.materials = {};
+        calcState.urgent = false;
+        document.querySelectorAll('[data-preset]').forEach(function (b) { b.classList.remove('active'); });
+        document.getElementById('urg-normal').click();
+        renderServices(window.Store.getConfig().services || []);
+        renderCalculatorInputs(window.Store.getConfig());
+        recalcEstimate();
+        showToast('Смета очищена');
+      });
+
+      document.getElementById('calc-to-order-btn').addEventListener('click', transferEstimateToOrder);
+      document.getElementById('mob-dock-order-btn').addEventListener('click', transferEstimateToOrder);
+
+      document.getElementById('copy-phone-btn').addEventListener('click', function () {
+        const phone = window.Store.getConfig().contacts.phone;
+        copyTextSafe(phone);
+        showToast('Номер скопирован: ' + phone);
+      });
+
+      // Мобильное меню
+      const mobMenu = document.getElementById('mobile-menu');
+      document.getElementById('burger-open').addEventListener('click', function () {
+        mobMenu.classList.add('is-open');
+      });
+      document.getElementById('burger-close').addEventListener('click', function () {
+        mobMenu.classList.remove('is-open');
+      });
+      document.querySelectorAll('.mob-link').forEach(function (lnk) {
+        lnk.addEventListener('click', function () { mobMenu.classList.remove('is-open'); });
+      });
+
+      // Плавающая кнопка FAB
+      const fabContainer = document.getElementById('fab-container');
+      document.getElementById('fab-trigger').addEventListener('click', function () {
+        fabContainer.classList.toggle('is-open');
+      });
+
+      // Отзывы на сайте
+      document.getElementById('toggle-review-form-btn').addEventListener('click', function () {
+        document.getElementById('review-form').classList.toggle('is-hidden');
+      });
+
+      document.getElementById('star-picker').addEventListener('click', function (e) {
+        const btn = e.target.closest('.star-btn');
+        if (!btn) return;
+        const val = Number(btn.getAttribute('data-val')) || 5;
+        calcState.selectedRating = val;
+        document.querySelectorAll('#star-picker .star-btn').forEach(function (b) {
+          b.classList.toggle('active', Number(b.getAttribute('data-val')) <= val);
+        });
+      });
+
+      document.getElementById('review-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const name = document.getElementById('rev-name').value.trim();
+        const district = document.getElementById('rev-district').value.trim();
+        const service = document.getElementById('rev-service').value.trim();
+        const text = document.getElementById('rev-text').value.trim();
+        const errEl = document.getElementById('rev-error');
+
+        if (name.length < 2 || text.length < 10) {
+          errEl.textContent = 'Пожалуйста, укажите имя и напишите отзыв (не менее 10 символов).';
+          return;
+        }
+        errEl.textContent = '';
+
+        window.Store.addReview({
+          name: name,
+          district: district || 'Город',
+          service: service || 'Электромонтаж',
+          rating: calcState.selectedRating,
+          text: text,
+          approved: false
+        });
+
+        const msgEl = document.getElementById('rev-pending-msg');
+        msgEl.textContent = '✓ Спасибо! Отзыв сохранён и появится после проверки мастером.';
+        msgEl.classList.remove('is-hidden');
+        e.target.reset();
+      });
+
+      // Отправка основной заявки
+      let clickedChannel = 'whatsapp';
+      document.querySelectorAll('#lead-form button[type="submit"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          clickedChannel = btn.getAttribute('data-channel') || 'whatsapp';
+        });
+      });
+
+      document.getElementById('lead-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (document.getElementById('lead-hp').value) return;
+
+        const name = document.getElementById('lead-name').value.trim();
+        const phone = document.getElementById('lead-phone').value.trim();
+        const comment = document.getElementById('lead-comment').value.trim();
+        const consent = document.getElementById('lead-consent').checked;
+
+        setText('err-lead-name', name.length < 2 ? 'Введите ваше имя' : '');
+        setText('err-lead-phone', phone.replace(/\D/g, '').length < 11 ? 'Введите полный номер телефона' : '');
+        setText('err-lead-consent', !consent ? 'Необходимо согласие на обработку данных' : '');
+
+        if (name.length < 2 || phone.replace(/\D/g, '').length < 11 || !consent) return;
+
+        window.Store.addRequest({
+          name: name,
+          phone: phone,
+          channel: clickedChannel,
+          comment: comment
+        });
+
+        const cfg = window.Store.getConfig();
+        const fullMessage = `⚡ Заявка с сайта (${cfg.brand.name})\nИмя: ${name}\nТелефон: ${phone}\n${comment ? '\n' + comment : ''}`;
+
+        if (cfg.contacts.tgBotToken && cfg.contacts.tgChatId) {
+          fetch(`https://api.telegram.org/bot${cfg.contacts.tgBotToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: cfg.contacts.tgChatId, text: fullMessage })
+          }).catch(function () {});
+        }
+
+        copyTextSafe(fullMessage);
+
+        let targetUrl = cfg.contacts.whatsapp || '';
+        const encoded = encodeURIComponent(fullMessage);
+
+        if (clickedChannel === 'whatsapp') {
+          const waDigits = (cfg.contacts.phoneClean || cfg.contacts.phone).replace(/\D/g, '');
+          targetUrl = `https://wa.me/${waDigits}?text=${encoded}`;
+        } else if (clickedChannel === 'telegram') {
+          const tgBase = cfg.contacts.telegram || 'https://t.me/';
+          targetUrl = tgBase.includes('?') ? `${tgBase}&text=${encoded}` : `${tgBase}?text=${encoded}`;
+        } else if (clickedChannel === 'max') {
+          targetUrl = cfg.contacts.max || '';
+        } else if (clickedChannel === 'vk') {
+          targetUrl = cfg.contacts.vk || '';
+        }
+
+        const okBox = document.getElementById('lead-success-box');
+        okBox.textContent = '✓ Заявка сохранена, текст сметы скопирован в буфер обмена! Переходим в мессенджер...';
+        okBox.classList.remove('is-hidden');
+
+        if (targetUrl) {
+          setTimeout(function () {
+            window.open(targetUrl, '_blank', 'noopener');
+          }, 400);
+        }
+      });
+
+      // Модалки
+      const privacyModal = document.getElementById('privacy-modal');
+      document.getElementById('open-privacy-btn').addEventListener('click', function () { privacyModal.classList.add('is-open'); });
+      document.getElementById('open-privacy-inline').addEventListener('click', function () { privacyModal.classList.add('is-open'); });
+      document.getElementById('close-privacy-btn').addEventListener('click', function () { privacyModal.classList.remove('is-open'); });
+
+      const confirmModal = document.getElementById('confirm-modal');
+      document.getElementById('confirm-cancel-btn').addEventListener('click', function () {
+        confirmModal.classList.remove('is-open');
+        confirmCallback = null;
+      });
+      document.getElementById('confirm-ok-btn').addEventListener('click', function () {
+        confirmModal.classList.remove('is-open');
+        if (typeof confirmCallback === 'function') confirmCallback();
+        confirmCallback = null;
+      });
+
+      // Вход и управление встроенной админкой
+      document.getElementById('open-admin-btn').addEventListener('click', openAdminOverlay);
+      document.getElementById('mob-open-admin-btn').addEventListener('click', function () {
+        mobMenu.classList.remove('is-open');
+        openAdminOverlay();
+      });
+      document.getElementById('close-admin-overlay-btn').addEventListener('click', closeAdminOverlay);
+
+      document.getElementById('login-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const pass = document.getElementById('admin-pass-input').value;
+        const actualPass = window.Store.getConfig().adminPassword || 'admin';
+        if (pass === actualPass) {
+          try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (err) {}
+          setText('login-error', '');
+          checkAdminAuth();
+        } else {
+          setText('login-error', 'Неверный пароль');
+        }
+      });
+
+      document.getElementById('admin-logout-btn').addEventListener('click', function () {
+        try { sessionStorage.removeItem(SESSION_KEY); } catch (err) {}
+        checkAdminAuth();
+      });
+
+      document.querySelectorAll('.admin-tab-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.admin-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+          document.querySelectorAll('.admin-tab-pane').forEach(function (p) { p.classList.add('is-hidden'); });
+          btn.classList.add('active');
+          document.getElementById(btn.getAttribute('data-tab')).classList.remove('is-hidden');
+        });
+      });
+
+      document.querySelectorAll('.js-save-all').forEach(function (btn) {
+        btn.addEventListener('click', saveAllAdmin);
+      });
+
+      document.getElementById('add-service-btn').addEventListener('click', function () {
+        collectAdminDom();
+        workingConfig.services.push({
+          id: 's_' + Date.now(),
+          name: 'Новая услуга',
+          unit: 'шт.',
+          price: 500,
+          icon: 'socket',
+          active: true,
+          desc: 'Выполнение работ по стандарту ПУЭ-7 и ГОСТ.'
+        });
+        renderAdminServices();
+      });
+
+      document.getElementById('add-material-btn').addEventListener('click', function () {
+        collectAdminDom();
+        workingConfig.materials.push({ id: 'm_' + Date.now(), name: 'Новый материал', unit: 'шт.', price: 200, active: true });
+        renderAdminMaterials();
+      });
+
+      document.getElementById('add-case-btn').addEventListener('click', function () {
+        collectAdminDom();
+        workingConfig.cases.push({
+          id: 'c_' + Date.now(),
+          badge: 'Новый объект • ПУЭ-7',
+          equipment: 'ВВГнг(А)-LS ГОСТ • УЗО тип А',
+          title: 'Выполненный электромонтаж',
+          done: 'Описание выполненных работ и установленной автоматики.',
+          checklist: ['Опрессовка коробок гильзами ГМЛ-П', 'Замер сопротивления изоляции'],
+          duration: '1 день',
+          cost: '15 000 ₽',
+          customPhoto: ''
+        });
+        renderAdminCases();
+      });
+
+      document.getElementById('add-step-btn').addEventListener('click', function () {
+        collectAdminDom();
+        workingConfig.steps.push({ title: 'Новый этап', desc: 'Описание действий мастера.' });
+        renderAdminSteps();
+      });
+
+      document.getElementById('add-faq-btn').addEventListener('click', function () {
+        collectAdminDom();
+        workingConfig.faqs.push({ q: 'Новый вопрос клиента?', a: 'Подробный ответ мастера.' });
+        renderAdminFaqs();
+      });
+
+      document.getElementById('adm-add-rev-btn').addEventListener('click', function () {
+        const name = getVal('adm-rev-name');
+        const text = getVal('adm-rev-text');
+        if (!name || !text) {
+          showToast('Укажите имя клиента и текст отзыва');
+          return;
+        }
+        collectAdminDom();
+        window.Store.saveConfig(workingConfig, true);
+        window.Store.addReview({
+          name: name,
+          district: getVal('adm-rev-district') || 'Город',
+          service: getVal('adm-rev-service') || 'Электромонтаж',
+          date: getVal('adm-rev-date'),
+          rating: Number(getVal('adm-rev-rating')) || 5,
+          text: text,
+          approved: true
+        });
+        workingConfig = window.Store.getConfig();
+        setVal('adm-rev-name', '');
+        setVal('adm-rev-district', '');
+        setVal('adm-rev-service', '');
+        setVal('adm-rev-date', '');
+        setVal('adm-rev-text', '');
+        renderAdminReviews();
+        showToast('✓ Отзыв опубликован!');
+      });
+
+      document.addEventListener('change', function (e) {
+        if (e.target.classList.contains('js-case-photo') && e.target.files[0]) {
+          const idx = Number(e.target.getAttribute('data-idx'));
+          collectAdminDom();
+          compressImageFile(e.target.files[0], function (base64) {
+            workingConfig.cases[idx].customPhoto = base64;
+            window.Store.saveConfig(workingConfig);
+            renderAdminCases();
+            showToast('Фото сжато и сохранено в облаке');
+          });
+        }
+      });
+
+      document.getElementById('download-ready-html-btn').addEventListener('click', downloadReadyHtmlFile);
+      document.getElementById('download-ready-html-top').addEventListener('click', downloadReadyHtmlFile);
+
+      document.getElementById('export-json-btn').addEventListener('click', function () {
+        saveAllAdmin();
+        const blob = new Blob([window.Store.exportJSON()], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'electro-config.json';
+        a.click();
+      });
+
+      document.getElementById('import-json-input').addEventListener('change', function (e) {
+        const f = e.target.files[0];
+        if (!f) return;
+        const r = new FileReader();
+        r.onload = function (ev) {
+          try {
+            window.Store.importJSON(ev.target.result);
+            loadConfigToAdminForm();
+            showToast('Конфигурация успешно загружена!');
+          } catch (err) {
+            showToast('Ошибка в структуре файла JSON');
+          }
+        };
+        r.readAsText(f);
+      });
+
+      document.getElementById('refresh-requests-btn').addEventListener('click', function () {
+        window.Store.pullFromCloud().then(function () {
+          workingConfig = window.Store.getConfig();
+          renderAdminRequests();
+          renderAdminReviews();
+          showToast('Данные обновлены из облака');
+        });
+      });
+
+      document.getElementById('clear-requests-btn').addEventListener('click', function () {
+        openConfirmModal('Очистить заявки', 'Удалить все сохранённые заявки клиентов?', function () {
+          window.Store.clearRequests();
+          workingConfig = window.Store.getConfig();
+          renderAdminRequests();
+          showToast('Список заявок очищен');
+        });
+      });
+
+      document.getElementById('reset-factory-btn').addEventListener('click', function () {
+        openConfirmModal('Сброс настроек', 'Сбросить все цены и тексты к заводским значениям по умолчанию?', function () {
+          window.Store.resetConfig();
+          loadConfigToAdminForm();
+          showToast('Настройки сброшены к заводским');
+        });
+      });
+
+      const createBinBtn = document.getElementById('create-cloud-bin-btn');
+      if (createBinBtn) {
+        createBinBtn.addEventListener('click', function () {
+          const rawKey = getVal('cloud-api-key');
+          const token = decodeToken(rawKey);
+          if (!token) {
+            showToast('Сначала вставьте GitHub Token (ghp_...) в первое поле');
+            return;
+          }
+          createBinBtn.textContent = 'Создание базы...';
+          collectAdminDom();
+
+          const cleanPayload = deepClone(workingConfig);
+          cleanPayload.cloud = { binId: '', apiKey: '' };
+
+          fetch('https://api.github.com/gists', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/vnd.github+json',
+              'Authorization': 'Bearer ' + token,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              description: 'Облачная база сайта электрика (' + (workingConfig.brand.name || 'ЭлектроПрофи') + ')',
+              public: false,
+              files: {
+                'electro_config.json': {
+                  content: JSON.stringify(cleanPayload, null, 2)
+                }
+              }
+            })
+          })
+            .then(function (r) {
+              return r.json().then(function (d) { return { ok: r.ok, status: r.status, data: d }; });
+            })
+            .then(function (res) {
+              createBinBtn.textContent = '☁ Создать новую облачную базу в 1 клик';
+              if (res.ok && res.data && res.data.id) {
+                setVal('cloud-bin-id', res.data.id);
+                saveAllAdmin();
+                showToast('✓ Облачная база создана! Gist ID обновлён.');
+              } else {
+                showToast('Ошибка GitHub API: проверьте токен ghp_');
+              }
+            })
+            .catch(function () {
+              createBinBtn.textContent = '☁ Создать новую облачную базу в 1 клик';
+              showToast('Ошибка соединения с GitHub API');
+            });
+        });
+      }
+
+      window.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          privacyModal.classList.remove('is-open');
+          confirmModal.classList.remove('is-open');
+        }
+      });
+
+      window.addEventListener('hashchange', function () {
+        if (window.location.hash === '#admin') openAdminOverlay();
+      });
+    }
+
+    window.addEventListener('store:updated', function () {
+      renderSite();
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      renderSite();
+      initPhoneMask();
+      initScrollLaser();
+      bindEvents();
+      window.Store.pullFromCloud();
+      if (window.location.hash === '#admin') {
+        openAdminOverlay();
+      }
+    });
+  })(window);
+  </script>
 </body>
 </html>
