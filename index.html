@@ -301,9 +301,9 @@
     }
 
     .brand-emblem {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
       background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(245, 158, 11, 0.06));
       border: 1px solid var(--border-amber);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -321,19 +321,31 @@
     .brand-title {
       display: block;
       font-weight: 800;
-      font-size: 0.98rem;
+      font-size: 0.92rem;
       letter-spacing: -0.02em;
       color: #FFFFFF;
-      line-height: 1.2;
+      line-height: 1.15;
+      white-space: nowrap !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @media (min-width: 400px) {
+      .brand-title { font-size: 1.02rem; }
+      .brand-emblem { width: 38px; height: 38px; }
     }
 
     .brand-meta {
       display: flex;
       align-items: center;
       gap: 5px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--text-secondary);
-      line-height: 1.2;
+      line-height: 1.15;
+      margin-top: 2px;
+      white-space: nowrap !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .status-dot {
@@ -376,11 +388,13 @@
     }
 
     .hdr-call-btn {
-      min-height: 38px;
-      padding: 7px 12px;
-      font-size: 0.8rem;
+      min-height: 36px;
+      padding: 6px 10px;
+      font-size: 0.76rem;
       border-radius: 10px;
-      white-space: nowrap;
+      white-space: nowrap !important;
+      flex-shrink: 0;
+      gap: 5px;
     }
 
     .hdr-phone-desktop { display: none; }
@@ -423,9 +437,15 @@
       transform: translateX(100%);
       transition: transform 0.25s ease;
       overflow-y: auto;
+      pointer-events: none;
+      visibility: hidden;
     }
 
-    .mobile-drawer.is-open { transform: translateX(0); }
+    .mobile-drawer.is-open {
+      transform: translateX(0);
+      pointer-events: auto;
+      visibility: visible;
+    }
 
     .mobile-nav-list {
       display: flex;
@@ -970,10 +990,12 @@
       gap: 10px;
       transform: translateY(140%);
       transition: transform 0.25s ease;
+      pointer-events: none;
     }
 
     .mobile-calc-dock.is-visible {
       transform: translateY(0);
+      pointer-events: auto;
     }
 
     @media (min-width: 992px) {
@@ -1212,6 +1234,7 @@
       flex-direction: column;
       align-items: flex-end;
       gap: 10px;
+      pointer-events: none;
     }
 
     @media (min-width: 992px) {
@@ -1219,25 +1242,21 @@
     }
 
     .fab-menu {
-      display: flex;
+      display: none;
       flex-direction: column;
       align-items: flex-end;
       gap: 8px;
-      opacity: 0;
       pointer-events: none;
-      transform: translateY(10px);
-      transition: all 0.2s ease;
     }
 
     .fab-container.is-open .fab-menu {
-      opacity: 1;
+      display: flex;
       pointer-events: auto;
-      transform: translateY(0);
     }
 
     .fab-trigger {
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       background: linear-gradient(180deg, var(--amber-bright), var(--amber));
       color: #090A0F;
@@ -1246,6 +1265,7 @@
       cursor: pointer;
       display: grid;
       place-items: center;
+      pointer-events: auto;
     }
 
     .modal-backdrop {
@@ -1387,6 +1407,7 @@
       transition: transform 0.25s ease;
       max-width: 92vw;
       text-align: center;
+      pointer-events: none;
     }
 
     .toast.is-visible { transform: translateX(-50%) translateY(0); }
@@ -2805,17 +2826,16 @@
         `;
       }).join('');
 
-      // Прямая привязка событий к каждой кнопке карточки услуги
+      // Прямая привязка событий к каждой кнопке карточки услуги (срабатывает в любой точке экрана без прыжка скролла)
       grid.querySelectorAll('.js-pick-service').forEach(function (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
           const id = btn.getAttribute('data-id');
-          calcState.works[id] = Math.max(1, (Number(calcState.works[id]) || 0) + 1);
+          calcState.works[id] = (Number(calcState.works[id]) || 0) + 1;
           renderServices(window.Store.getConfig().services || []);
           renderCalculatorInputs(window.Store.getConfig());
           recalcEstimate();
-          const calcSection = document.getElementById('calculator');
-          if (calcSection) calcSection.scrollIntoView({ behavior: 'smooth' });
-          showToast('Услуга добавлена в калькулятор');
+          showToast('Добавлено в смету (' + calcState.works[id] + ')');
         });
       });
     }
