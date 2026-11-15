@@ -14,17 +14,17 @@
   <style>
     /* ==========================================================================
        Дизайн-система: «Obsidian & Warm Amber» (Dark Architectural Tech)
-       Монолитная сборка: Клиентский сайт + Калькулятор + Облачная CMS в одном файле
+       Полная адаптация под мобильные экраны (320px–1920px) без обрезания текста
        ========================================================================== */
     :root {
       --bg-obsidian: #08090D;
       --bg-surface: #0E1117;
-      --card-bg: rgba(20, 24, 34, 0.78);
+      --card-bg: rgba(20, 24, 34, 0.82);
       --card-solid: #141822;
-      --card-inset: rgba(9, 11, 16, 0.72);
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-top-highlight: rgba(255, 255, 255, 0.15);
-      --border-amber: rgba(245, 158, 11, 0.42);
+      --card-inset: rgba(9, 11, 16, 0.78);
+      --border-subtle: rgba(255, 255, 255, 0.09);
+      --border-top-highlight: rgba(255, 255, 255, 0.16);
+      --border-amber: rgba(245, 158, 11, 0.45);
       --amber: #F59E0B;
       --amber-bright: #FBBF24;
       --amber-glow: rgba(245, 158, 11, 0.16);
@@ -33,7 +33,7 @@
       --text-main: #F3F4F6;
       --text-secondary: #9CA3AF;
       --text-muted: #6B7280;
-      --radius-lg: 18px;
+      --radius-lg: 16px;
       --radius-md: 12px;
       --radius-sm: 8px;
       --shadow-card: 0 20px 40px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.11);
@@ -53,7 +53,7 @@
       background-color: var(--bg-obsidian);
       color: var(--text-main);
       font-family: var(--font-sans);
-      line-height: 1.55;
+      line-height: 1.5;
       -webkit-text-size-adjust: 100%;
       overflow-x: hidden;
     }
@@ -70,10 +70,12 @@
       color: var(--text-main);
       position: relative;
       overflow-x: hidden;
-      padding-bottom: 76px;
+      padding-bottom: 84px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
-    /* Тонкая лазерная линия прогресса чтения сверху экрана */
+    /* Лазерная линия прогресса чтения сверху экрана */
     .scroll-laser {
       position: fixed;
       top: 0;
@@ -98,7 +100,7 @@
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 16px;
+      padding: 0 14px;
       position: relative;
       z-index: 2;
     }
@@ -108,15 +110,15 @@
     }
 
     section {
-      padding: 56px 0;
+      padding: 48px 0;
     }
 
     @media (min-width: 768px) {
-      section { padding: 80px 0; }
+      section { padding: 76px 0; }
     }
 
     .section-head {
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       max-width: 700px;
     }
 
@@ -125,30 +127,31 @@
       align-items: center;
       gap: 8px;
       font-family: var(--font-mono);
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       color: var(--amber-bright);
       background: rgba(245, 158, 11, 0.1);
       border: 1px solid rgba(245, 158, 11, 0.25);
       padding: 5px 12px;
       border-radius: 99px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+      max-width: 100%;
     }
 
     .section-title {
-      font-size: clamp(1.55rem, 3.4vw, 2.35rem);
+      font-size: clamp(1.45rem, 4.5vw, 2.3rem);
       font-weight: 800;
       letter-spacing: -0.02em;
-      line-height: 1.18;
+      line-height: 1.2;
       margin-bottom: 10px;
       color: #FFFFFF;
     }
 
     .section-subtitle {
       color: var(--text-secondary);
-      font-size: 0.98rem;
+      font-size: 0.94rem;
     }
 
     a, button, input, textarea, select {
@@ -171,24 +174,28 @@
     }
 
     /* ==========================================================================
-       Кнопки и капсулы мессенджеров
+       Кнопки — без white-space: nowrap, чтобы текст никогда не обрезался на мобильном
        ========================================================================== */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 9px;
-      min-height: 46px;
-      padding: 11px 20px;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 16px;
       border-radius: var(--radius-md);
       font-weight: 700;
-      font-size: 0.94rem;
+      font-size: 0.9rem;
+      line-height: 1.25;
+      text-align: center;
       text-decoration: none;
       border: 1px solid transparent;
       cursor: pointer;
       transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease, border-color 0.16s ease;
       user-select: none;
-      white-space: nowrap;
+      white-space: normal;
+      word-break: break-word;
+      max-width: 100%;
     }
 
     .btn:active { transform: scale(0.98); }
@@ -203,7 +210,6 @@
     .btn-primary:hover {
       background: linear-gradient(180deg, #FDE047 0%, var(--amber-bright) 100%);
       transform: translateY(-1px);
-      box-shadow: 0 12px 28px -4px rgba(245, 158, 11, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.5);
     }
 
     .btn-glass {
@@ -224,9 +230,10 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 8px;
+      width: 100%;
     }
 
-    @media (min-width: 540px) {
+    @media (min-width: 560px) {
       .messenger-grid {
         display: flex;
         flex-wrap: wrap;
@@ -236,45 +243,40 @@
 
     .btn-msg {
       min-height: 44px;
-      padding: 9px 14px;
+      padding: 9px 12px;
       border-radius: var(--radius-md);
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 7px;
       text-decoration: none;
       border: 1px solid rgba(255, 255, 255, 0.1);
       background: rgba(20, 24, 34, 0.85);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
       cursor: pointer;
       transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+      white-space: normal;
+      text-align: center;
     }
 
     .btn-msg svg { width: 18px; height: 18px; flex-shrink: 0; }
     .btn-msg:hover { transform: translateY(-2px); }
 
     .btn-tg { color: #67C7FF; border-color: rgba(42, 171, 238, 0.3); background: rgba(42, 171, 238, 0.1); }
-    .btn-tg:hover { background: rgba(42, 171, 238, 0.22); border-color: rgba(42, 171, 238, 0.6); }
-
     .btn-wa { color: #5CE690; border-color: rgba(37, 211, 102, 0.3); background: rgba(37, 211, 102, 0.1); }
-    .btn-wa:hover { background: rgba(37, 211, 102, 0.22); border-color: rgba(37, 211, 102, 0.6); }
-
     .btn-max { color: #C4B5FD; border-color: rgba(139, 92, 246, 0.38); background: linear-gradient(135deg, rgba(124, 58, 237, 0.16), rgba(59, 130, 246, 0.16)); }
-    .btn-max:hover { border-color: rgba(167, 139, 250, 0.7); background: linear-gradient(135deg, rgba(124, 58, 237, 0.28), rgba(59, 130, 246, 0.28)); }
-
     .btn-vk { color: #75B6FF; border-color: rgba(0, 119, 255, 0.32); background: rgba(0, 119, 255, 0.12); }
-    .btn-vk:hover { background: rgba(0, 119, 255, 0.24); border-color: rgba(0, 119, 255, 0.6); }
 
     /* ==========================================================================
-       Шапка (Header) — идеально адаптирована под 360px
+       Шапка (Header) — идеально адаптирована под 320px–360px
        ========================================================================== */
     .site-header {
       position: sticky;
       top: 0;
       z-index: 800;
-      background: rgba(8, 9, 13, 0.84);
+      background: rgba(8, 9, 13, 0.88);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--border-subtle);
@@ -284,21 +286,23 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 66px;
-      gap: 10px;
+      min-height: 62px;
+      padding: 8px 0;
+      gap: 8px;
     }
 
     .brand-logo {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
       text-decoration: none;
       min-width: 0;
+      flex: 1;
     }
 
     .brand-emblem {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 10px;
       background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(245, 158, 11, 0.06));
       border: 1px solid var(--border-amber);
@@ -311,26 +315,25 @@
 
     .brand-text-wrap {
       min-width: 0;
+      flex: 1;
     }
 
     .brand-title {
       display: block;
       font-weight: 800;
-      font-size: 1.05rem;
+      font-size: 0.98rem;
       letter-spacing: -0.02em;
       color: #FFFFFF;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.2;
     }
 
     .brand-meta {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       font-size: 0.72rem;
       color: var(--text-secondary);
-      white-space: nowrap;
+      line-height: 1.2;
     }
 
     .status-dot {
@@ -340,6 +343,7 @@
       background: var(--emerald);
       box-shadow: 0 0 8px var(--emerald);
       display: inline-block;
+      flex-shrink: 0;
       animation: pulseDot 2.2s infinite;
     }
 
@@ -351,7 +355,7 @@
     .main-nav {
       display: none;
       align-items: center;
-      gap: 22px;
+      gap: 20px;
     }
 
     .main-nav a {
@@ -367,29 +371,28 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex-shrink: 0;
     }
 
     .hdr-call-btn {
-      min-height: 40px;
-      padding: 8px 14px;
-      font-size: 0.84rem;
+      min-height: 38px;
+      padding: 7px 12px;
+      font-size: 0.8rem;
       border-radius: 10px;
+      white-space: nowrap;
     }
 
-    .hdr-phone-desktop {
-      display: none;
-    }
-
+    .hdr-phone-desktop { display: none; }
     @media (min-width: 640px) {
       .hdr-phone-desktop { display: inline; }
       .hdr-phone-mobile { display: none; }
+      .brand-title { font-size: 1.06rem; }
     }
 
     .burger-btn {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border-radius: 10px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-subtle);
@@ -398,6 +401,7 @@
       justify-content: center;
       cursor: pointer;
       color: var(--text-main);
+      flex-shrink: 0;
     }
 
     @media (min-width: 1024px) {
@@ -410,14 +414,15 @@
       position: fixed;
       inset: 0;
       z-index: 900;
-      background: rgba(8, 9, 13, 0.97);
+      background: rgba(8, 9, 13, 0.98);
       backdrop-filter: blur(20px);
-      padding: 20px 20px 32px;
+      padding: 18px 18px 28px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       transform: translateX(100%);
-      transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: transform 0.25s ease;
+      overflow-y: auto;
     }
 
     .mobile-drawer.is-open { transform: translateX(0); }
@@ -425,12 +430,12 @@
     .mobile-nav-list {
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      margin-top: 28px;
+      gap: 10px;
+      margin: 20px 0;
     }
 
     .mobile-nav-list a {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 700;
       text-decoration: none;
       padding: 10px 0;
@@ -444,37 +449,35 @@
        Bento Card базовая поверхность
        ========================================================================== */
     .bento-card {
-      background: linear-gradient(180deg, rgba(24, 29, 42, 0.78) 0%, rgba(14, 17, 24, 0.9) 100%);
+      background: linear-gradient(180deg, rgba(24, 29, 42, 0.82) 0%, rgba(14, 17, 24, 0.94) 100%);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-card);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
       position: relative;
-      overflow: hidden;
+      max-width: 100%;
     }
 
     /* ==========================================================================
        Hero секция (Первый экран)
        ========================================================================== */
     .hero {
-      padding: 32px 0 56px;
+      padding: 24px 0 48px;
     }
 
     @media (min-width: 768px) {
-      .hero { padding: 56px 0 76px; }
+      .hero { padding: 52px 0 72px; }
     }
 
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 28px;
+      gap: 24px;
       align-items: stretch;
     }
 
     @media (min-width: 992px) {
       .hero-grid {
-        grid-template-columns: 1.18fr 0.82fr;
+        grid-template-columns: 1.16fr 0.84fr;
         gap: 32px;
       }
     }
@@ -483,35 +486,36 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 13px;
+      padding: 6px 12px;
       border-radius: 99px;
       background: rgba(16, 185, 129, 0.1);
       border: 1px solid rgba(16, 185, 129, 0.28);
       color: #6EE7B7;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+      max-width: 100%;
     }
 
     .hero h1 {
-      font-size: clamp(1.75rem, 4.2vw, 2.95rem);
+      font-size: clamp(1.55rem, 5.2vw, 2.85rem);
       font-weight: 800;
-      line-height: 1.13;
-      letter-spacing: -0.025em;
-      margin-bottom: 16px;
+      line-height: 1.16;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
       color: #FFFFFF;
     }
 
     .text-gradient-amber {
-      background: linear-gradient(95deg, #FFFFFF 0%, #FDE68A 45%, #F59E0B 100%);
+      background: linear-gradient(95deg, #FFFFFF 0%, #FDE68A 50%, #F59E0B 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .hero-lead {
-      font-size: 0.98rem;
+      font-size: 0.94rem;
       color: var(--text-secondary);
-      margin-bottom: 22px;
+      margin-bottom: 20px;
       max-width: 620px;
     }
 
@@ -519,7 +523,7 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     @media (min-width: 480px) {
@@ -534,7 +538,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
-      margin-top: 24px;
+      margin-top: 22px;
     }
 
     @media (min-width: 640px) {
@@ -546,29 +550,33 @@
       border: 1px solid var(--border-subtle);
       border-top-color: var(--border-top-highlight);
       border-radius: var(--radius-md);
-      padding: 12px 14px;
+      padding: 12px;
     }
 
     .trust-val {
       font-family: var(--font-mono);
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--amber-bright);
       margin-bottom: 2px;
     }
 
     .trust-lbl {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--text-secondary);
     }
 
-    /* Правая приборная панель Hero: Технический регламент */
+    /* Приборная панель Hero: Технический регламент */
     .reglament-panel {
-      padding: 22px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border-color: rgba(245, 158, 11, 0.22);
+      border-color: rgba(245, 158, 11, 0.25);
+    }
+
+    @media (min-width: 640px) {
+      .reglament-panel { padding: 22px; }
     }
 
     .reglament-head {
@@ -576,9 +584,9 @@
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      padding-bottom: 14px;
-      margin-bottom: 14px;
+      gap: 6px;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
       border-bottom: 1px solid var(--border-subtle);
     }
 
@@ -591,30 +599,26 @@
       background: var(--card-inset);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 12px 14px;
-      transition: border-color 0.2s;
-    }
-
-    .spec-slot:hover {
-      border-color: rgba(245, 158, 11, 0.35);
+      padding: 12px;
     }
 
     .spec-slot-top {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       margin-bottom: 4px;
     }
 
     .spec-code-badge {
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       color: var(--amber-bright);
       background: rgba(245, 158, 11, 0.12);
       border: 1px solid rgba(245, 158, 11, 0.25);
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 6px;
     }
 
@@ -623,7 +627,6 @@
       font-size: 0.68rem;
       font-weight: 700;
       color: var(--emerald);
-      letter-spacing: 0.04em;
     }
 
     /* ==========================================================================
@@ -639,40 +642,37 @@
     @media (min-width: 1024px) { .services-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
 
     .service-card {
-      padding: 20px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 16px;
+      gap: 14px;
       transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
-    .service-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--border-amber);
-    }
-
     .service-card.in-cart {
-      border-color: rgba(16, 185, 129, 0.5);
-      background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(14, 17, 24, 0.92) 100%);
+      border-color: rgba(16, 185, 129, 0.55);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, rgba(14, 17, 24, 0.94) 100%);
     }
 
     .service-card-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 12px;
+      gap: 8px;
+      margin-bottom: 10px;
     }
 
     .service-icon-box {
-      width: 44px;
-      height: 44px;
-      border-radius: 11px;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
       background: rgba(245, 158, 11, 0.12);
       border: 1px solid rgba(245, 158, 11, 0.25);
       color: var(--amber-bright);
       display: grid;
       place-items: center;
+      flex-shrink: 0;
     }
 
     .service-unit-tag {
@@ -686,10 +686,11 @@
     }
 
     .service-title {
-      font-size: 1.02rem;
+      font-size: 1rem;
       font-weight: 700;
       margin-bottom: 6px;
       color: #FFFFFF;
+      line-height: 1.3;
     }
 
     .service-desc {
@@ -699,53 +700,76 @@
 
     .service-footer {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      padding-top: 14px;
+      gap: 10px;
+      padding-top: 12px;
       border-top: 1px solid var(--border-subtle);
     }
 
     .service-price {
       font-family: var(--font-mono);
       font-weight: 700;
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       color: var(--amber-bright);
     }
 
     /* ==========================================================================
-       Умный калькулятор с 1-клик пресетами
+       Умный калькулятор (адаптивные строки под 320px–360px + верхнее табло сметы)
        ========================================================================== */
     .preset-bar {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: 640px) {
+      .preset-bar {
+        display: flex;
+        flex-wrap: wrap;
+      }
     }
 
     .preset-chip {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border-subtle);
-      border-radius: 99px;
-      padding: 8px 14px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-secondary);
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-main);
       cursor: pointer;
       transition: all 0.16s ease;
+      text-align: center;
     }
 
     .preset-chip:hover,
     .preset-chip.active {
-      background: rgba(245, 158, 11, 0.14);
+      background: rgba(245, 158, 11, 0.16);
       border-color: var(--amber);
       color: var(--amber-bright);
+    }
+
+    /* Верхнее мгновенное табло сметы для смартфонов */
+    .calc-live-banner {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.16), rgba(20, 24, 34, 0.95));
+      border: 1px solid var(--border-amber);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
 
     .calc-wrapper {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 22px;
+      gap: 20px;
       align-items: start;
     }
 
@@ -754,86 +778,104 @@
     }
 
     .calc-panel, .calc-summary {
-      padding: 20px;
+      padding: 16px;
     }
 
     @media (min-width: 640px) {
-      .calc-panel, .calc-summary { padding: 26px; }
+      .calc-panel, .calc-summary { padding: 24px; }
     }
 
     .calc-summary {
       position: sticky;
-      top: 86px;
+      top: 82px;
       border-color: var(--border-amber);
     }
 
+    /* На мобильном у каждой услуги калькулятора название занимает 100% ширины, а цена и степпер — под ним */
     .calc-row {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 12px 10px;
-      border-bottom: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      transition: background 0.15s;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+      padding: 12px;
+      margin-bottom: 6px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    @media (min-width: 540px) {
+      .calc-row {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
     }
 
     .calc-row.is-active {
-      background: rgba(245, 158, 11, 0.07);
-    }
-
-    .calc-row-info {
-      min-width: 0;
-      flex: 1;
+      background: rgba(245, 158, 11, 0.09);
+      border-color: rgba(245, 158, 11, 0.4);
     }
 
     .calc-row-title {
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.92rem;
       color: #FFFFFF;
+      line-height: 1.3;
+    }
+
+    .calc-row-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
 
     .calc-row-meta {
       font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: var(--text-secondary);
-      margin-top: 2px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--amber-bright);
     }
 
     .stepper {
       display: inline-flex;
       align-items: center;
       background: var(--bg-obsidian);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 10px;
       overflow: hidden;
       flex-shrink: 0;
     }
 
     .stepper button {
-      width: 40px;
+      width: 42px;
       height: 40px;
-      background: transparent;
+      background: rgba(245, 158, 11, 0.08);
       border: none;
       color: var(--amber-bright);
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 1.25rem;
+      font-weight: 800;
       cursor: pointer;
+      touch-action: manipulation;
     }
 
-    .stepper button:hover {
-      background: rgba(245, 158, 11, 0.14);
+    .stepper button:active {
+      background: var(--amber);
+      color: #090A0F;
     }
 
     .stepper input {
-      width: 52px;
+      width: 54px;
       height: 40px;
       text-align: center;
       background: transparent;
       border: none;
       font-family: var(--font-mono);
       font-weight: 700;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
+      color: #FFFFFF;
       -moz-appearance: textfield;
       appearance: textfield;
     }
@@ -846,37 +888,41 @@
 
     .toggle-pills {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 6px;
       background: var(--bg-obsidian);
-      padding: 5px;
+      padding: 6px;
       border-radius: 12px;
       border: 1px solid var(--border-subtle);
-      margin: 12px 0;
+      margin: 10px 0;
+    }
+
+    @media (min-width: 480px) {
+      .toggle-pills { grid-template-columns: 1fr 1fr; }
     }
 
     .toggle-pill {
       min-height: 40px;
-      border: none;
+      border: 1px solid transparent;
       background: transparent;
       color: var(--text-secondary);
-      font-weight: 600;
-      font-size: 0.82rem;
+      font-weight: 700;
+      font-size: 0.84rem;
       border-radius: 8px;
       cursor: pointer;
-      padding: 6px 8px;
+      padding: 8px 10px;
       transition: all 0.15s;
     }
 
     .toggle-pill.active {
       background: var(--card-solid);
       color: var(--amber-bright);
-      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-color: rgba(245, 158, 11, 0.35);
     }
 
     .summary-lines {
       margin: 14px 0;
-      max-height: 230px;
+      max-height: 240px;
       overflow-y: auto;
       font-size: 0.85rem;
     }
@@ -884,44 +930,45 @@
     .summary-line {
       display: flex;
       justify-content: space-between;
-      gap: 8px;
+      align-items: flex-start;
+      gap: 10px;
       padding: 7px 0;
-      border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
     }
 
     .summary-total-box {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(245, 158, 11, 0.04));
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.16), rgba(245, 158, 11, 0.04));
       border: 1px solid var(--border-amber);
       border-radius: var(--radius-md);
       padding: 16px;
-      margin: 16px 0;
+      margin: 14px 0;
     }
 
     .summary-range {
       font-family: var(--font-mono);
-      font-size: clamp(1.25rem, 2.5vw, 1.55rem);
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
       font-weight: 800;
       color: var(--amber-bright);
     }
 
-    /* Мобильная нижняя плашка живой сметы (Sticky Bottom Bar) */
+    /* Мобильная нижняя плашка живой сметы */
     .mobile-calc-dock {
       position: fixed;
-      left: 12px;
-      right: 12px;
-      bottom: 12px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
       z-index: 810;
-      background: rgba(14, 17, 24, 0.95);
+      background: rgba(14, 17, 24, 0.96);
       backdrop-filter: blur(16px);
       border: 1px solid var(--border-amber);
       border-radius: 14px;
       padding: 10px 14px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.85);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      transform: translateY(130%);
+      transform: translateY(140%);
       transition: transform 0.25s ease;
     }
 
@@ -939,7 +986,7 @@
     .cases-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 20px;
+      gap: 18px;
     }
 
     @media (min-width: 768px) {
@@ -957,7 +1004,7 @@
       aspect-ratio: 16 / 9;
       overflow: hidden;
       border-bottom: 1px solid var(--border-subtle);
-      position: relative;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     }
 
     .case-photo-box img {
@@ -968,55 +1015,55 @@
     }
 
     .case-passport-bar {
-      padding: 14px 20px;
+      padding: 12px 16px;
       background: rgba(9, 11, 16, 0.65);
       border-bottom: 1px solid var(--border-subtle);
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .case-badge {
       font-family: var(--font-mono);
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       font-weight: 700;
       color: var(--amber-bright);
       background: rgba(245, 158, 11, 0.12);
       border: 1px solid rgba(245, 158, 11, 0.28);
-      padding: 4px 10px;
+      padding: 3px 9px;
       border-radius: 6px;
     }
 
     .case-equip {
       font-family: var(--font-mono);
-      font-size: 0.73rem;
+      font-size: 0.72rem;
       color: var(--text-secondary);
     }
 
     .case-body {
-      padding: 20px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       flex: 1;
-      gap: 16px;
+      gap: 14px;
     }
 
     .case-checklist {
       list-style: none;
       display: grid;
-      gap: 8px;
-      margin-top: 14px;
-      padding: 12px 14px;
+      gap: 7px;
+      margin-top: 12px;
+      padding: 12px;
       background: var(--card-inset);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
     }
 
     .case-checklist li {
-      font-size: 0.84rem;
+      font-size: 0.83rem;
       display: flex;
       align-items: flex-start;
       gap: 8px;
@@ -1034,8 +1081,8 @@
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      padding-top: 14px;
+      gap: 10px;
+      padding-top: 12px;
       border-top: 1px solid var(--border-subtle);
     }
 
@@ -1045,27 +1092,25 @@
     .steps-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 14px;
+      gap: 12px;
     }
 
     @media (min-width: 640px) { .steps-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (min-width: 1024px) { .steps-grid { grid-template-columns: repeat(3, 1fr); } }
 
-    .step-card {
-      padding: 20px;
-    }
+    .step-card { padding: 18px; }
 
     .step-num-badge {
       font-family: var(--font-mono);
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: var(--amber-bright);
       background: rgba(245, 158, 11, 0.12);
       border: 1px solid rgba(245, 158, 11, 0.28);
-      padding: 4px 10px;
+      padding: 3px 9px;
       border-radius: 6px;
       display: inline-block;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .reviews-bar {
@@ -1073,78 +1118,95 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      padding: 18px 22px;
-      margin-bottom: 20px;
+      gap: 12px;
+      padding: 16px 18px;
+      margin-bottom: 18px;
     }
 
     .reviews-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 16px;
+      gap: 14px;
     }
 
     @media (min-width: 768px) { .reviews-grid { grid-template-columns: repeat(2, 1fr); } }
 
-    .review-card { padding: 20px; }
-    .stars { color: var(--amber-bright); letter-spacing: 2px; font-size: 0.95rem; }
+    .review-card { padding: 18px; }
+    .stars { color: var(--amber-bright); letter-spacing: 2px; font-size: 0.92rem; }
 
     .star-picker { display: inline-flex; gap: 6px; }
     .star-btn { background: transparent; border: none; font-size: 1.6rem; color: #374151; cursor: pointer; padding: 2px 4px; }
     .star-btn.active { color: var(--amber-bright); }
 
-    .faq-list { display: flex; flex-direction: column; gap: 12px; max-width: 880px; }
+    .faq-list { display: flex; flex-direction: column; gap: 10px; max-width: 880px; }
     .faq-item { border-radius: var(--radius-md); overflow: hidden; }
     .faq-question {
       width: 100%;
       text-align: left;
-      padding: 18px 20px;
+      padding: 16px 18px;
       background: transparent;
       border: none;
       font-weight: 700;
-      font-size: 0.98rem;
+      font-size: 0.95rem;
+      line-height: 1.35;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       cursor: pointer;
       color: #FFFFFF;
     }
     .faq-answer {
-      padding: 0 20px 18px;
+      padding: 0 18px 16px;
       color: var(--text-secondary);
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       display: none;
     }
     .faq-item.is-open .faq-answer { display: block; }
 
-    .form-grid { display: grid; grid-template-columns: 1fr; gap: 22px; }
+    .form-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
     @media (min-width: 920px) { .form-grid { grid-template-columns: 1fr 1.15fr; } }
 
     .field { margin-bottom: 14px; }
-    .field label { display: block; font-size: 0.84rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+    .field label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+      line-height: 1.3;
+    }
 
     .input, .textarea {
       width: 100%;
+      max-width: 100%;
       background: var(--bg-obsidian);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 10px;
-      padding: 12px 14px;
+      padding: 11px 13px;
       color: var(--text-main);
-      font-size: 0.94rem;
+      font-size: 0.92rem;
+      line-height: 1.4;
       transition: border-color 0.15s;
+    }
+
+    .textarea {
+      resize: vertical;
+      min-height: 54px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
     }
 
     .input:focus, .textarea:focus { border-color: var(--amber); outline: none; }
     .field-error { color: var(--danger); font-size: 0.78rem; margin-top: 4px; min-height: 16px; }
 
     /* ==========================================================================
-       Плавающая кнопка связи (FAB) и Тост
+       Плавающая кнопка связи (FAB), Модалки и Встроенная Админ-Панель (CMS)
        ========================================================================== */
     .fab-container {
       position: fixed;
-      right: 16px;
-      bottom: 84px;
+      right: 14px;
+      bottom: 82px;
       z-index: 820;
       display: flex;
       flex-direction: column;
@@ -1174,8 +1236,8 @@
     }
 
     .fab-trigger {
-      width: 54px;
-      height: 54px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       background: linear-gradient(180deg, var(--amber-bright), var(--amber));
       color: #090A0F;
@@ -1186,7 +1248,6 @@
       place-items: center;
     }
 
-    /* Модальные окна и Встроенная Админ-Панель (CMS) */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -1196,7 +1257,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 14px;
     }
 
     .modal-backdrop.is-open { display: flex; }
@@ -1209,17 +1270,18 @@
       width: 100%;
       max-height: 88vh;
       overflow-y: auto;
-      padding: 24px;
+      padding: 20px;
       box-shadow: var(--shadow-card);
     }
 
-    /* Полноэкранный режим встроенной Админ-панели (#admin-overlay) */
+    /* Полноэкранный режим встроенной Админ-панели (#admin-overlay) — 100% Mobile-Friendly */
     .admin-overlay {
       position: fixed;
       inset: 0;
       z-index: 940;
       background: var(--bg-obsidian);
       overflow-y: auto;
+      overflow-x: hidden;
       display: none;
       padding-bottom: 60px;
     }
@@ -1231,19 +1293,19 @@
     .admin-layout {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 20px;
-      padding: 24px 0 48px;
+      gap: 16px;
+      padding: 18px 0 48px;
     }
 
     @media (min-width: 960px) {
-      .admin-layout { grid-template-columns: 260px 1fr; }
+      .admin-layout { grid-template-columns: 250px 1fr; gap: 22px; }
     }
 
     .admin-sidebar {
       background: var(--card-solid);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
-      padding: 12px;
+      padding: 10px;
       display: flex;
       flex-direction: column;
       gap: 4px;
@@ -1251,25 +1313,56 @@
 
     .admin-tab-btn {
       text-align: left;
-      padding: 11px 14px;
+      padding: 10px 12px;
       border-radius: 10px;
       background: transparent;
       border: none;
       color: var(--text-secondary);
       font-weight: 600;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       cursor: pointer;
     }
 
     .admin-tab-btn.active {
-      background: rgba(245, 158, 11, 0.15);
+      background: rgba(245, 158, 11, 0.16);
       color: var(--amber-bright);
+    }
+
+    .admin-section-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: 560px) {
+      .admin-section-bar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .admin-item-card {
+      background: var(--card-inset);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .admin-row-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
 
     .admin-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
     }
 
     .admin-table th, .admin-table td {
@@ -1286,8 +1379,8 @@
       background: var(--emerald);
       color: #042319;
       font-weight: 800;
-      font-size: 0.88rem;
-      padding: 12px 22px;
+      font-size: 0.86rem;
+      padding: 11px 20px;
       border-radius: 99px;
       z-index: 999;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
@@ -1328,7 +1421,7 @@
     <div class="scroll-laser-bar" id="scroll-laser-bar"></div>
   </div>
 
-  <!-- Мобильная компактная шапка (ничего не ломается на 360px) -->
+  <!-- Мобильная компактная шапка -->
   <header class="site-header">
     <div class="container header-inner">
       <a href="#top" class="brand-logo" aria-label="Наверх страницы">
@@ -1356,12 +1449,12 @@
 
       <div class="header-actions">
         <a href="tel:+79123456789" class="btn btn-primary hdr-call-btn" id="hdr-phone-btn">
-          <svg width="16" height="16"><use href="#i-phone"/></svg>
+          <svg width="15" height="15"><use href="#i-phone"/></svg>
           <span class="hdr-phone-desktop" id="hdr-phone-txt">+7 (912) 345-67-89</span>
           <span class="hdr-phone-mobile">Позвонить</span>
         </a>
         <button type="button" class="burger-btn" id="burger-open" aria-label="Открыть меню">
-          <svg width="22" height="22" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
+          <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
             <path d="M4 7h16M4 12h16M4 17h16"/>
           </svg>
         </button>
@@ -1389,7 +1482,7 @@
     <div>
       <p style="color:var(--text-secondary);font-size:0.84rem;margin-bottom:10px;">Быстрая связь в мессенджерах:</p>
       <div class="messenger-grid" id="mob-messengers"></div>
-      <button type="button" class="btn btn-glass" id="mob-open-admin-btn" style="width:100%;margin-top:14px;font-size:0.82rem;">
+      <button type="button" class="btn btn-glass" id="mob-open-admin-btn" style="width:100%;margin-top:14px;font-size:0.84rem;">
         ⚙ Панель управления мастера
       </button>
     </div>
@@ -1442,8 +1535,8 @@
         <aside class="bento-card reglament-panel">
           <div>
             <div class="reglament-head">
-              <span class="num-mono" style="font-size:0.8rem;color:var(--amber-bright);font-weight:700;">⚡ ТЕХНИЧЕСКИЙ РЕГЛАМЕНТ</span>
-              <span class="num-mono" style="font-size:0.74rem;color:var(--emerald);font-weight:700;">● ДОПУСК IV ГРУППЫ ДО 1000В</span>
+              <span class="num-mono" style="font-size:0.78rem;color:var(--amber-bright);font-weight:700;">⚡ ТЕХНИЧЕСКИЙ РЕГЛАМЕНТ</span>
+              <span class="num-mono" style="font-size:0.72rem;color:var(--emerald);font-weight:700;">● ДОПУСК IV ГРУППЫ ДО 1000В</span>
             </div>
             <div class="spec-slots" id="hero-tech-specs"></div>
           </div>
@@ -1460,19 +1553,19 @@
         <div class="section-head">
           <span class="section-eyebrow">Прайс-лист 2026</span>
           <h2 class="section-title">Основные услуги и расценки</h2>
-          <p class="section-subtitle">Нажмите «+ В смету» на нужной карточке — услуга сразу добавится в калькулятор ниже.</p>
+          <p class="section-subtitle">Нажмите «Рассчитать» на нужной карточке — услуга сразу добавится в калькулятор и страница перейдёт к расчёту.</p>
         </div>
         <div class="services-grid" id="services-grid"></div>
       </div>
     </section>
 
-    <!-- 3. УМНЫЙ КАЛЬКУЛЯТОР С БЫСТРЫМИ ПРЕСЕТАМИ -->
+    <!-- 3. УМНЫЙ КАЛЬКУЛЯТОР С БЫСТРЫМИ ПРЕСЕТАМИ И ВЕРХНИМ ТАБЛО -->
     <section id="calculator">
       <div class="container">
         <div class="section-head">
           <span class="section-eyebrow">Интерактивный конфигуратор</span>
           <h2 class="section-title">Онлайн-калькулятор сметы</h2>
-          <p class="section-subtitle">Выберите готовый сценарий в 1 клик или настройте точное количество точек вручную.</p>
+          <p class="section-subtitle">Нажмите готовый сценарий ниже или укажите количество точек кнопками «− / +».</p>
         </div>
 
         <!-- Быстрые сценарии (Пресеты) -->
@@ -1483,34 +1576,45 @@
           <button type="button" class="preset-chip" data-preset="shield">🛡 Сборка электрощита</button>
         </div>
 
+        <!-- Верхнее живое табло сметы (сразу видно на экране смартфона при нажатии кнопок!) -->
+        <div class="calc-live-banner" id="calc-top-banner">
+          <div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);" id="calc-top-count">Выбрано позиций: 0 (выберите работы ниже)</div>
+            <div class="num-mono" style="font-size:1.25rem;font-weight:800;color:var(--amber-bright);" id="calc-top-range">Итого: 0 ₽</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" class="btn btn-primary" id="calc-top-order-btn" style="min-height:38px;padding:7px 14px;font-size:0.82rem;">Оформить смету →</button>
+          </div>
+        </div>
+
         <div class="calc-wrapper">
           <div class="bento-card calc-panel">
-            <h3 style="margin-bottom:12px;font-size:1.08rem;color:#FFFFFF;">1. Виды электромонтажных работ</h3>
+            <h3 style="margin-bottom:12px;font-size:1.05rem;color:#FFFFFF;">1. Виды электромонтажных работ</h3>
             <div id="calc-works-list"></div>
 
-            <h3 style="margin:24px 0 8px;font-size:1.08rem;color:#FFFFFF;">2. Комплектация материалами</h3>
+            <h3 style="margin:22px 0 8px;font-size:1.05rem;color:#FFFFFF;">2. Комплектация материалами</h3>
             <div class="toggle-pills" role="tablist">
               <button type="button" class="toggle-pill active" id="mat-mode-own">Мои материалы</button>
               <button type="button" class="toggle-pill" id="mat-mode-calc">Материалы мастера (ГОСТ)</button>
             </div>
             <div id="calc-materials-box" class="is-hidden"></div>
 
-            <h3 style="margin:24px 0 8px;font-size:1.08rem;color:#FFFFFF;">3. Срочность выезда</h3>
+            <h3 style="margin:22px 0 8px;font-size:1.05rem;color:#FFFFFF;">3. Срочность выезда</h3>
             <div class="toggle-pills" role="tablist">
               <button type="button" class="toggle-pill active" id="urg-normal">Плановый выезд</button>
               <button type="button" class="toggle-pill" id="urg-fast">Срочно сегодня (+30%)</button>
             </div>
           </div>
 
-          <aside class="bento-card calc-summary" aria-live="polite">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <h3 style="font-size:1.15rem;color:#FFFFFF;">Детализация сметы</h3>
+          <aside class="bento-card calc-summary" id="calc-summary-card" aria-live="polite">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+              <h3 style="font-size:1.12rem;color:#FFFFFF;">Детализация сметы</h3>
               <button type="button" class="btn btn-glass" id="calc-reset-btn" style="min-height:32px;padding:4px 12px;font-size:0.78rem;">Очистить</button>
             </div>
 
             <div class="summary-lines" id="calc-summary-lines"></div>
 
-            <div style="font-size:0.86rem;color:var(--text-secondary);display:grid;gap:5px;">
+            <div style="font-size:0.85rem;color:var(--text-secondary);display:grid;gap:5px;">
               <div style="display:flex;justify-content:space-between;"><span>Работы по прайсу:</span><strong class="num-mono" id="sum-works" style="color:#FFFFFF;">0 ₽</strong></div>
               <div style="display:flex;justify-content:space-between;"><span>Материалы ГОСТ:</span><strong class="num-mono" id="sum-materials" style="color:#FFFFFF;">0 ₽</strong></div>
               <div style="display:flex;justify-content:space-between;" id="sum-urgent-row" class="is-hidden"><span id="sum-urgent-lbl">Срочность (+30%):</span><strong class="num-mono" id="sum-urgent" style="color:var(--amber-bright);">0 ₽</strong></div>
@@ -1567,14 +1671,14 @@
 
         <div class="bento-card reviews-bar">
           <div>
-            <div class="num-mono" style="font-size:1.45rem;font-weight:800;color:var(--amber-bright);" id="rev-avg-score">★ 4.9 / 5.0</div>
+            <div class="num-mono" style="font-size:1.4rem;font-weight:800;color:var(--amber-bright);" id="rev-avg-score">★ 4.9 / 5.0</div>
             <div style="font-size:0.84rem;color:var(--text-secondary);" id="rev-total-count">На основе 8 проверенных отзывов</div>
           </div>
           <button type="button" class="btn btn-glass" id="toggle-review-form-btn">Написать отзыв</button>
         </div>
 
-        <form id="review-form" class="bento-card is-hidden" style="padding:22px;margin-bottom:22px;" novalidate>
-          <h3 style="margin-bottom:14px;font-size:1.1rem;">Оставить отзыв о работе мастера</h3>
+        <form id="review-form" class="bento-card is-hidden" style="padding:20px;margin-bottom:20px;" novalidate>
+          <h3 style="margin-bottom:14px;font-size:1.08rem;">Оставить отзыв о работе мастера</h3>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
             <div class="field">
               <label for="rev-name">Ваше имя *</label>
@@ -1608,7 +1712,7 @@
           </div>
 
           <button type="submit" class="btn btn-primary">Отправить отзыв</button>
-          <div id="rev-pending-msg" style="margin-top:12px;color:var(--emerald);font-weight:600;font-size:0.88rem;" class="is-hidden"></div>
+          <div id="rev-pending-msg" style="margin-top:12px;color:var(--emerald);font-weight:600;font-size:0.86rem;" class="is-hidden"></div>
         </form>
 
         <div class="reviews-grid" id="reviews-grid"></div>
@@ -1631,27 +1735,27 @@
       <div class="container">
         <div class="form-grid" id="contacts">
           <!-- Контакты -->
-          <div class="bento-card" style="padding:24px;">
+          <div class="bento-card" style="padding:20px;">
             <span class="section-eyebrow">Прямой контакт</span>
-            <h2 style="font-size:1.55rem;margin-bottom:12px;color:#FFFFFF;">Связь с мастером</h2>
-            <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:20px;">
+            <h2 style="font-size:1.45rem;margin-bottom:10px;color:#FFFFFF;">Связь с мастером</h2>
+            <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:18px;">
               Отвечаю лично без посредников. Присылайте фото щита, проект кухни или план квартиры в любой удобный мессенджер для быстрой оценки.
             </p>
 
-            <div style="margin-bottom:20px;">
+            <div style="margin-bottom:18px;">
               <div style="font-size:0.78rem;color:var(--text-secondary);">Прямой номер телефона:</div>
               <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:4px;">
-                <a href="tel:+79123456789" id="cnt-phone-link" class="num-mono" style="font-size:1.45rem;font-weight:800;color:var(--amber-bright);text-decoration:none;">+7 (912) 345-67-89</a>
+                <a href="tel:+79123456789" id="cnt-phone-link" class="num-mono" style="font-size:1.35rem;font-weight:800;color:var(--amber-bright);text-decoration:none;">+7 (912) 345-67-89</a>
                 <button type="button" class="btn btn-glass" id="copy-phone-btn" style="min-height:34px;padding:5px 12px;font-size:0.78rem;">Скопировать</button>
               </div>
             </div>
 
-            <div style="margin-bottom:22px;">
+            <div style="margin-bottom:20px;">
               <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px;">Написать в один клик (Telegram, WhatsApp, MAX, ВК):</div>
               <div class="messenger-grid" id="contacts-messengers"></div>
             </div>
 
-            <div style="display:grid;gap:10px;font-size:0.88rem;border-top:1px solid var(--border-subtle);padding-top:16px;">
+            <div style="display:grid;gap:10px;font-size:0.86rem;border-top:1px solid var(--border-subtle);padding-top:14px;">
               <div><strong style="color:#FFFFFF;">График работы:</strong> <span id="cnt-schedule" style="color:var(--text-secondary);">Ежедневно 08:00–22:00</span></div>
               <div><strong style="color:#FFFFFF;">Зона выезда:</strong> <span id="cnt-region" style="color:var(--text-secondary);">Екатеринбург и пригород</span></div>
               <div><strong style="color:#FFFFFF;">Районы:</strong> <span id="cnt-districts" style="color:var(--text-secondary);">Все районы города</span></div>
@@ -1660,9 +1764,9 @@
           </div>
 
           <!-- Форма заявки -->
-          <form id="lead-form" class="bento-card" style="padding:24px;" novalidate>
-            <h2 style="font-size:1.45rem;margin-bottom:6px;color:#FFFFFF;">Отправить смету или вызвать на замер</h2>
-            <p style="font-size:0.88rem;color:var(--text-secondary);margin-bottom:16px;">
+          <form id="lead-form" class="bento-card" style="padding:20px;" novalidate>
+            <h2 style="font-size:1.4rem;margin-bottom:6px;color:#FFFFFF;">Отправить смету или вызвать на замер</h2>
+            <p style="font-size:0.86rem;color:var(--text-secondary);margin-bottom:16px;">
               Заполните имя и телефон, затем нажмите кнопку удобного мессенджера — смета прикрепится автоматически.
             </p>
 
@@ -1686,7 +1790,7 @@
             </div>
 
             <div class="field" style="display:flex;align-items:flex-start;gap:10px;">
-              <input type="checkbox" id="lead-consent" checked style="width:18px;height:18px;margin-top:2px;accent-color:var(--amber);">
+              <input type="checkbox" id="lead-consent" checked style="width:18px;height:18px;margin-top:2px;accent-color:var(--amber);flex-shrink:0;">
               <label for="lead-consent" style="font-size:0.78rem;color:var(--text-secondary);font-weight:400;">
                 Согласен на обработку персональных данных согласно <button type="button" id="open-privacy-inline" style="background:none;border:none;color:var(--amber-bright);text-decoration:underline;cursor:pointer;padding:0;">Политике конфиденциальности</button>.
               </label>
@@ -1701,7 +1805,7 @@
               <button type="submit" data-channel="vk" class="btn-msg btn-vk"><svg><use href="#i-vk"/></svg><span>ВКонтакте</span></button>
             </div>
 
-            <div id="lead-success-box" class="is-hidden" style="margin-top:14px;padding:12px;border-radius:10px;background:rgba(16,185,129,0.14);border:1px solid var(--emerald);color:#6EE7B7;font-size:0.86rem;"></div>
+            <div id="lead-success-box" class="is-hidden" style="margin-top:14px;padding:12px;border-radius:10px;background:rgba(16,185,129,0.14);border:1px solid var(--emerald);color:#6EE7B7;font-size:0.84rem;"></div>
           </form>
         </div>
       </div>
@@ -1709,23 +1813,23 @@
   </main>
 
   <!-- ПОДВАЛ -->
-  <footer style="border-top:1px solid var(--border-subtle);padding:28px 0;background:#050609;position:relative;z-index:2;">
+  <footer style="border-top:1px solid var(--border-subtle);padding:26px 0;background:#050609;position:relative;z-index:2;">
     <div class="container" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;font-size:0.84rem;color:var(--text-secondary);">
       <div>
         © <span id="ftr-year">2026</span> <strong id="ftr-brand" style="color:#FFFFFF;">ЭлектроПрофи</strong> (<span id="ftr-city">Екатеринбург</span>). Инженерный электромонтаж.
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;">
+      <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;">
         <button type="button" id="open-privacy-btn" style="background:none;border:none;color:var(--text-secondary);text-decoration:underline;cursor:pointer;">Политика ПДн (152-ФЗ)</button>
-        <button type="button" id="open-admin-btn" style="background:none;border:1px solid var(--border-subtle);border-radius:8px;padding:5px 12px;color:var(--text-secondary);cursor:pointer;">⚙ Панель мастера</button>
+        <button type="button" id="open-admin-btn" style="background:none;border:1px solid var(--border-subtle);border-radius:8px;padding:6px 12px;color:var(--text-secondary);cursor:pointer;">⚙ Панель мастера</button>
       </div>
     </div>
   </footer>
 
-  <!-- Прилипающая мобильная плашка живой сметы (показывается на смартфоне, когда в калькуляторе выбраны позиции) -->
+  <!-- Прилипающая мобильная плашка живой сметы -->
   <div class="mobile-calc-dock" id="mobile-calc-dock">
     <div>
       <div style="font-size:0.7rem;color:var(--text-secondary);">Предварительная смета:</div>
-      <div class="num-mono" style="font-size:0.98rem;font-weight:800;color:var(--amber-bright);" id="mob-dock-range">0 ₽</div>
+      <div class="num-mono" style="font-size:0.95rem;font-weight:800;color:var(--amber-bright);" id="mob-dock-range">0 ₽</div>
     </div>
     <button type="button" class="btn btn-primary" id="mob-dock-order-btn" style="min-height:38px;padding:8px 14px;font-size:0.82rem;">
       В заявку →
@@ -1736,18 +1840,18 @@
   <div class="fab-container" id="fab-container">
     <div class="fab-menu" id="fab-menu"></div>
     <button type="button" class="fab-trigger" id="fab-trigger" aria-label="Быстрая связь с мастером">
-      <svg width="24" height="24"><use href="#i-phone"/></svg>
+      <svg width="22" height="22"><use href="#i-phone"/></svg>
     </button>
   </div>
 
   <!-- Модальное окно Политики конфиденциальности -->
   <div class="modal-backdrop" id="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
     <div class="modal-window">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-        <h3 id="privacy-title">Политика обработки персональных данных (152-ФЗ)</h3>
-        <button type="button" class="btn btn-glass" id="close-privacy-btn" style="min-height:34px;padding:4px 12px;font-size:0.82rem;">Закрыть</button>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;">
+        <h3 id="privacy-title" style="font-size:1.05rem;">Политика обработки персональных данных (152-ФЗ)</h3>
+        <button type="button" class="btn btn-glass" id="close-privacy-btn" style="min-height:34px;padding:4px 12px;font-size:0.8rem;">Закрыть</button>
       </div>
-      <div style="font-size:0.86rem;color:var(--text-secondary);display:grid;gap:10px;">
+      <div style="font-size:0.85rem;color:var(--text-secondary);display:grid;gap:10px;">
         <p>1. Настоящая Политика определяет порядок обработки и защиты информации о физических лицах, пользующихся формами обратной связи и расчёта стоимости на сайте электромонтажных услуг.</p>
         <p>2. <strong>Состав данных:</strong> Имя пользователя, контактный номер телефона и текст комментария со сметой электромонтажных работ.</p>
         <p>3. <strong>Цель обработки:</strong> Консультация по вопросам электромонтажа, расчёт предварительной сметы и согласование времени выезда мастера на объект.</p>
@@ -1756,11 +1860,11 @@
     </div>
   </div>
 
-  <!-- Модальное окно подтверждения действия (вместо системного confirm) -->
+  <!-- Модальное окно подтверждения действия -->
   <div class="modal-backdrop" id="confirm-modal" role="dialog" aria-modal="true">
     <div class="modal-window" style="max-width:420px;">
-      <h3 style="margin-bottom:10px;font-size:1.15rem;" id="confirm-modal-title">Подтверждение</h3>
-      <p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:18px;" id="confirm-modal-text">Вы уверены?</p>
+      <h3 style="margin-bottom:10px;font-size:1.12rem;" id="confirm-modal-title">Подтверждение</h3>
+      <p style="font-size:0.88rem;color:var(--text-secondary);margin-bottom:18px;" id="confirm-modal-text">Вы уверены?</p>
       <div style="display:flex;justify-content:flex-end;gap:10px;">
         <button type="button" class="btn btn-glass" id="confirm-cancel-btn" style="min-height:38px;padding:6px 14px;">Отмена</button>
         <button type="button" class="btn btn-primary" id="confirm-ok-btn" style="min-height:38px;padding:6px 16px;">Подтвердить</button>
@@ -1769,7 +1873,7 @@
   </div>
 
   <!-- ==========================================================================
-       ВСТРОЕННАЯ ОБЛАЧНАЯ ПАНЕЛЬ УПРАВЛЕНИЯ МАСТЕРА (CMS ВНУТРИ ЭТОГО ЖЕ ФАЙЛА)
+       ВСТРОЕННАЯ ОБЛАЧНАЯ ПАНЕЛЬ УПРАВЛЕНИЯ МАСТЕРА (100% АДАПТИВ ПОД ТЕЛЕФОН)
        ========================================================================== -->
   <div class="admin-overlay" id="admin-overlay" aria-hidden="true">
     <header class="site-header">
@@ -1777,23 +1881,22 @@
         <div class="brand-logo">
           <span class="brand-emblem">⚙</span>
           <span class="brand-text-wrap">
-            <span class="brand-title">Панель управления мастера</span>
-            <span class="brand-meta">Облачная синхронизация GitHub Gist</span>
+            <span class="brand-title">Панель мастера</span>
           </span>
         </div>
         <div class="header-actions">
-          <button type="button" class="btn btn-glass" id="close-admin-overlay-btn" style="min-height:38px;padding:6px 14px;font-size:0.84rem;">← Вернуться на сайт</button>
-          <button type="button" class="btn btn-glass is-hidden" id="admin-logout-btn" style="min-height:38px;padding:6px 12px;font-size:0.84rem;">Выйти</button>
+          <button type="button" class="btn btn-glass" id="close-admin-overlay-btn" style="min-height:36px;padding:6px 12px;font-size:0.8rem;">← Вернуться на сайт</button>
+          <button type="button" class="btn btn-glass is-hidden" id="admin-logout-btn" style="min-height:36px;padding:6px 10px;font-size:0.8rem;">Выйти</button>
         </div>
       </div>
     </header>
 
     <div class="container">
       <!-- Экран входа по паролю -->
-      <section id="login-screen" style="max-width:420px;margin:48px auto;">
-        <form id="login-form" class="bento-card" style="padding:26px;">
-          <h2 style="font-size:1.4rem;margin-bottom:6px;color:#FFFFFF;">Вход в панель мастера</h2>
-          <p style="font-size:0.86rem;color:var(--text-secondary);margin-bottom:18px;">
+      <section id="login-screen" style="max-width:420px;margin:36px auto;">
+        <form id="login-form" class="bento-card" style="padding:22px;">
+          <h2 style="font-size:1.35rem;margin-bottom:6px;color:#FFFFFF;">Вход в панель мастера</h2>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:16px;">
             Пароль по умолчанию: <code class="num-mono" style="color:var(--amber-bright);">admin</code>
           </p>
           <div class="field">
@@ -1807,15 +1910,15 @@
 
       <!-- Интерфейс CMS после входа -->
       <div id="admin-app" class="is-hidden">
-        <div class="bento-card" style="margin-top:20px;padding:18px 22px;border-color:var(--border-amber);background:rgba(245,158,11,0.06);">
-          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+        <div class="bento-card" style="margin-top:16px;padding:16px;border-color:var(--border-amber);background:rgba(245,158,11,0.06);">
+          <div style="display:flex;flex-direction:column;gap:12px;">
             <div>
-              <strong style="color:var(--amber-bright);font-size:0.95rem;">☁ Живая облачная админка + выгрузка единого файла:</strong>
-              <p style="font-size:0.82rem;color:var(--text-secondary);margin-top:3px;">
-                При нажатии <strong>«Сохранить»</strong> цены и контакты сразу обновляются в облаке Gist. А кнопка справа скачивает готовый единый файл <code>index.html</code> со всеми вшитыми настройками для загрузки на GitHub Pages.
+              <strong style="color:var(--amber-bright);font-size:0.92rem;">☁ Живая облачная админка + выгрузка единого файла:</strong>
+              <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">
+                При нажатии <strong>«Сохранить в облако»</strong> цены и контакты сразу обновляются в облаке Gist. А кнопка ниже скачивает готовый единый файл <code>index.html</code> со всеми вшитыми настройками.
               </p>
             </div>
-            <button type="button" class="btn btn-primary" id="download-ready-html-top" style="font-size:0.84rem;">⬇ Скачать готовый index.html</button>
+            <button type="button" class="btn btn-primary" id="download-ready-html-top" style="width:100%;font-size:0.85rem;">⬇ Скачать готовый index.html</button>
           </div>
         </div>
 
@@ -1832,131 +1935,133 @@
             <button type="button" class="admin-tab-btn" data-tab="tab-settings">9. Облако, экспорт и пароль</button>
           </aside>
 
-          <div class="bento-card" style="padding:22px;">
-            <!-- Вкладка 1 -->
+          <div class="bento-card" style="padding:16px;">
+            <!-- Вкладка 1: Все длинные поля сделаны многострочными textarea, чтобы слова никогда не обрезались! -->
             <div class="admin-tab-pane" id="tab-brand">
-              <h2 style="margin-bottom:16px;font-size:1.3rem;">Бренд, город и первый экран</h2>
-              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;">
+              <h2 style="margin-bottom:14px;font-size:1.2rem;">Бренд, город и первый экран</h2>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
                 <div class="field"><label>Название бренда</label><input type="text" id="b-name" class="input"></div>
                 <div class="field"><label>Имя и фамилия мастера</label><input type="text" id="b-master" class="input"></div>
                 <div class="field"><label>Город</label><input type="text" id="b-city" class="input"></div>
-                <div class="field"><label>Зона выезда (регион)</label><input type="text" id="b-region" class="input"></div>
               </div>
-              <div class="field"><label>Главный заголовок H1 на первом экране</label><input type="text" id="b-tagline" class="input"></div>
-              <div class="field"><label>Подзаголовок после имени мастера</label><textarea id="b-hero-subtitle" class="textarea" rows="2"></textarea></div>
-              <div class="field"><label>Подпись под блоком «Технический регламент»</label><input type="text" id="b-hero-caption" class="input"></div>
-              <div class="field"><label>Районы обслуживания</label><input type="text" id="b-districts" class="input"></div>
-              <div class="field"><label>График работы</label><input type="text" id="b-schedule" class="input"></div>
+              <div class="field"><label>Зона выезда (регион)</label><textarea id="b-region" class="textarea" rows="2"></textarea></div>
+              <div class="field"><label>Главный заголовок H1 на первом экране</label><textarea id="b-tagline" class="textarea" rows="2"></textarea></div>
+              <div class="field"><label>Подзаголовок после имени мастера</label><textarea id="b-hero-subtitle" class="textarea" rows="3"></textarea></div>
+              <div class="field"><label>Подпись под блоком «Технический регламент»</label><textarea id="b-hero-caption" class="textarea" rows="2"></textarea></div>
+              <div class="field"><label>Районы обслуживания</label><textarea id="b-districts" class="textarea" rows="2"></textarea></div>
+              <div class="field"><label>График работы</label><textarea id="b-schedule" class="textarea" rows="2"></textarea></div>
 
-              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;">
+              <div class="admin-row-2col">
                 <div class="field"><label>Стаж (плашка 1)</label><input type="text" id="b-exp" class="input"></div>
                 <div class="field"><label>Гарантия (плашка 2)</label><input type="text" id="b-war" class="input"></div>
-                <div class="field"><label>Время выезда (плашка 3)</label><input type="text" id="b-arr" class="input"></div>
-                <div class="field"><label>Стандарт (плашка 4)</label><input type="text" id="b-norm" class="input"></div>
-                <div class="field"><label>Минимальный заказ (₽)</label><input type="number" id="b-minorder" class="input"></div>
-                <div class="field"><label>Наценка за срочность (%)</label><input type="number" id="b-urgent-pct" class="input"></div>
+                <div class="field"><label>Время выезда (3)</label><input type="text" id="b-arr" class="input"></div>
+                <div class="field"><label>Стандарт (4)</label><input type="text" id="b-norm" class="input"></div>
+                <div class="field"><label>Мин. заказ (₽)</label><input type="number" id="b-minorder" class="input"></div>
+                <div class="field"><label>Срочность (%)</label><input type="number" id="b-urgent-pct" class="input"></div>
               </div>
-              <button type="button" class="btn btn-primary js-save-all">Сохранить в облако</button>
+              <button type="button" class="btn btn-primary js-save-all" style="width:100%;">Сохранить в облако</button>
             </div>
 
             <!-- Вкладка 2 -->
             <div class="admin-tab-pane is-hidden" id="tab-contacts">
-              <h2 style="margin-bottom:12px;font-size:1.3rem;">Контакты и мессенджеры РФ</h2>
-              <p style="font-size:0.84rem;color:var(--text-secondary);margin-bottom:16px;">Пустые поля мессенджеров автоматически скрываются на сайте.</p>
-              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;">
-                <div class="field"><label>Телефон</label><input type="text" id="c-phone" class="input"></div>
-                <div class="field"><label>E-mail</label><input type="email" id="c-email" class="input"></div>
-                <div class="field"><label>Ссылка на Telegram</label><input type="url" id="c-tg" class="input" placeholder="https://t.me/username"></div>
-                <div class="field"><label>Ссылка на WhatsApp</label><input type="url" id="c-wa" class="input" placeholder="https://wa.me/79123456789"></div>
-                <div class="field"><label>Ссылка на MAX</label><input type="url" id="c-max" class="input" placeholder="https://max.ru/username"></div>
-                <div class="field"><label>Ссылка на ВКонтакте</label><input type="url" id="c-vk" class="input" placeholder="https://vk.com/username"></div>
+              <h2 style="margin-bottom:10px;font-size:1.2rem;">Контакты и мессенджеры РФ</h2>
+              <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:14px;">Пустые поля мессенджеров автоматически скрываются на сайте.</p>
+              <div style="display:grid;gap:10px;">
+                <div class="field" style="margin:0;"><label>Телефон</label><input type="text" id="c-phone" class="input"></div>
+                <div class="field" style="margin:0;"><label>E-mail</label><input type="email" id="c-email" class="input"></div>
+                <div class="field" style="margin:0;"><label>Ссылка на Telegram</label><input type="url" id="c-tg" class="input" placeholder="https://t.me/username"></div>
+                <div class="field" style="margin:0;"><label>Ссылка на WhatsApp</label><input type="url" id="c-wa" class="input" placeholder="https://wa.me/79123456789"></div>
+                <div class="field" style="margin:0;"><label>Ссылка на MAX</label><input type="url" id="c-max" class="input" placeholder="https://max.ru/username"></div>
+                <div class="field" style="margin:0;"><label>Ссылка на ВКонтакте</label><input type="url" id="c-vk" class="input" placeholder="https://vk.com/username"></div>
               </div>
-              <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border-subtle);">
-                <h3 style="font-size:1rem;margin-bottom:8px;">Уведомления о заявках в Telegram-бот (опционально)</h3>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;">
-                  <div class="field"><label>Telegram Bot Token (@BotFather)</label><input type="text" id="c-bot-token" class="input"></div>
-                  <div class="field"><label>Telegram Chat ID</label><input type="text" id="c-chat-id" class="input"></div>
+              <div style="margin:16px 0;padding-top:14px;border-top:1px solid var(--border-subtle);">
+                <h3 style="font-size:0.95rem;margin-bottom:10px;">Уведомления о заявках в Telegram-бот (опционально)</h3>
+                <div style="display:grid;gap:10px;">
+                  <div class="field" style="margin:0;"><label>Telegram Bot Token (@BotFather)</label><input type="text" id="c-bot-token" class="input"></div>
+                  <div class="field" style="margin:0;"><label>Telegram Chat ID</label><input type="text" id="c-chat-id" class="input"></div>
                 </div>
               </div>
-              <button type="button" class="btn btn-primary js-save-all">Сохранить контакты</button>
+              <button type="button" class="btn btn-primary js-save-all" style="width:100%;">Сохранить контакты</button>
             </div>
 
             <!-- Вкладка 3 -->
             <div class="admin-tab-pane is-hidden" id="tab-services">
-              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px;">
-                <h2 style="font-size:1.3rem;">Услуги, описания и расценки</h2>
+              <div class="admin-section-bar">
+                <h2 style="font-size:1.2rem;">Услуги, описания и расценки</h2>
                 <button type="button" class="btn btn-glass" id="add-service-btn">+ Добавить услугу</button>
               </div>
               <div id="admin-services-list" style="display:grid;gap:12px;"></div>
-              <button type="button" class="btn btn-primary js-save-all" style="margin-top:16px;">Сохранить прайс</button>
+              <button type="button" class="btn btn-primary js-save-all" style="width:100%;margin-top:16px;">Сохранить прайс</button>
             </div>
 
             <!-- Вкладка 4 -->
             <div class="admin-tab-pane is-hidden" id="tab-materials">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-                <h2 style="font-size:1.3rem;">Материалы для калькулятора</h2>
+              <div class="admin-section-bar">
+                <h2 style="font-size:1.2rem;">Материалы для калькулятора</h2>
                 <button type="button" class="btn btn-glass" id="add-material-btn">+ Добавить материал</button>
               </div>
-              <div id="admin-materials-list"></div>
-              <button type="button" class="btn btn-primary js-save-all" style="margin-top:16px;">Сохранить материалы</button>
+              <div id="admin-materials-list" style="display:grid;gap:10px;"></div>
+              <button type="button" class="btn btn-primary js-save-all" style="width:100%;margin-top:16px;">Сохранить материалы</button>
             </div>
 
             <!-- Вкладка 5 -->
             <div class="admin-tab-pane is-hidden" id="tab-cases">
-              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px;">
-                <h2 style="font-size:1.3rem;">Инженерные паспорта объектов (Портфолио)</h2>
+              <div class="admin-section-bar">
+                <h2 style="font-size:1.2rem;">Инженерные паспорта объектов</h2>
                 <button type="button" class="btn btn-glass" id="add-case-btn">+ Добавить объект</button>
               </div>
-              <div id="admin-cases-list" style="display:grid;gap:16px;"></div>
-              <button type="button" class="btn btn-primary js-save-all" style="margin-top:16px;">Сохранить объекты</button>
+              <div id="admin-cases-list" style="display:grid;gap:14px;"></div>
+              <button type="button" class="btn btn-primary js-save-all" style="width:100%;margin-top:16px;">Сохранить объекты</button>
             </div>
 
             <!-- Вкладка 6 -->
             <div class="admin-tab-pane is-hidden" id="tab-steps-faq">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                <h2 style="font-size:1.25rem;">Этапы работы</h2>
+              <div class="admin-section-bar">
+                <h2 style="font-size:1.2rem;">Этапы работы</h2>
                 <button type="button" class="btn btn-glass" id="add-step-btn">+ Добавить этап</button>
               </div>
-              <div id="admin-steps-list" style="display:grid;gap:10px;margin-bottom:24px;"></div>
+              <div id="admin-steps-list" style="display:grid;gap:12px;margin-bottom:24px;"></div>
 
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-top:18px;border-top:1px solid var(--border-subtle);">
-                <h2 style="font-size:1.25rem;">Частые вопросы (FAQ)</h2>
+              <div class="admin-section-bar" style="padding-top:16px;border-top:1px solid var(--border-subtle);">
+                <h2 style="font-size:1.2rem;">Частые вопросы (FAQ)</h2>
                 <button type="button" class="btn btn-glass" id="add-faq-btn">+ Добавить вопрос</button>
               </div>
               <div id="admin-faqs-list" style="display:grid;gap:12px;"></div>
-              <button type="button" class="btn btn-primary js-save-all" style="margin-top:16px;">Сохранить этапы и FAQ</button>
+              <button type="button" class="btn btn-primary js-save-all" style="width:100%;margin-top:16px;">Сохранить этапы и FAQ</button>
             </div>
 
             <!-- Вкладка 7 -->
             <div class="admin-tab-pane is-hidden" id="tab-reviews">
-              <h2 style="margin-bottom:14px;font-size:1.3rem;">Отзывы клиентов и ручное добавление</h2>
-              <div class="bento-card" style="padding:16px;margin-bottom:18px;background:var(--card-inset);">
-                <h3 style="font-size:0.96rem;margin-bottom:10px;color:var(--amber-bright);">+ Добавить новый отзыв вручную (с Авито / мессенджера)</h3>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:8px;">
-                  <input type="text" id="adm-rev-name" class="input" placeholder="Имя клиента *">
+              <h2 style="margin-bottom:12px;font-size:1.2rem;">Отзывы клиентов и добавление</h2>
+              <div class="admin-item-card" style="margin-bottom:18px;border-color:var(--border-amber);">
+                <h3 style="font-size:0.92rem;color:var(--amber-bright);">+ Добавить новый отзыв вручную</h3>
+                <input type="text" id="adm-rev-name" class="input" placeholder="Имя клиента *">
+                <div class="admin-row-2col">
                   <input type="text" id="adm-rev-district" class="input" placeholder="Район / ЖК">
+                  <input type="text" id="adm-rev-date" class="input" placeholder="Дата (15 мая 2026)">
+                </div>
+                <div class="admin-row-2col">
                   <input type="text" id="adm-rev-service" class="input" placeholder="Услуга">
-                  <input type="text" id="adm-rev-date" class="input" placeholder="Дата (напр. 15 мая 2026)">
                   <select id="adm-rev-rating" class="input">
-                    <option value="5">5 ★</option>
-                    <option value="4">4 ★</option>
-                    <option value="3">3 ★</option>
+                    <option value="5">Оценка: 5 ★</option>
+                    <option value="4">Оценка: 4 ★</option>
+                    <option value="3">Оценка: 3 ★</option>
                   </select>
                 </div>
-                <textarea id="adm-rev-text" class="textarea" rows="2" placeholder="Текст отзыва *" style="margin-bottom:8px;"></textarea>
-                <button type="button" class="btn btn-primary" id="adm-add-rev-btn" style="min-height:38px;padding:6px 16px;font-size:0.84rem;">Опубликовать отзыв</button>
+                <textarea id="adm-rev-text" class="textarea" rows="3" placeholder="Текст отзыва *"></textarea>
+                <button type="button" class="btn btn-primary" id="adm-add-rev-btn" style="width:100%;">Опубликовать отзыв</button>
               </div>
-              <div id="admin-reviews-list" style="display:grid;gap:10px;"></div>
-              <button type="button" class="btn btn-primary js-save-all" style="margin-top:14px;">Сохранить отзывы</button>
+              <div id="admin-reviews-list" style="display:grid;gap:12px;"></div>
+              <button type="button" class="btn btn-primary js-save-all" style="width:100%;margin-top:14px;">Сохранить отзывы</button>
             </div>
 
             <!-- Вкладка 8 -->
             <div class="admin-tab-pane is-hidden" id="tab-requests">
-              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;">
-                <h2 style="font-size:1.3rem;">Заявки клиентов</h2>
-                <div style="display:flex;gap:8px;">
-                  <button type="button" class="btn btn-glass" id="refresh-requests-btn" style="min-height:36px;padding:6px 12px;font-size:0.8rem;">↻ Обновить из облака</button>
-                  <button type="button" class="btn btn-glass" id="clear-requests-btn" style="min-height:36px;padding:6px 12px;font-size:0.8rem;color:var(--danger);">Очистить все</button>
+              <div class="admin-section-bar">
+                <h2 style="font-size:1.2rem;">Заявки клиентов</h2>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                  <button type="button" class="btn btn-glass" id="refresh-requests-btn" style="font-size:0.8rem;">↻ Обновить из облака</button>
+                  <button type="button" class="btn btn-glass" id="clear-requests-btn" style="font-size:0.8rem;color:var(--danger);">Очистить все</button>
                 </div>
               </div>
               <div id="admin-requests-list"></div>
@@ -1964,45 +2069,45 @@
 
             <!-- Вкладка 9 -->
             <div class="admin-tab-pane is-hidden" id="tab-settings">
-              <h2 style="margin-bottom:14px;font-size:1.3rem;">Облачная синхронизация (GitHub Gist), экспорт и пароль</h2>
+              <h2 style="margin-bottom:14px;font-size:1.2rem;">Облако GitHub Gist, экспорт и пароль</h2>
 
-              <div class="bento-card" style="padding:18px;margin-bottom:18px;background:var(--card-inset);border-color:rgba(59,130,246,0.35);">
-                <h3 style="margin-bottom:6px;font-size:1rem;color:#93C5FD;">☁ Облачная база GitHub Gist (Работает в РФ без VPN)</h3>
-                <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:12px;">
-                  Ваш активный Gist ID уже подключён. Для нового покупателя просто сотрите поле ID базы и нажмите «Создать новую облачную базу в 1 клик».
+              <div class="admin-item-card" style="margin-bottom:16px;border-color:rgba(59,130,246,0.35);">
+                <h3 style="font-size:0.96rem;color:#93C5FD;">☁ Облачная база GitHub Gist (Работает в РФ без VPN)</h3>
+                <p style="font-size:0.8rem;color:var(--text-secondary);">
+                  Ваш активный Gist ID уже подключён. Для нового покупателя сотрите поле ID базы и нажмите «Создать новую облачную базу в 1 клик».
                 </p>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:12px;">
-                  <div class="field" style="margin:0;"><label>GitHub Token (с правом gist)</label><input type="text" id="cloud-api-key" class="input num-mono" placeholder="ghp_..."></div>
-                  <div class="field" style="margin:0;"><label>ID облачной базы (Gist ID)</label><input type="text" id="cloud-bin-id" class="input num-mono" placeholder="0ad0938b..."></div>
-                </div>
-                <div style="display:flex;flex-wrap:wrap;gap:10px;">
-                  <button type="button" class="btn btn-primary" id="create-cloud-bin-btn" style="font-size:0.84rem;">☁ Создать новую облачную базу в 1 клик</button>
-                  <button type="button" class="btn btn-glass js-save-all" style="font-size:0.84rem;">Сохранить и перезаписать облако</button>
+                <div class="field" style="margin:0;"><label>GitHub Token (с правом gist)</label><input type="text" id="cloud-api-key" class="input num-mono" placeholder="ghp_..."></div>
+                <div class="field" style="margin:0;"><label>ID облачной базы (Gist ID)</label><input type="text" id="cloud-bin-id" class="input num-mono" placeholder="0ad0938b..."></div>
+                <div style="display:grid;gap:8px;margin-top:4px;">
+                  <button type="button" class="btn btn-primary" id="create-cloud-bin-btn" style="width:100%;">☁ Создать новую облачную базу в 1 клик</button>
+                  <button type="button" class="btn btn-glass js-save-all" style="width:100%;">Сохранить и перезаписать облако</button>
                 </div>
               </div>
 
-              <div class="bento-card" style="padding:18px;margin-bottom:18px;background:var(--card-inset);">
-                <h3 style="margin-bottom:6px;font-size:1rem;">Выгрузка готового сайта</h3>
-                <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:12px;">
+              <div class="admin-item-card" style="margin-bottom:16px;">
+                <h3 style="font-size:0.96rem;">Выгрузка готового сайта</h3>
+                <p style="font-size:0.8rem;color:var(--text-secondary);">
                   Скачайте единый файл <code>index.html</code> со всеми вшитыми ценами, контактами и зашифрованным ключом облака для загрузки на GitHub Pages.
                 </p>
-                <div style="display:flex;flex-wrap:wrap;gap:10px;">
-                  <button type="button" class="btn btn-primary" id="download-ready-html-btn" style="font-size:0.84rem;">⬇ Скачать готовый index.html</button>
-                  <button type="button" class="btn btn-glass" id="export-json-btn" style="font-size:0.84rem;">Скачать JSON-бэкап</button>
-                  <label class="btn btn-glass" style="cursor:pointer;font-size:0.84rem;">
-                    Загрузить JSON
-                    <input type="file" id="import-json-input" accept=".json" style="display:none;">
-                  </label>
+                <div style="display:grid;gap:8px;">
+                  <button type="button" class="btn btn-primary" id="download-ready-html-btn" style="width:100%;">⬇ Скачать готовый index.html</button>
+                  <div class="admin-row-2col">
+                    <button type="button" class="btn btn-glass" id="export-json-btn" style="font-size:0.8rem;">Скачать JSON-бэкап</button>
+                    <label class="btn btn-glass" style="cursor:pointer;font-size:0.8rem;">
+                      Загрузить JSON
+                      <input type="file" id="import-json-input" accept=".json" style="display:none;">
+                    </label>
+                  </div>
                 </div>
               </div>
 
-              <div class="field" style="max-width:320px;">
+              <div class="field">
                 <label>Сменить пароль входа в админку</label>
                 <input type="text" id="set-new-pass" class="input">
               </div>
-              <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;">
-                <button type="button" class="btn btn-primary js-save-all">Сохранить пароль</button>
-                <button type="button" class="btn btn-glass" id="reset-factory-btn" style="color:var(--danger);border-color:rgba(239,68,68,0.35);">Сбросить к заводским настройкам</button>
+              <div style="display:grid;gap:8px;">
+                <button type="button" class="btn btn-primary js-save-all" style="width:100%;">Сохранить пароль</button>
+                <button type="button" class="btn btn-glass" id="reset-factory-btn" style="width:100%;color:var(--danger);border-color:rgba(239,68,68,0.35);">Сбросить к заводским настройкам</button>
               </div>
             </div>
           </div>
@@ -2209,9 +2314,7 @@
           let legacyRaw = null;
           try { legacyRaw = localStorage.getItem(LEGACY_KEY); } catch (e) {}
 
-          if (!raw && legacyRaw) {
-            raw = legacyRaw;
-          }
+          if (!raw && legacyRaw) raw = legacyRaw;
           if (!raw) {
             const d = deepClone(DEFAULT_CONFIG);
             if (d.cloud && d.cloud.apiKey) d.cloud.apiKey = decodeToken(d.cloud.apiKey);
@@ -2227,7 +2330,6 @@
             seo: { ...DEFAULT_CONFIG.seo, ...(saved.seo || {}) }
           };
 
-          // Подхватываем ключ из старого хранилища, если он там был
           if (!merged.cloud.apiKey && legacyRaw) {
             try {
               const oldParsed = JSON.parse(legacyRaw);
@@ -2235,6 +2337,34 @@
                 merged.cloud.apiKey = oldParsed.cloud.apiKey;
               }
             } catch (e) {}
+          }
+
+          if (!Array.isArray(merged.services) || merged.services.length === 0) {
+            merged.services = deepClone(DEFAULT_CONFIG.services);
+          } else {
+            merged.services = merged.services.map(function (s, idx) {
+              const defS = DEFAULT_CONFIG.services[idx] || DEFAULT_CONFIG.services[0];
+              return {
+                ...defS,
+                ...s,
+                id: s.id || ('s' + (idx + 1)),
+                price: Number(s.price) || 0
+              };
+            });
+          }
+
+          if (!Array.isArray(merged.materials) || merged.materials.length === 0) {
+            merged.materials = deepClone(DEFAULT_CONFIG.materials);
+          } else {
+            merged.materials = merged.materials.map(function (m, idx) {
+              const defM = DEFAULT_CONFIG.materials[idx] || DEFAULT_CONFIG.materials[0];
+              return {
+                ...defM,
+                ...m,
+                id: m.id || ('m' + (idx + 1)),
+                price: Number(m.price) || 0
+              };
+            });
           }
 
           if (!Array.isArray(merged.techSpecs) || merged.techSpecs.length === 0) {
@@ -2321,24 +2451,6 @@
               const remote = JSON.parse(data.files['electro_config.json'].content);
               if (remote && remote.brand) {
                 remote.cloud = { binId: gistId, apiKey: savedKey };
-                if (!Array.isArray(remote.techSpecs) || remote.techSpecs.length === 0) {
-                  remote.techSpecs = deepClone(DEFAULT_CONFIG.techSpecs);
-                }
-                if (!Array.isArray(remote.steps) || remote.steps.length === 0) {
-                  remote.steps = deepClone(DEFAULT_CONFIG.steps);
-                }
-                if (Array.isArray(remote.cases)) {
-                  remote.cases = remote.cases.map(function (c, idx) {
-                    const defCase = DEFAULT_CONFIG.cases[idx] || DEFAULT_CONFIG.cases[0];
-                    return {
-                      ...defCase,
-                      ...c,
-                      badge: c.badge || defCase.badge,
-                      equipment: c.equipment || defCase.equipment,
-                      checklist: Array.isArray(c.checklist) && c.checklist.length > 0 ? c.checklist : defCase.checklist
-                    };
-                  });
-                }
                 self.saveConfig(remote, true);
                 return true;
               }
@@ -2445,35 +2557,14 @@
     window.Store = Store;
 
     /* ==========================================================================
-       КЛИЕНТСКАЯ ЛОГИКА И КАЛЬКУЛЯТОР
+       КЛИЕНТСКАЯ ЛОГИКА И КАЛЬКУЛЯТОР (С ПРЯМОЙ ПРИВЯЗКОЙ КНОПОК ДЛЯ ВСЕХ МОБИЛЬНЫХ БРАУЗЕРОВ)
        ========================================================================== */
     const calcState = {
       works: {},
       materials: {},
       matMode: 'own',
       urgent: false,
-      selectedRating: 5,
-      activePreset: ''
-    };
-
-    // Готовые сценарии (пресеты) для 1-клик расчёта
-    const PRESET_SCENARIOS = {
-      flat1: {
-        works: { s1: 180, s2: 28, s3: 6, s5: 18, s6: 22 },
-        materials: { m1: 120, m2: 60, m3: 34, m4: 10, m5: 1 }
-      },
-      flat2: {
-        works: { s1: 360, s2: 48, s3: 10, s5: 28, s6: 38 },
-        materials: { m1: 240, m2: 120, m3: 58, m4: 16, m5: 1 }
-      },
-      kitchen: {
-        works: { s1: 35, s2: 9, s6: 8, s8: 2 },
-        materials: { m1: 35, m3: 9, m4: 3 }
-      },
-      shield: {
-        works: { s5: 24 },
-        materials: { m4: 12, m5: 1 }
-      }
+      selectedRating: 5
     };
 
     const SERVICE_ICONS = {
@@ -2499,7 +2590,7 @@
       clearTimeout(showToast._timer);
       showToast._timer = setTimeout(function () {
         t.classList.remove('is-visible');
-      }, 2800);
+      }, 2600);
     }
 
     function copyTextSafe(text) {
@@ -2560,6 +2651,42 @@
         items.push(`<a href="${escapeHtml(contacts.vk)}" target="_blank" rel="noopener" class="btn-msg btn-vk"><svg><use href="#i-vk"/></svg><span>ВКонтакте</span></a>`);
       }
       return items.join('');
+    }
+
+    // Применение готового сценария (по индексам активных услуг, чтобы работало при любых изменениях в админке)
+    function applyCalculatorPreset(presetKey, btnEl) {
+      const cfg = window.Store.getConfig();
+      const srvs = (cfg.services || []).filter(function (s) { return s.active !== false; });
+      const mats = (cfg.materials || []).filter(function (m) { return m.active !== false; });
+
+      calcState.works = {};
+      calcState.materials = {};
+
+      function setW(idx, qty) { if (srvs[idx]) calcState.works[srvs[idx].id] = qty; }
+      function setM(idx, qty) { if (mats[idx]) calcState.materials[mats[idx].id] = qty; }
+
+      if (presetKey === 'flat1') {
+        setW(0, 180); setW(1, 28); setW(2, 6); setW(4, 18); setW(5, 22);
+        setM(0, 120); setM(1, 60); setM(2, 34); setM(3, 10); setM(4, 1);
+      } else if (presetKey === 'flat2') {
+        setW(0, 360); setW(1, 48); setW(2, 10); setW(4, 28); setW(5, 38);
+        setM(0, 240); setM(1, 120); setM(2, 58); setM(3, 16); setM(4, 1);
+      } else if (presetKey === 'kitchen') {
+        setW(0, 35); setW(1, 9); setW(5, 8); setW(7, 2);
+        setM(0, 35); setM(2, 9); setM(3, 3);
+      } else if (presetKey === 'shield') {
+        setW(4, 24);
+        setM(3, 12); setM(4, 1);
+      }
+
+      document.querySelectorAll('[data-preset]').forEach(function (b) {
+        b.classList.toggle('active', b === btnEl);
+      });
+
+      renderServices(cfg.services || []);
+      renderCalculatorInputs(cfg);
+      recalcEstimate();
+      showToast('Рассчитан сценарий: ' + (btnEl ? btnEl.textContent.trim() : ''));
     }
 
     function renderSite() {
@@ -2640,7 +2767,7 @@
               <span class="spec-code-badge">${escapeHtml(sp.code)}</span>
               <span class="spec-status-ok">✓ НОРМА</span>
             </div>
-            <div style="font-weight:700;font-size:0.92rem;color:#FFFFFF;margin-bottom:2px;">${escapeHtml(sp.title)}</div>
+            <div style="font-weight:700;font-size:0.9rem;color:#FFFFFF;margin-bottom:2px;">${escapeHtml(sp.title)}</div>
             <div style="font-size:0.8rem;color:var(--text-secondary);">${escapeHtml(sp.desc)}</div>
           </div>
         `;
@@ -2656,7 +2783,7 @@
         const iconSvg = SERVICE_ICONS[s.icon] || SERVICE_ICONS.shield;
         const inCartQty = Number(calcState.works[s.id]) || 0;
         return `
-          <article class="bento-card service-card ${inCartQty > 0 ? 'in-cart' : ''}">
+          <article class="bento-card service-card ${inCartQty > 0 ? 'in-cart' : ''}" id="srv-card-${escapeHtml(s.id)}">
             <div>
               <div class="service-card-top">
                 <div class="service-icon-box" aria-hidden="true">${iconSvg}</div>
@@ -2670,13 +2797,43 @@
                 <div style="font-size:0.7rem;color:var(--text-secondary);">Тариф</div>
                 <div class="service-price">от ${formatRub(s.price)}</div>
               </div>
-              <button type="button" class="btn ${inCartQty > 0 ? 'btn-primary' : 'btn-glass'} js-pick-service" data-id="${escapeHtml(s.id)}" style="min-height:36px;padding:6px 12px;font-size:0.8rem;">
-                ${inCartQty > 0 ? '✓ В смете (' + inCartQty + ')' : '+ В смету'}
+              <button type="button" class="btn ${inCartQty > 0 ? 'btn-primary' : 'btn-glass'} js-pick-service" data-id="${escapeHtml(s.id)}" style="min-height:38px;padding:6px 14px;font-size:0.82rem;">
+                ${inCartQty > 0 ? '✓ В смете (' + inCartQty + ')' : 'Рассчитать →'}
               </button>
             </div>
           </article>
         `;
       }).join('');
+
+      // Прямая привязка событий к каждой кнопке карточки услуги
+      grid.querySelectorAll('.js-pick-service').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const id = btn.getAttribute('data-id');
+          calcState.works[id] = Math.max(1, (Number(calcState.works[id]) || 0) + 1);
+          renderServices(window.Store.getConfig().services || []);
+          renderCalculatorInputs(window.Store.getConfig());
+          recalcEstimate();
+          const calcSection = document.getElementById('calculator');
+          if (calcSection) calcSection.scrollIntoView({ behavior: 'smooth' });
+          showToast('Услуга добавлена в калькулятор');
+        });
+      });
+    }
+
+    function updateServiceCardsBadgeOnly() {
+      const cfg = window.Store.getConfig();
+      (cfg.services || []).forEach(function (s) {
+        const qty = Number(calcState.works[s.id]) || 0;
+        const card = document.getElementById('srv-card-' + s.id);
+        if (card) {
+          card.classList.toggle('in-cart', qty > 0);
+          const btn = card.querySelector('.js-pick-service');
+          if (btn) {
+            btn.className = 'btn ' + (qty > 0 ? 'btn-primary' : 'btn-glass') + ' js-pick-service';
+            btn.textContent = qty > 0 ? '✓ В смете (' + qty + ')' : 'Рассчитать →';
+          }
+        }
+      });
     }
 
     function renderCalculatorInputs(cfg) {
@@ -2688,15 +2845,15 @@
       worksBox.innerHTML = activeWorks.map(function (s) {
         const qty = Number(calcState.works[s.id]) || 0;
         return `
-          <div class="calc-row ${qty > 0 ? 'is-active' : ''}">
-            <div class="calc-row-info">
-              <div class="calc-row-title">${escapeHtml(s.name)}</div>
+          <div class="calc-row ${qty > 0 ? 'is-active' : ''}" id="calc-row-work-${escapeHtml(s.id)}">
+            <div class="calc-row-title">${escapeHtml(s.name)}</div>
+            <div class="calc-row-controls">
               <div class="calc-row-meta">${formatRub(s.price)} / ${escapeHtml(s.unit)}</div>
-            </div>
-            <div class="stepper">
-              <button type="button" class="js-step" data-type="work" data-id="${escapeHtml(s.id)}" data-delta="-1" aria-label="Уменьшить">−</button>
-              <input type="number" min="0" max="9999" value="${qty}" class="js-qty-input" data-type="work" data-id="${escapeHtml(s.id)}" aria-label="${escapeHtml(s.name)}">
-              <button type="button" class="js-step" data-type="work" data-id="${escapeHtml(s.id)}" data-delta="1" aria-label="Увеличить">+</button>
+              <div class="stepper">
+                <button type="button" class="js-step" data-type="work" data-id="${escapeHtml(s.id)}" data-delta="-1" aria-label="Уменьшить">−</button>
+                <input type="number" min="0" max="9999" value="${qty}" class="js-qty-input" data-type="work" data-id="${escapeHtml(s.id)}" aria-label="${escapeHtml(s.name)}">
+                <button type="button" class="js-step" data-type="work" data-id="${escapeHtml(s.id)}" data-delta="1" aria-label="Увеличить">+</button>
+              </div>
             </div>
           </div>
         `;
@@ -2706,19 +2863,58 @@
       matsBox.innerHTML = activeMats.map(function (m) {
         const qty = Number(calcState.materials[m.id]) || 0;
         return `
-          <div class="calc-row ${qty > 0 ? 'is-active' : ''}">
-            <div class="calc-row-info">
-              <div class="calc-row-title">${escapeHtml(m.name)}</div>
+          <div class="calc-row ${qty > 0 ? 'is-active' : ''}" id="calc-row-mat-${escapeHtml(m.id)}">
+            <div class="calc-row-title">${escapeHtml(m.name)}</div>
+            <div class="calc-row-controls">
               <div class="calc-row-meta">${formatRub(m.price)} / ${escapeHtml(m.unit)}</div>
-            </div>
-            <div class="stepper">
-              <button type="button" class="js-step" data-type="mat" data-id="${escapeHtml(m.id)}" data-delta="-1" aria-label="Уменьшить">−</button>
-              <input type="number" min="0" max="9999" value="${qty}" class="js-qty-input" data-type="mat" data-id="${escapeHtml(m.id)}" aria-label="${escapeHtml(m.name)}">
-              <button type="button" class="js-step" data-type="mat" data-id="${escapeHtml(m.id)}" data-delta="1" aria-label="Увеличить">+</button>
+              <div class="stepper">
+                <button type="button" class="js-step" data-type="mat" data-id="${escapeHtml(m.id)}" data-delta="-1" aria-label="Уменьшить">−</button>
+                <input type="number" min="0" max="9999" value="${qty}" class="js-qty-input" data-type="mat" data-id="${escapeHtml(m.id)}" aria-label="${escapeHtml(m.name)}">
+                <button type="button" class="js-step" data-type="mat" data-id="${escapeHtml(m.id)}" data-delta="1" aria-label="Увеличить">+</button>
+              </div>
             </div>
           </div>
         `;
       }).join('');
+
+      // Прямая привязка ко всем кнопкам - / + и полям ввода без перерисовки DOM под пальцем
+      const allContainers = [worksBox, matsBox];
+      allContainers.forEach(function (container) {
+        container.querySelectorAll('.js-step').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            const type = btn.getAttribute('data-type');
+            const id = btn.getAttribute('data-id');
+            const delta = Number(btn.getAttribute('data-delta')) || 0;
+            const dict = type === 'work' ? calcState.works : calcState.materials;
+            const nextVal = Math.max(0, (Number(dict[id]) || 0) + delta);
+            dict[id] = nextVal;
+
+            const row = document.getElementById('calc-row-' + type + '-' + id);
+            if (row) {
+              row.classList.toggle('is-active', nextVal > 0);
+              const inp = row.querySelector('.js-qty-input');
+              if (inp) inp.value = nextVal;
+            }
+            updateServiceCardsBadgeOnly();
+            recalcEstimate();
+          });
+        });
+
+        container.querySelectorAll('.js-qty-input').forEach(function (inp) {
+          inp.addEventListener('input', function () {
+            const type = inp.getAttribute('data-type');
+            const id = inp.getAttribute('data-id');
+            const val = Math.max(0, Math.min(9999, parseInt(inp.value, 10) || 0));
+            if (type === 'work') calcState.works[id] = val;
+            else calcState.materials[id] = val;
+
+            const row = document.getElementById('calc-row-' + type + '-' + id);
+            if (row) row.classList.toggle('is-active', val > 0);
+            updateServiceCardsBadgeOnly();
+            recalcEstimate();
+          });
+        });
+      });
     }
 
     function recalcEstimate() {
@@ -2734,7 +2930,7 @@
         if (s.active === false) return;
         const q = Math.max(0, Number(calcState.works[s.id]) || 0);
         if (q > 0) {
-          const lineTotal = q * Number(s.price);
+          const lineTotal = q * (Number(s.price) || 0);
           worksSum += lineTotal;
           summaryLines.push({ title: `${s.name} (${q} ${s.unit})`, cost: lineTotal });
         }
@@ -2745,7 +2941,7 @@
           if (m.active === false) return;
           const q = Math.max(0, Number(calcState.materials[m.id]) || 0);
           if (q > 0) {
-            const lineTotal = q * Number(m.price);
+            const lineTotal = q * (Number(m.price) || 0);
             matsSum += lineTotal;
             summaryLines.push({ title: `[Мат.] ${m.name} (${q} ${m.unit})`, cost: lineTotal });
           }
@@ -2771,7 +2967,7 @@
           linesEl.innerHTML = `<div style="color:var(--text-secondary);padding:10px 0;">Выберите готовый сценарий выше или нажмите «+» напротив нужных работ.</div>`;
         } else {
           linesEl.innerHTML = summaryLines.map(function (ln) {
-            return `<div class="summary-line"><span>${escapeHtml(ln.title)}</span><strong class="num-mono" style="color:#FFFFFF;">${formatRub(ln.cost)}</strong></div>`;
+            return `<div class="summary-line"><span>${escapeHtml(ln.title)}</span><strong class="num-mono" style="color:#FFFFFF;white-space:nowrap;">${formatRub(ln.cost)}</strong></div>`;
           }).join('');
         }
       }
@@ -2794,6 +2990,10 @@
       const rangeStr = rawTotal > 0 ? `от ${formatRub(lowRange)} до ${formatRub(highRange)}` : '0 ₽';
       setText('sum-total-range', rangeStr);
       setText('mob-dock-range', rangeStr);
+
+      // Обновляем верхнее табло калькулятора
+      setText('calc-top-count', summaryLines.length > 0 ? `Выбрано позиций в смете: ${summaryLines.length}` : 'Выбрано позиций: 0 (нажмите «+» ниже)');
+      setText('calc-top-range', rawTotal > 0 ? `Ориентир: ${rangeStr}` : 'Итого: 0 ₽');
 
       const mobDock = document.getElementById('mobile-calc-dock');
       if (mobDock) {
@@ -2837,14 +3037,14 @@
               </div>
               <div class="case-body">
                 <div>
-                  <h3 style="font-size:1.12rem;margin-bottom:8px;color:#FFFFFF;">${escapeHtml(c.title)}</h3>
-                  <p style="font-size:0.88rem;color:var(--text-secondary);">${escapeHtml(c.done)}</p>
+                  <h3 style="font-size:1.08rem;margin-bottom:8px;color:#FFFFFF;">${escapeHtml(c.title)}</h3>
+                  <p style="font-size:0.86rem;color:var(--text-secondary);">${escapeHtml(c.done)}</p>
                   ${checklistHtml}
                 </div>
                 <div class="case-meta">
                   <div>
                     <div style="font-size:0.74rem;color:var(--text-secondary);">Срок: ${escapeHtml(c.duration)}</div>
-                    <div class="num-mono" style="font-size:1.18rem;font-weight:800;color:var(--amber-bright);">${escapeHtml(c.cost)}</div>
+                    <div class="num-mono" style="font-size:1.15rem;font-weight:800;color:var(--amber-bright);">${escapeHtml(c.cost)}</div>
                   </div>
                   <button type="button" class="btn btn-glass js-want-same" data-title="${escapeHtml(c.title)}" style="min-height:38px;padding:7px 14px;font-size:0.82rem;">
                     Хочу так же →
@@ -2855,6 +3055,18 @@
           </article>
         `;
       }).join('');
+
+      grid.querySelectorAll('.js-want-same').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const title = btn.getAttribute('data-title');
+          const commentEl = document.getElementById('lead-comment');
+          if (commentEl) {
+            commentEl.value = `Здравствуйте! Интересует аналогичный объект: «${title}». Прошу сориентировать по стоимости и срокам.`;
+          }
+          document.getElementById('request-section').scrollIntoView({ behavior: 'smooth' });
+          setTimeout(function () { document.getElementById('lead-name').focus(); }, 450);
+        });
+      });
     }
 
     function renderSteps(steps) {
@@ -2865,8 +3077,8 @@
         return `
           <div class="bento-card step-card">
             <span class="step-num-badge">ЭТАП 0${idx + 1}</span>
-            <h3 style="font-size:1.04rem;color:#FFFFFF;margin-bottom:6px;">${escapeHtml(st.title)}</h3>
-            <p style="font-size:0.86rem;color:var(--text-secondary);">${escapeHtml(st.desc)}</p>
+            <h3 style="font-size:1.02rem;color:#FFFFFF;margin-bottom:6px;">${escapeHtml(st.title)}</h3>
+            <p style="font-size:0.85rem;color:var(--text-secondary);">${escapeHtml(st.desc)}</p>
           </div>
         `;
       }).join('');
@@ -2915,12 +3127,22 @@
           <div class="bento-card faq-item ${idx === 0 ? 'is-open' : ''}">
             <button type="button" class="faq-question" aria-expanded="${idx === 0 ? 'true' : 'false'}">
               <span>${escapeHtml(f.q)}</span>
-              <span style="color:var(--amber-bright);font-size:1.25rem;">${idx === 0 ? '−' : '+'}</span>
+              <span style="color:var(--amber-bright);font-size:1.25rem;flex-shrink:0;">${idx === 0 ? '−' : '+'}</span>
             </button>
             <div class="faq-answer">${escapeHtml(f.a)}</div>
           </div>
         `;
       }).join('');
+
+      box.querySelectorAll('.faq-question').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const item = btn.parentElement;
+          const isOpen = item.classList.toggle('is-open');
+          btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          const sign = btn.querySelector('span:last-child');
+          if (sign) sign.textContent = isOpen ? '−' : '+';
+        });
+      });
     }
 
     function initPhoneMask() {
@@ -2962,6 +3184,7 @@
     }
 
     function transferEstimateToOrder() {
+      recalcEstimate();
       const commentEl = document.getElementById('lead-comment');
       if (commentEl && calcState._formattedText) {
         commentEl.value = calcState._formattedText;
@@ -2973,7 +3196,7 @@
     }
 
     /* ==========================================================================
-       ЛОГИКА ВСТРОЕННОЙ CMS АДМИН-ПАНЕЛИ
+       ЛОГИКА ВСТРОЕННОЙ CMS АДМИН-ПАНЕЛИ (ПОЛНОСТЬЮ МНОГОСТРОЧНЫЕ ПОЛЯ БЕЗ ОБРЕЗАНИЯ СЛОВ)
        ========================================================================== */
     let workingConfig = null;
     const ICON_OPTIONS = [
@@ -3065,6 +3288,7 @@
       renderAdminRequests();
     }
 
+    // Вкладка 3: Услуги — каждое длинное поле на всю ширину с переносом текста
     function renderAdminServices() {
       const box = document.getElementById('admin-services-list');
       if (!box) return;
@@ -3073,84 +3297,147 @@
           return `<option value="${o.val}" ${s.icon === o.val ? 'selected' : ''}>${o.label}</option>`;
         }).join('');
         return `
-          <div class="bento-card" style="padding:14px;background:var(--card-inset);">
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:8px;">
-              <input type="text" class="input js-srv-name" data-idx="${idx}" value="${escapeHtml(s.name)}" placeholder="Название услуги">
-              <input type="text" class="input js-srv-unit" data-idx="${idx}" value="${escapeHtml(s.unit)}" placeholder="Ед. изм.">
-              <input type="number" class="input js-srv-price" data-idx="${idx}" value="${Number(s.price) || 0}" placeholder="Цена ₽">
+          <div class="admin-item-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+              <strong style="color:var(--amber-bright);font-size:0.86rem;">Услуга #${idx + 1}</strong>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <label style="display:inline-flex;align-items:center;gap:5px;font-size:0.8rem;color:var(--text-secondary);cursor:pointer;">
+                  <input type="checkbox" class="js-srv-active" data-idx="${idx}" ${s.active !== false ? 'checked' : ''} style="accent-color:var(--amber);">
+                  Активна
+                </label>
+                <button type="button" class="btn btn-glass js-del-srv" data-idx="${idx}" style="min-height:30px;padding:4px 10px;font-size:0.78rem;color:var(--danger);">Удалить ✕</button>
+              </div>
+            </div>
+            <div>
+              <label style="font-size:0.75rem;color:var(--text-secondary);">Название услуги</label>
+              <textarea class="textarea js-srv-name" data-idx="${idx}" rows="2">${escapeHtml(s.name)}</textarea>
+            </div>
+            <div class="admin-row-2col">
+              <div>
+                <label style="font-size:0.75rem;color:var(--text-secondary);">Цена (₽)</label>
+                <input type="number" class="input js-srv-price" data-idx="${idx}" value="${Number(s.price) || 0}">
+              </div>
+              <div>
+                <label style="font-size:0.75rem;color:var(--text-secondary);">Ед. изм.</label>
+                <input type="text" class="input js-srv-unit" data-idx="${idx}" value="${escapeHtml(s.unit)}">
+              </div>
+            </div>
+            <div>
+              <label style="font-size:0.75rem;color:var(--text-secondary);">Иконка карточки</label>
               <select class="input js-srv-icon" data-idx="${idx}">${iconOpts}</select>
             </div>
-            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
-              <input type="text" class="input js-srv-desc" data-idx="${idx}" value="${escapeHtml(s.desc || '')}" placeholder="Описание услуги" style="flex:1;min-width:200px;">
-              <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:var(--text-secondary);cursor:pointer;">
-                <input type="checkbox" class="js-srv-active" data-idx="${idx}" ${s.active !== false ? 'checked' : ''} style="accent-color:var(--amber);">
-                Активна
-              </label>
-              <button type="button" class="btn btn-glass js-del-srv" data-idx="${idx}" style="min-height:34px;padding:4px 10px;color:var(--danger);">✕</button>
+            <div>
+              <label style="font-size:0.75rem;color:var(--text-secondary);">Описание в карточке</label>
+              <textarea class="textarea js-srv-desc" data-idx="${idx}" rows="2">${escapeHtml(s.desc || '')}</textarea>
             </div>
           </div>
         `;
       }).join('');
     }
 
+    // Вкладка 4: Материалы — название на всю ширину сверху, цена и ед. изм. снизу (ничего не сжимается!)
     function renderAdminMaterials() {
       const box = document.getElementById('admin-materials-list');
       if (!box) return;
       box.innerHTML = (workingConfig.materials || []).map(function (m, idx) {
         return `
-          <div style="display:grid;grid-template-columns:2fr 80px 100px auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border-subtle);">
-            <input type="text" class="input js-mat-name" data-idx="${idx}" value="${escapeHtml(m.name)}" placeholder="Материал">
-            <input type="text" class="input js-mat-unit" data-idx="${idx}" value="${escapeHtml(m.unit)}" placeholder="Ед.">
-            <input type="number" class="input js-mat-price" data-idx="${idx}" value="${Number(m.price) || 0}" placeholder="Цена ₽">
-            <button type="button" class="btn btn-glass js-del-mat" data-idx="${idx}" style="min-height:36px;padding:6px 10px;color:var(--danger);">✕</button>
+          <div class="admin-item-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <strong style="color:var(--amber-bright);font-size:0.84rem;">Материал #${idx + 1}</strong>
+              <button type="button" class="btn btn-glass js-del-mat" data-idx="${idx}" style="min-height:30px;padding:4px 10px;font-size:0.78rem;color:var(--danger);">Удалить ✕</button>
+            </div>
+            <div>
+              <label style="font-size:0.75rem;color:var(--text-secondary);">Наименование материала</label>
+              <textarea class="textarea js-mat-name" data-idx="${idx}" rows="2">${escapeHtml(m.name)}</textarea>
+            </div>
+            <div class="admin-row-2col">
+              <div>
+                <label style="font-size:0.75rem;color:var(--text-secondary);">Цена (₽)</label>
+                <input type="number" class="input js-mat-price" data-idx="${idx}" value="${Number(m.price) || 0}">
+              </div>
+              <div>
+                <label style="font-size:0.75rem;color:var(--text-secondary);">Ед. изм.</label>
+                <input type="text" class="input js-mat-unit" data-idx="${idx}" value="${escapeHtml(m.unit)}">
+              </div>
+            </div>
           </div>
         `;
       }).join('');
     }
 
+    // Вкладка 5: Паспорта объектов — все длинные строки через textarea
     function renderAdminCases() {
       const box = document.getElementById('admin-cases-list');
       if (!box) return;
       box.innerHTML = (workingConfig.cases || []).map(function (c, idx) {
         const checklistStr = Array.isArray(c.checklist) ? c.checklist.join('\n') : '';
         return `
-          <div class="bento-card" style="padding:16px;background:var(--card-inset);">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <div class="admin-item-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
               <strong style="color:var(--amber-bright);">Паспорт объекта #${idx + 1}</strong>
               <button type="button" class="btn btn-glass js-del-case" data-idx="${idx}" style="min-height:30px;padding:4px 10px;font-size:0.78rem;color:var(--danger);">Удалить ✕</button>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:8px;">
-              <input type="text" class="input js-case-badge" data-idx="${idx}" value="${escapeHtml(c.badge || '')}" placeholder="Бейдж (Коттедж 180 м² • 15 кВт)">
-              <input type="text" class="input js-case-equip" data-idx="${idx}" value="${escapeHtml(c.equipment || '')}" placeholder="Оборудование (Щит 48 мод.)">
+            <div>
+              <label style="font-size:0.75rem;color:var(--text-secondary);">Тип и параметры объекта (бейдж)</label>
+              <textarea class="textarea js-case-badge" data-idx="${idx}" rows="2">${escapeHtml(c.badge || '')}</textarea>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:8px;">
-              <input type="text" class="input js-case-title" data-idx="${idx}" value="${escapeHtml(c.title)}" placeholder="Название работы">
-              <input type="text" class="input js-case-dur" data-idx="${idx}" value="${escapeHtml(c.duration)}" placeholder="Срок">
-              <input type="text" class="input js-case-cost" data-idx="${idx}" value="${escapeHtml(c.cost)}" placeholder="Стоимость">
+            <div>
+              <label style="font-size:0.75rem;color:var(--text-secondary);">Установленная автоматика / кабель</label>
+              <textarea class="textarea js-case-equip" data-idx="${idx}" rows="2">${escapeHtml(c.equipment || '')}</textarea>
             </div>
-            <textarea class="textarea js-case-done" data-idx="${idx}" rows="2" placeholder="Описание задачи" style="margin-bottom:8px;">${escapeHtml(c.done)}</textarea>
-            <textarea class="textarea js-case-checklist" data-idx="${idx}" rows="3" placeholder="Чек-лист проверок (каждый пункт с новой строки)" style="margin-bottom:8px;">${escapeHtml(checklistStr)}</textarea>
+            <div>
+              <label style="font-size:0.75rem;color:var(--text-secondary);">Заголовок выполненной работы</label>
+              <textarea class="textarea js-case-title" data-idx="${idx}" rows="2">${escapeHtml(c.title)}</textarea>
+            </div>
+            <div class="admin-row-2col">
+              <div>
+                <label style="font-size:0.75rem;color:var(--text-secondary);">Срок</label>
+                <input type="text" class="input js-case-dur" data-idx="${idx}" value="${escapeHtml(c.duration)}">
+              </div>
+              <div>
+                <label style="font-size:0.75rem;color:var(--text-secondary);">Стоимость</label>
+                <input type="text" class="input js-case-cost" data-idx="${idx}" value="${escapeHtml(c.cost)}">
+              </div>
+            </div>
+            <div>
+              <label style="font-size:0.75rem;color:var(--text-secondary);">Подробное описание работ</label>
+              <textarea class="textarea js-case-done" data-idx="${idx}" rows="3">${escapeHtml(c.done)}</textarea>
+            </div>
+            <div>
+              <label style="font-size:0.75rem;color:var(--text-secondary);">Чек-лист проверок (каждый пункт с новой строки)</label>
+              <textarea class="textarea js-case-checklist" data-idx="${idx}" rows="3">${escapeHtml(checklistStr)}</textarea>
+            </div>
             <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;">
-              <label class="btn btn-glass" style="min-height:34px;padding:5px 12px;font-size:0.8rem;cursor:pointer;">
-                📷 Загрузить реальное фото
+              <label class="btn btn-glass" style="width:100%;font-size:0.82rem;cursor:pointer;">
+                📷 Загрузить реальное фото объекта
                 <input type="file" accept="image/*" class="js-case-photo" data-idx="${idx}" style="display:none;">
               </label>
-              ${c.customPhoto ? `<button type="button" class="btn btn-glass js-clear-photo" data-idx="${idx}" style="min-height:34px;padding:5px 12px;font-size:0.8rem;">Убрать фото</button><span style="color:var(--emerald);font-size:0.78rem;">✓ Фото загружено</span>` : `<span style="color:var(--text-secondary);font-size:0.78rem;">Отображается как строгий инженерный паспорт</span>`}
+              ${c.customPhoto ? `<button type="button" class="btn btn-glass js-clear-photo" data-idx="${idx}" style="width:100%;font-size:0.8rem;">Убрать фото</button><span style="color:var(--emerald);font-size:0.78rem;">✓ Фото прикреплено</span>` : `<span style="color:var(--text-secondary);font-size:0.78rem;">Отображается как строгий инженерный паспорт</span>`}
             </div>
           </div>
         `;
       }).join('');
     }
 
+    // Вкладка 6: Этапы работы и FAQ — вертикальные карточки на всю ширину
     function renderAdminSteps() {
       const box = document.getElementById('admin-steps-list');
       if (!box) return;
       box.innerHTML = (workingConfig.steps || []).map(function (st, idx) {
         return `
-          <div style="display:grid;grid-template-columns:1fr 2fr auto;gap:8px;align-items:center;background:var(--card-inset);padding:10px;border-radius:10px;">
-            <input type="text" class="input js-step-title" data-idx="${idx}" value="${escapeHtml(st.title)}" placeholder="Этап">
-            <input type="text" class="input js-step-desc" data-idx="${idx}" value="${escapeHtml(st.desc)}" placeholder="Описание">
-            <button type="button" class="btn btn-glass js-del-step" data-idx="${idx}" style="min-height:36px;padding:6px 10px;color:var(--danger);">✕</button>
+          <div class="admin-item-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <strong style="color:var(--amber-bright);font-size:0.84rem;">Этап 0${idx + 1}</strong>
+              <button type="button" class="btn btn-glass js-del-step" data-idx="${idx}" style="min-height:30px;padding:4px 10px;font-size:0.78rem;color:var(--danger);">Удалить ✕</button>
+            </div>
+            <div>
+              <label style="font-size:0.75rem;color:var(--text-secondary);">Название этапа</label>
+              <input type="text" class="input js-step-title" data-idx="${idx}" value="${escapeHtml(st.title)}">
+            </div>
+            <div>
+              <label style="font-size:0.75rem;color:var(--text-secondary);">Описание действий мастера</label>
+              <textarea class="textarea js-step-desc" data-idx="${idx}" rows="2">${escapeHtml(st.desc)}</textarea>
+            </div>
           </div>
         `;
       }).join('');
@@ -3161,12 +3448,19 @@
       if (!box) return;
       box.innerHTML = (workingConfig.faqs || []).map(function (f, idx) {
         return `
-          <div class="bento-card" style="padding:14px;background:var(--card-inset);">
-            <div style="display:flex;gap:8px;margin-bottom:8px;">
-              <input type="text" class="input js-faq-q" data-idx="${idx}" value="${escapeHtml(f.q)}" placeholder="Вопрос">
-              <button type="button" class="btn btn-glass js-del-faq" data-idx="${idx}" style="min-height:36px;padding:6px 10px;color:var(--danger);">✕</button>
+          <div class="admin-item-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <strong style="color:var(--amber-bright);font-size:0.84rem;">Вопрос #${idx + 1}</strong>
+              <button type="button" class="btn btn-glass js-del-faq" data-idx="${idx}" style="min-height:30px;padding:4px 10px;font-size:0.78rem;color:var(--danger);">Удалить ✕</button>
             </div>
-            <textarea class="textarea js-faq-a" data-idx="${idx}" rows="2" placeholder="Ответ">${escapeHtml(f.a)}</textarea>
+            <div>
+              <label style="font-size:0.75rem;color:var(--text-secondary);">Текст вопроса</label>
+              <textarea class="textarea js-faq-q" data-idx="${idx}" rows="2">${escapeHtml(f.q)}</textarea>
+            </div>
+            <div>
+              <label style="font-size:0.75rem;color:var(--text-secondary);">Ответ мастера</label>
+              <textarea class="textarea js-faq-a" data-idx="${idx}" rows="3">${escapeHtml(f.a)}</textarea>
+            </div>
           </div>
         `;
       }).join('');
@@ -3177,25 +3471,28 @@
       if (!box) return;
       box.innerHTML = (workingConfig.reviews || []).map(function (r, idx) {
         return `
-          <div class="bento-card" style="padding:14px;background:var(--card-inset);">
-            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
-              <div style="display:flex;flex-wrap:wrap;gap:6px;flex:1;">
-                <input type="text" class="input js-rev-name" data-idx="${idx}" value="${escapeHtml(r.name)}" style="max-width:150px;padding:6px 10px;">
-                <input type="text" class="input js-rev-district" data-idx="${idx}" value="${escapeHtml(r.district)}" style="max-width:140px;padding:6px 10px;">
-                <input type="text" class="input js-rev-service" data-idx="${idx}" value="${escapeHtml(r.service)}" style="max-width:170px;padding:6px 10px;">
-                <input type="text" class="input js-rev-date" data-idx="${idx}" value="${escapeHtml(r.date)}" style="max-width:130px;padding:6px 10px;">
-                <select class="input js-rev-rating" data-idx="${idx}" style="max-width:80px;padding:6px;">
-                  <option value="5" ${Number(r.rating) === 5 ? 'selected' : ''}>5 ★</option>
-                  <option value="4" ${Number(r.rating) === 4 ? 'selected' : ''}>4 ★</option>
-                  <option value="3" ${Number(r.rating) === 3 ? 'selected' : ''}>3 ★</option>
-                </select>
-              </div>
+          <div class="admin-item-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+              <strong style="color:#FFFFFF;font-size:0.88rem;">${escapeHtml(r.name)}</strong>
               <div style="display:flex;gap:6px;">
-                ${r.approved === false ? `<button type="button" class="btn btn-primary js-rev-approve" data-id="${escapeHtml(r.id)}" style="min-height:32px;padding:4px 10px;font-size:0.78rem;">Одобрить</button>` : ''}
-                <button type="button" class="btn btn-glass js-rev-del" data-id="${escapeHtml(r.id)}" style="min-height:32px;padding:4px 10px;font-size:0.78rem;color:var(--danger);">Удалить</button>
+                ${r.approved === false ? `<button type="button" class="btn btn-primary js-rev-approve" data-id="${escapeHtml(r.id)}" style="min-height:30px;padding:4px 10px;font-size:0.76rem;">Одобрить</button>` : ''}
+                <button type="button" class="btn btn-glass js-rev-del" data-id="${escapeHtml(r.id)}" style="min-height:30px;padding:4px 10px;font-size:0.76rem;color:var(--danger);">Удалить ✕</button>
               </div>
             </div>
-            <textarea class="textarea js-rev-text" data-idx="${idx}" rows="2">${escapeHtml(r.text)}</textarea>
+            <div class="admin-row-2col">
+              <input type="text" class="input js-rev-name" data-idx="${idx}" value="${escapeHtml(r.name)}" placeholder="Имя">
+              <input type="text" class="input js-rev-district" data-idx="${idx}" value="${escapeHtml(r.district)}" placeholder="Район">
+            </div>
+            <div class="admin-row-2col">
+              <input type="text" class="input js-rev-date" data-idx="${idx}" value="${escapeHtml(r.date)}" placeholder="Дата">
+              <select class="input js-rev-rating" data-idx="${idx}">
+                <option value="5" ${Number(r.rating) === 5 ? 'selected' : ''}>5 ★</option>
+                <option value="4" ${Number(r.rating) === 4 ? 'selected' : ''}>4 ★</option>
+                <option value="3" ${Number(r.rating) === 3 ? 'selected' : ''}>3 ★</option>
+              </select>
+            </div>
+            <input type="text" class="input js-rev-service" data-idx="${idx}" value="${escapeHtml(r.service)}" placeholder="Услуга">
+            <textarea class="textarea js-rev-text" data-idx="${idx}" rows="3">${escapeHtml(r.text)}</textarea>
           </div>
         `;
       }).join('');
@@ -3209,30 +3506,22 @@
         box.innerHTML = `<p style="color:var(--text-secondary);">Заявок пока нет.</p>`;
         return;
       }
-      box.innerHTML = `
-        <div style="overflow-x:auto;">
-          <table class="admin-table">
-            <thead>
-              <tr><th>Дата</th><th>Клиент</th><th>Телефон</th><th>Канал</th><th>Смета / Комментарий</th><th></th></tr>
-            </thead>
-            <tbody>
-              ${list.map(function (r) {
-                const digits = (r.phone || '').replace(/\D/g, '');
-                return `
-                  <tr>
-                    <td>${escapeHtml(r.createdAt)}</td>
-                    <td><strong>${escapeHtml(r.name)}</strong></td>
-                    <td><a href="tel:+${digits}" style="color:var(--amber-bright);">${escapeHtml(r.phone)}</a></td>
-                    <td>${escapeHtml(r.channel)}</td>
-                    <td style="white-space:pre-wrap;font-size:0.8rem;max-width:340px;">${escapeHtml(r.comment)}</td>
-                    <td><button type="button" class="btn btn-glass js-req-del" data-id="${escapeHtml(r.id)}" style="min-height:28px;padding:3px 8px;color:var(--danger);">✕</button></td>
-                  </tr>
-                `;
-              }).join('')}
-            </tbody>
-          </table>
-        </div>
-      `;
+      box.innerHTML = `<div style="display:grid;gap:10px;">` + list.map(function (r) {
+        const digits = (r.phone || '').replace(/\D/g, '');
+        return `
+          <div class="admin-item-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <strong style="color:#FFFFFF;">${escapeHtml(r.name)}</strong>
+              <span style="font-size:0.75rem;color:var(--text-secondary);">${escapeHtml(r.createdAt)}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+              <a href="tel:+${digits}" class="num-mono" style="color:var(--amber-bright);font-weight:700;text-decoration:none;">${escapeHtml(r.phone)}</a>
+              <button type="button" class="btn btn-glass js-req-del" data-id="${escapeHtml(r.id)}" style="min-height:30px;padding:4px 10px;font-size:0.76rem;color:var(--danger);">Удалить ✕</button>
+            </div>
+            <div style="white-space:pre-wrap;font-size:0.82rem;color:var(--text-secondary);">${escapeHtml(r.comment)}</div>
+          </div>
+        `;
+      }).join('') + `</div>`;
     }
 
     function collectAdminDom() {
@@ -3414,7 +3703,6 @@
       reader.readAsDataURL(file);
     }
 
-    // Генерация готового монолитного index.html со вшитым конфигом и зашифрованным ключом
     function downloadReadyHtmlFile() {
       saveAllAdmin();
       const exportCfg = window.Store.getConfig();
@@ -3442,161 +3730,16 @@
        ОБРАБОТЧИКИ СОБЫТИЙ
        ========================================================================== */
     function bindEvents() {
-      document.addEventListener('click', function (e) {
-        // Быстрые пресеты калькулятора
-        const presetBtn = e.target.closest('[data-preset]');
-        if (presetBtn) {
-          const key = presetBtn.getAttribute('data-preset');
-          const preset = PRESET_SCENARIOS[key];
-          if (preset) {
-            calcState.works = deepClone(preset.works || {});
-            calcState.materials = deepClone(preset.materials || {});
-            document.querySelectorAll('[data-preset]').forEach(function (b) {
-              b.classList.toggle('active', b === presetBtn);
-            });
-            renderServices(window.Store.getConfig().services || []);
-            renderCalculatorInputs(window.Store.getConfig());
-            recalcEstimate();
-            showToast('Применён сценарий: ' + presetBtn.textContent.trim());
-          }
-          return;
-        }
-
-        // Добавление услуги из карточки
-        const pickBtn = e.target.closest('.js-pick-service');
-        if (pickBtn) {
-          const id = pickBtn.getAttribute('data-id');
-          calcState.works[id] = (Number(calcState.works[id]) || 0) + 1;
-          renderServices(window.Store.getConfig().services || []);
-          renderCalculatorInputs(window.Store.getConfig());
-          recalcEstimate();
-          showToast('Услуга добавлена в смету');
-          return;
-        }
-
-        // Степперы +/- в калькуляторе
-        const stepBtn = e.target.closest('.js-step');
-        if (stepBtn) {
-          const type = stepBtn.getAttribute('data-type');
-          const id = stepBtn.getAttribute('data-id');
-          const delta = Number(stepBtn.getAttribute('data-delta')) || 0;
-          const dict = type === 'work' ? calcState.works : calcState.materials;
-          dict[id] = Math.max(0, (Number(dict[id]) || 0) + delta);
-          renderServices(window.Store.getConfig().services || []);
-          renderCalculatorInputs(window.Store.getConfig());
-          recalcEstimate();
-          return;
-        }
-
-        // Кнопка «Хочу так же» в паспортах объектов
-        const sameBtn = e.target.closest('.js-want-same');
-        if (sameBtn) {
-          const title = sameBtn.getAttribute('data-title');
-          const commentEl = document.getElementById('lead-comment');
-          if (commentEl) {
-            commentEl.value = `Здравствуйте! Интересует аналогичный объект: «${title}». Прошу сориентировать по стоимости и срокам.`;
-          }
-          document.getElementById('request-section').scrollIntoView({ behavior: 'smooth' });
-          setTimeout(function () { document.getElementById('lead-name').focus(); }, 450);
-          return;
-        }
-
-        // Аккордеон FAQ
-        const faqBtn = e.target.closest('.faq-question');
-        if (faqBtn) {
-          const item = faqBtn.parentElement;
-          const isOpen = item.classList.toggle('is-open');
-          faqBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-          const sign = faqBtn.querySelector('span:last-child');
-          if (sign) sign.textContent = isOpen ? '−' : '+';
-          return;
-        }
-
-        // Удаление элементов в админке
-        const delSrv = e.target.closest('.js-del-srv');
-        if (delSrv) {
-          collectAdminDom();
-          workingConfig.services.splice(Number(delSrv.getAttribute('data-idx')), 1);
-          renderAdminServices();
-          return;
-        }
-        const delMat = e.target.closest('.js-del-mat');
-        if (delMat) {
-          collectAdminDom();
-          workingConfig.materials.splice(Number(delMat.getAttribute('data-idx')), 1);
-          renderAdminMaterials();
-          return;
-        }
-        const delCase = e.target.closest('.js-del-case');
-        if (delCase) {
-          collectAdminDom();
-          workingConfig.cases.splice(Number(delCase.getAttribute('data-idx')), 1);
-          renderAdminCases();
-          return;
-        }
-        const delStep = e.target.closest('.js-del-step');
-        if (delStep) {
-          collectAdminDom();
-          workingConfig.steps.splice(Number(delStep.getAttribute('data-idx')), 1);
-          renderAdminSteps();
-          return;
-        }
-        const delFaq = e.target.closest('.js-del-faq');
-        if (delFaq) {
-          collectAdminDom();
-          workingConfig.faqs.splice(Number(delFaq.getAttribute('data-idx')), 1);
-          renderAdminFaqs();
-          return;
-        }
-        const clearPhoto = e.target.closest('.js-clear-photo');
-        if (clearPhoto) {
-          collectAdminDom();
-          workingConfig.cases[Number(clearPhoto.getAttribute('data-idx'))].customPhoto = '';
-          window.Store.saveConfig(workingConfig);
-          renderAdminCases();
-          return;
-        }
-        const revApp = e.target.closest('.js-rev-approve');
-        if (revApp) {
-          collectAdminDom();
-          window.Store.saveConfig(workingConfig, true);
-          window.Store.approveReview(revApp.getAttribute('data-id'));
-          workingConfig = window.Store.getConfig();
-          renderAdminReviews();
-          showToast('Отзыв опубликован');
-          return;
-        }
-        const revDel = e.target.closest('.js-rev-del');
-        if (revDel) {
-          collectAdminDom();
-          window.Store.saveConfig(workingConfig, true);
-          window.Store.deleteReview(revDel.getAttribute('data-id'));
-          workingConfig = window.Store.getConfig();
-          renderAdminReviews();
-          showToast('Отзыв удалён');
-          return;
-        }
-        const reqDel = e.target.closest('.js-req-del');
-        if (reqDel) {
-          window.Store.deleteRequest(reqDel.getAttribute('data-id'));
-          workingConfig = window.Store.getConfig();
-          renderAdminRequests();
-          showToast('Заявка удалена');
-          return;
-        }
+      // Прямая привязка к кнопкам пресетов калькулятора
+      document.querySelectorAll('[data-preset]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          applyCalculatorPreset(btn.getAttribute('data-preset'), btn);
+        });
       });
 
-      document.addEventListener('input', function (e) {
-        if (e.target.classList.contains('js-qty-input')) {
-          const type = e.target.getAttribute('data-type');
-          const id = e.target.getAttribute('data-id');
-          const val = Math.max(0, Math.min(9999, parseInt(e.target.value, 10) || 0));
-          if (type === 'work') calcState.works[id] = val;
-          else calcState.materials[id] = val;
-          renderServices(window.Store.getConfig().services || []);
-          recalcEstimate();
-        }
-      });
+      document.getElementById('calc-top-order-btn').addEventListener('click', transferEstimateToOrder);
+      document.getElementById('calc-to-order-btn').addEventListener('click', transferEstimateToOrder);
+      document.getElementById('mob-dock-order-btn').addEventListener('click', transferEstimateToOrder);
 
       document.getElementById('mat-mode-own').addEventListener('click', function () {
         calcState.matMode = 'own';
@@ -3640,16 +3783,12 @@
         showToast('Смета очищена');
       });
 
-      document.getElementById('calc-to-order-btn').addEventListener('click', transferEstimateToOrder);
-      document.getElementById('mob-dock-order-btn').addEventListener('click', transferEstimateToOrder);
-
       document.getElementById('copy-phone-btn').addEventListener('click', function () {
         const phone = window.Store.getConfig().contacts.phone;
         copyTextSafe(phone);
         showToast('Номер скопирован: ' + phone);
       });
 
-      // Мобильное меню
       const mobMenu = document.getElementById('mobile-menu');
       document.getElementById('burger-open').addEventListener('click', function () {
         mobMenu.classList.add('is-open');
@@ -3661,24 +3800,22 @@
         lnk.addEventListener('click', function () { mobMenu.classList.remove('is-open'); });
       });
 
-      // Плавающая кнопка FAB
       const fabContainer = document.getElementById('fab-container');
       document.getElementById('fab-trigger').addEventListener('click', function () {
         fabContainer.classList.toggle('is-open');
       });
 
-      // Отзывы на сайте
       document.getElementById('toggle-review-form-btn').addEventListener('click', function () {
         document.getElementById('review-form').classList.toggle('is-hidden');
       });
 
-      document.getElementById('star-picker').addEventListener('click', function (e) {
-        const btn = e.target.closest('.star-btn');
-        if (!btn) return;
-        const val = Number(btn.getAttribute('data-val')) || 5;
-        calcState.selectedRating = val;
-        document.querySelectorAll('#star-picker .star-btn').forEach(function (b) {
-          b.classList.toggle('active', Number(b.getAttribute('data-val')) <= val);
+      document.querySelectorAll('#star-picker .star-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const val = Number(btn.getAttribute('data-val')) || 5;
+          calcState.selectedRating = val;
+          document.querySelectorAll('#star-picker .star-btn').forEach(function (b) {
+            b.classList.toggle('active', Number(b.getAttribute('data-val')) <= val);
+          });
         });
       });
 
@@ -3711,7 +3848,6 @@
         e.target.reset();
       });
 
-      // Отправка основной заявки
       let clickedChannel = 'whatsapp';
       document.querySelectorAll('#lead-form button[type="submit"]').forEach(function (btn) {
         btn.addEventListener('click', function () {
@@ -3780,7 +3916,6 @@
         }
       });
 
-      // Модалки
       const privacyModal = document.getElementById('privacy-modal');
       document.getElementById('open-privacy-btn').addEventListener('click', function () { privacyModal.classList.add('is-open'); });
       document.getElementById('open-privacy-inline').addEventListener('click', function () { privacyModal.classList.add('is-open'); });
@@ -3797,7 +3932,6 @@
         confirmCallback = null;
       });
 
-      // Вход и управление встроенной админкой
       document.getElementById('open-admin-btn').addEventListener('click', openAdminOverlay);
       document.getElementById('mob-open-admin-btn').addEventListener('click', function () {
         mobMenu.classList.remove('is-open');
@@ -3912,8 +4046,86 @@
         showToast('✓ Отзыв опубликован!');
       });
 
+      // Делегирование в админке с защитой для всех мобильных браузеров
+      document.getElementById('admin-overlay').addEventListener('click', function (e) {
+        const target = (e.target && e.target.nodeType === 1) ? e.target : (e.target && e.target.parentElement ? e.target.parentElement : null);
+        if (!target || !target.closest) return;
+
+        const delSrv = target.closest('.js-del-srv');
+        if (delSrv) {
+          collectAdminDom();
+          workingConfig.services.splice(Number(delSrv.getAttribute('data-idx')), 1);
+          renderAdminServices();
+          return;
+        }
+        const delMat = target.closest('.js-del-mat');
+        if (delMat) {
+          collectAdminDom();
+          workingConfig.materials.splice(Number(delMat.getAttribute('data-idx')), 1);
+          renderAdminMaterials();
+          return;
+        }
+        const delCase = target.closest('.js-del-case');
+        if (delCase) {
+          collectAdminDom();
+          workingConfig.cases.splice(Number(delCase.getAttribute('data-idx')), 1);
+          renderAdminCases();
+          return;
+        }
+        const delStep = target.closest('.js-del-step');
+        if (delStep) {
+          collectAdminDom();
+          workingConfig.steps.splice(Number(delStep.getAttribute('data-idx')), 1);
+          renderAdminSteps();
+          return;
+        }
+        const delFaq = target.closest('.js-del-faq');
+        if (delFaq) {
+          collectAdminDom();
+          workingConfig.faqs.splice(Number(delFaq.getAttribute('data-idx')), 1);
+          renderAdminFaqs();
+          return;
+        }
+        const clearPhoto = target.closest('.js-clear-photo');
+        if (clearPhoto) {
+          collectAdminDom();
+          workingConfig.cases[Number(clearPhoto.getAttribute('data-idx'))].customPhoto = '';
+          window.Store.saveConfig(workingConfig);
+          renderAdminCases();
+          return;
+        }
+        const revApp = target.closest('.js-rev-approve');
+        if (revApp) {
+          collectAdminDom();
+          window.Store.saveConfig(workingConfig, true);
+          window.Store.approveReview(revApp.getAttribute('data-id'));
+          workingConfig = window.Store.getConfig();
+          renderAdminReviews();
+          showToast('Отзыв опубликован');
+          return;
+        }
+        const revDel = target.closest('.js-rev-del');
+        if (revDel) {
+          collectAdminDom();
+          window.Store.saveConfig(workingConfig, true);
+          window.Store.deleteReview(revDel.getAttribute('data-id'));
+          workingConfig = window.Store.getConfig();
+          renderAdminReviews();
+          showToast('Отзыв удалён');
+          return;
+        }
+        const reqDel = target.closest('.js-req-del');
+        if (reqDel) {
+          window.Store.deleteRequest(reqDel.getAttribute('data-id'));
+          workingConfig = window.Store.getConfig();
+          renderAdminRequests();
+          showToast('Заявка удалена');
+          return;
+        }
+      });
+
       document.addEventListener('change', function (e) {
-        if (e.target.classList.contains('js-case-photo') && e.target.files[0]) {
+        if (e.target && e.target.classList && e.target.classList.contains('js-case-photo') && e.target.files[0]) {
           const idx = Number(e.target.getAttribute('data-idx'));
           collectAdminDom();
           compressImageFile(e.target.files[0], function (base64) {
