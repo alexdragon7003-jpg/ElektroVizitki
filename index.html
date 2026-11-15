@@ -652,6 +652,52 @@
     /* ==========================================================================
        Услуги (Bento Grid)
        ========================================================================== */
+
+    /* Фильтры категорий и живой поиск по 111 позициям прайса */
+    .catalog-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .cat-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .cat-pill {
+      appearance: none;
+      background: rgba(18, 22, 31, 0.9);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 7px 12px;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      line-height: 1.2;
+      text-align: left;
+    }
+
+    .cat-pill:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #FFFFFF;
+    }
+
+    .cat-pill.active {
+      background: rgba(245, 158, 11, 0.18);
+      border-color: var(--amber);
+      color: var(--amber-bright);
+    }
+
+    .search-input-wrap {
+      position: relative;
+      width: 100%;
+    }
+
     .services-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -1576,7 +1622,25 @@
           <h2 class="section-title">Основные услуги и расценки</h2>
           <p class="section-subtitle">Нажмите «Рассчитать» на нужной карточке — услуга сразу добавится в калькулятор и страница перейдёт к расчёту.</p>
         </div>
+        <div class="catalog-controls">
+          <div class="search-input-wrap">
+            <input type="search" id="services-search-input" class="input" placeholder="🔍 Поиск работы по названию (например: розетка, штробление, щит, УЗО, люстра)...">
+          </div>
+          <div class="cat-pills" id="services-cat-pills">
+            <button type="button" class="cat-pill active" data-cat="all">Все работы (111)</button>
+            <button type="button" class="cat-pill" data-cat="sockets">Розетки, выключатели и коробки</button>
+            <button type="button" class="cat-pill" data-cat="drilling">Штробление и сверление</button>
+            <button type="button" class="cat-pill" data-cat="cable">Прокладка кабеля и СИП</button>
+            <button type="button" class="cat-pill" data-cat="shield">Электрощиты, автоматы и УЗО</button>
+            <button type="button" class="cat-pill" data-cat="lighting">Люстры, свет и тёплый пол</button>
+            <button type="button" class="cat-pill" data-cat="appliances">Бытовая техника</button>
+            <button type="button" class="cat-pill" data-cat="security">Видео и домофоны</button>
+          </div>
+        </div>
         <div class="services-grid" id="services-grid"></div>
+        <div style="margin-top:16px;text-align:center;" id="services-more-wrap">
+          <button type="button" class="btn btn-glass" id="services-toggle-all-btn" style="width:100%;max-width:420px;">Показать все позиции прайса ↓</button>
+        </div>
       </div>
     </section>
 
@@ -1610,7 +1674,21 @@
 
         <div class="calc-wrapper">
           <div class="bento-card calc-panel">
-            <h3 style="margin-bottom:12px;font-size:1.05rem;color:#FFFFFF;">1. Виды электромонтажных работ</h3>
+            <h3 style="margin-bottom:10px;font-size:1.05rem;color:#FFFFFF;">1. Виды электромонтажных работ (111 позиций)</h3>
+            <div class="catalog-controls" style="margin-bottom:12px;">
+              <input type="search" id="calc-search-input" class="input" placeholder="🔍 Быстрый поиск работы в калькуляторе...">
+              <div class="cat-pills" id="calc-cat-pills">
+                <button type="button" class="cat-pill active" data-cat="sockets">Розетки и выключатели</button>
+                <button type="button" class="cat-pill" data-cat="drilling">Штробление и подрозетники</button>
+                <button type="button" class="cat-pill" data-cat="cable">Кабель, гофра и короба</button>
+                <button type="button" class="cat-pill" data-cat="shield">Электрощиты и автоматы</button>
+                <button type="button" class="cat-pill" data-cat="lighting">Люстры, свет и тёплый пол</button>
+                <button type="button" class="cat-pill" data-cat="appliances">Бытовая техника</button>
+                <button type="button" class="cat-pill" data-cat="security">Видеонаблюдение</button>
+                <button type="button" class="cat-pill" data-cat="selected">★ Выбранные в смете</button>
+                <button type="button" class="cat-pill" data-cat="all">Все (111)</button>
+              </div>
+            </div>
             <div id="calc-works-list"></div>
 
             <h3 style="margin:22px 0 8px;font-size:1.05rem;color:#FFFFFF;">2. Комплектация материалами</h3>
@@ -2008,8 +2086,11 @@
             <!-- Вкладка 3 -->
             <div class="admin-tab-pane is-hidden" id="tab-services">
               <div class="admin-section-bar">
-                <h2 style="font-size:1.2rem;">Услуги, описания и расценки</h2>
+                <h2 style="font-size:1.2rem;">Услуги, описания и расценки (111 позиций)</h2>
                 <button type="button" class="btn btn-glass" id="add-service-btn">+ Добавить услугу</button>
+              </div>
+              <div class="field" style="margin-bottom:12px;">
+                <input type="search" id="admin-srv-search" class="input" placeholder="🔍 Быстрый фильтр по названию работы в админке...">
               </div>
               <div id="admin-services-list" style="display:grid;gap:12px;"></div>
               <button type="button" class="btn btn-primary js-save-all" style="width:100%;margin-top:16px;">Сохранить прайс</button>
@@ -2144,7 +2225,7 @@
   (function (window) {
     'use strict';
 
-    const STORAGE_KEY = 'electro_pro_config_v2';
+    const STORAGE_KEY = 'electro_pro_config_v3';
     const LEGACY_KEY = 'electro_pro_config_v1';
     const REQUESTS_KEY = 'electro_pro_requests_v1';
     const SESSION_KEY = 'electro_admin_logged_in';
@@ -2194,15 +2275,132 @@
         description: 'Услуги частного электрика с допуском IV группы. Сборка электрощитов, полная замена проводки без пыли, поиск КЗ. Честный калькулятор цен онлайн.'
       },
       adminPassword: 'admin',
+      catalogVersion: 3,
       services: [
-        { id: 's1', name: 'Прокладка кабеля (ВВГнг-LS)', unit: 'м.п.', price: 180, icon: 'cable', active: true, desc: 'Монтаж силового кабеля по потолку или в гофре с креплением площадками.' },
-        { id: 's2', name: 'Установка подрозетника и розетки', unit: 'шт.', price: 650, icon: 'socket', active: true, desc: 'Алмазное бурение с пылесосом, вмазка подрозетника и чистовое подключение.' },
-        { id: 's3', name: 'Монтаж выключателя света', unit: 'шт.', price: 600, icon: 'switch', active: true, desc: 'Установка одно-, двухклавишных и проходных выключателей освещения.' },
-        { id: 's4', name: 'Установка светильников и люстр', unit: 'шт.', price: 900, icon: 'lamp', active: true, desc: 'Монтаж точечных светильников, трековых систем, бра и потолочных люстр.' },
-        { id: 's5', name: 'Инженерная сборка электрощита', unit: 'модуль', price: 550, icon: 'shield', active: true, desc: 'Расключение автоматов, УЗО, реле напряжения с заводской маркировкой линий.' },
-        { id: 's6', name: 'Штробление стен без пыли', unit: 'м.п.', price: 450, icon: 'drill', active: true, desc: 'Резка штроборезом со строительным пылесосом по бетону, кирпичу и газоблоку.' },
-        { id: 's7', name: 'Поиск и устранение КЗ / обрыва', unit: 'услуга', price: 3000, icon: 'search', active: true, desc: 'Трассоискатель, тепловизор и мегаомметр. Локализация без вскрытия всех обоев.' },
-        { id: 's8', name: 'Подключение варочной / духовки', unit: 'шт.', price: 2200, icon: 'stove', active: true, desc: 'Силовое подключение техники с обжимом наконечников НШВИ и проверкой земли.' }
+        // 1. Розетки, выключатели и распаечные коробки (21 поз.)
+        { id: 'w1', cat: 'sockets', name: 'Установка механизма розетки в подрозетник', unit: 'шт.', price: 520, icon: 'socket', desc: 'Монтаж механизма розетки с подключением жил и выставкой по уровню.', active: true },
+        { id: 'w2', cat: 'sockets', name: 'Установка наружной розетки', unit: 'шт.', price: 570, icon: 'socket', desc: 'Накладной монтаж корпуса и механизма наружной розетки на стену.', active: true },
+        { id: 'w3', cat: 'sockets', name: 'Установка розетки в коробе (кабель-канале)', unit: 'шт.', price: 630, icon: 'socket', desc: 'Монтаж суппорта и розетки в магистральный кабель-канал.', active: true },
+        { id: 'w4', cat: 'sockets', name: 'Установка механизма одноклавишного выключателя в подрозетник', unit: 'шт.', price: 520, icon: 'switch', desc: 'Установка и расключение механизма одноклавишного выключателя.', active: true },
+        { id: 'w5', cat: 'sockets', name: 'Установка механизма двухклавишного выключателя в подрозетник', unit: 'шт.', price: 590, icon: 'switch', desc: 'Установка и подключение двухклавишного выключателя на две группы света.', active: true },
+        { id: 'w6', cat: 'sockets', name: 'Установка наружного одноклавишного выключателя', unit: 'шт.', price: 570, icon: 'switch', desc: 'Накладной монтаж одноклавишного выключателя открытой установки.', active: true },
+        { id: 'w7', cat: 'sockets', name: 'Установка наружного двухклавишного выключателя', unit: 'шт.', price: 610, icon: 'switch', desc: 'Накладной монтаж двухклавишного выключателя открытой установки.', active: true },
+        { id: 'w8', cat: 'sockets', name: 'Установка механизма проходного одноклавишного выключателя в подрозетник', unit: 'шт.', price: 620, icon: 'switch', desc: 'Монтаж и коммутация проходного одноклавишного выключателя.', active: true },
+        { id: 'w9', cat: 'sockets', name: 'Установка механизма проходного двухклавишного выключателя в подрозетник', unit: 'шт.', price: 700, icon: 'switch', desc: 'Монтаж и коммутация проходного двухклавишного выключателя.', active: true },
+        { id: 'w10', cat: 'sockets', name: 'Установка наружного проходного одноклавишного выключателя', unit: 'шт.', price: 700, icon: 'switch', desc: 'Накладной монтаж проходного одноклавишного выключателя.', active: true },
+        { id: 'w11', cat: 'sockets', name: 'Установка наружного проходного двухклавишного выключателя', unit: 'шт.', price: 740, icon: 'switch', desc: 'Накладной монтаж проходного двухклавишного выключателя.', active: true },
+        { id: 'w12', cat: 'sockets', name: 'Монтаж ретро выключателя', unit: 'шт.', price: 670, icon: 'switch', desc: 'Установка керамического или дизайнерского ретро-выключателя.', active: true },
+        { id: 'w13', cat: 'sockets', name: 'Установка диммера', unit: 'шт.', price: 660, icon: 'switch', desc: 'Монтаж и настройка светорегулятора (диммера) в подрозетник.', active: true },
+        { id: 'w14', cat: 'sockets', name: 'Установка звонка', unit: 'шт.', price: 940, icon: 'switch', desc: 'Монтаж и подключение электрического дверного звонка и кнопки.', active: true },
+        { id: 'w15', cat: 'sockets', name: 'Монтаж распределительной ретро коробки', unit: 'шт.', price: 740, icon: 'socket', desc: 'Установка накладной керамической распределительной ретро-коробки.', active: true },
+        { id: 'w16', cat: 'sockets', name: 'Установка наружной распаечной (распределительной) коробки', unit: 'шт.', price: 460, icon: 'socket', desc: 'Крепление накладной распределительной коробки с вводом кабелей.', active: true },
+        { id: 'w17', cat: 'sockets', name: 'Подключение проводов в распаечной (распределительной) коробке при помощи клеммников WAGO (за 1 клеммник)', unit: 'шт.', price: 120, icon: 'socket', desc: 'Зачистка жил и коммутация в коробке оригинальной клеммой WAGO.', active: true },
+        { id: 'w18', cat: 'sockets', name: 'Подключение проводов в распаечной (распределительной) коробке (опрессовка медными гильзами, 1 провод)', unit: 'шт.', price: 180, icon: 'socket', desc: 'Неразъёмное соединение по ПУЭ-7 опрессовкой гильзами ГМЛ с термоусадкой.', active: true },
+        { id: 'w19', cat: 'sockets', name: 'Подключение проводов в распаечной (распределительной) коробке (1 скрутка плюс пайка или сварка)', unit: 'шт.', price: 250, icon: 'socket', desc: 'Монолитная сварка или пропайка скрутки с изоляцией.', active: true },
+        { id: 'w20', cat: 'sockets', name: 'Монтаж подрозетника, распределительной коробки в готовое отверстие в гипсокартоне', unit: 'шт.', price: 170, icon: 'socket', desc: 'Установка установочной коробки с прижимными лапками в ГКЛ.', active: true },
+        { id: 'w21', cat: 'sockets', name: 'Монтаж подрозетника, распределительной коробки в готовое углубление на штукатурный раствор или гипс', unit: 'шт.', price: 260, icon: 'socket', desc: 'Вмазка установочной коробки заподлицо со стеной на алебастр/гипс.', active: true },
+
+        // 2. Высверливание отверстий и штробление (18 поз.)
+        { id: 'w22', cat: 'drilling', name: 'Высверливание отверстия под установочную коробку (подрозетник) в гипсокартоне', unit: 'шт.', price: 320, icon: 'drill', desc: 'Аккуратное сверление отверстия коронкой 68 мм в ГКЛ.', active: true },
+        { id: 'w23', cat: 'drilling', name: 'Высверливание углубления под установочную коробку (подрозетник) в кирпиче', unit: 'шт.', price: 500, icon: 'drill', desc: 'Бурение ниши под подрозетник в кирпичной стене с пылеудалением.', active: true },
+        { id: 'w24', cat: 'drilling', name: 'Высверливание углубления под установочную коробку (подрозетник) в бетоне', unit: 'шт.', price: 710, icon: 'drill', desc: 'Алмазное бурение ниши под подрозетник в монолитном бетоне.', active: true },
+        { id: 'w25', cat: 'drilling', name: 'Высверливание отверстия под распаечную (распределительную) коробку в гипсокартоне', unit: 'шт.', price: 350, icon: 'drill', desc: 'Высверливание посадочного отверстия под распредкоробку в ГКЛ.', active: true },
+        { id: 'w26', cat: 'drilling', name: 'Высверливание углубления под распаечную (распределительную) коробку в кирпиче', unit: 'шт.', price: 590, icon: 'drill', desc: 'Выборка ниши под скрытую распаечную коробку в кирпиче.', active: true },
+        { id: 'w27', cat: 'drilling', name: 'Высверливание углубления под распаечную (распределительную) коробку в бетоне', unit: 'шт.', price: 880, icon: 'drill', desc: 'Алмазное высверливание ниши под распаечную коробку в бетоне.', active: true },
+        { id: 'w28', cat: 'drilling', name: 'Штробление в пеноблоке, гипсолите размером до 20х20 включительно', unit: 'м.п.', price: 380, icon: 'drill', desc: 'Резка штробы под один кабель штроборезом с пылесосом.', active: true },
+        { id: 'w29', cat: 'drilling', name: 'Штробление в кирпиче, дереве размером до 20х20 включительно', unit: 'м.п.', price: 450, icon: 'drill', desc: 'Устройство штробы до 20х20 мм в кирпичном основании.', active: true },
+        { id: 'w30', cat: 'drilling', name: 'Штробление в бетоне размером до 20х20 включительно', unit: 'м.п.', price: 710, icon: 'drill', desc: 'Алмазная резка штробы до 20х20 мм в бетоне без пыли.', active: true },
+        { id: 'w31', cat: 'drilling', name: 'Штробление в пеноблоке, гипсолите размером до 20х40 включительно', unit: 'м.п.', price: 440, icon: 'drill', desc: 'Штробление канала до 20х40 мм в газоблоке/пеноблоке.', active: true },
+        { id: 'w32', cat: 'drilling', name: 'Штробление в кирпиче, дереве размером до 20х40 включительно', unit: 'м.п.', price: 550, icon: 'drill', desc: 'Штробление канала до 20х40 мм в кирпичной кладке.', active: true },
+        { id: 'w33', cat: 'drilling', name: 'Штробление в бетоне размером до 20х40 включительно', unit: 'м.п.', price: 810, icon: 'drill', desc: 'Алмазное штробление канала до 20х40 мм в бетоне.', active: true },
+        { id: 'w34', cat: 'drilling', name: 'Штробление в пеноблоке, гипсолите размером до 40х40 включительно', unit: 'м.п.', price: 560, icon: 'drill', desc: 'Штробление магистрального канала до 40х40 мм в пеноблоке.', active: true },
+        { id: 'w35', cat: 'drilling', name: 'Штробление в кирпиче, дереве размером до 40х40 включительно', unit: 'м.п.', price: 630, icon: 'drill', desc: 'Штробление магистрального канала до 40х40 мм в кирпиче.', active: true },
+        { id: 'w36', cat: 'drilling', name: 'Штробление в бетоне размером до 40х40 включительно', unit: 'м.п.', price: 950, icon: 'drill', desc: 'Алмазное штробление канала до 40х40 мм в бетонной стене.', active: true },
+        { id: 'w37', cat: 'drilling', name: 'Штробление в кирпиче, дереве размером до 100х40 включительно', unit: 'м.п.', price: 930, icon: 'drill', desc: 'Широкая магистральная штроба до 100х40 мм под пучок трасс в кирпиче.', active: true },
+        { id: 'w38', cat: 'drilling', name: 'Штробление в бетоне размером до 100х40 включительно', unit: 'м.п.', price: 1500, icon: 'drill', desc: 'Широкая магистральная штроба до 100х40 мм под ввод трасс в бетоне.', active: true },
+        { id: 'w39', cat: 'drilling', name: 'Штукатурка штроб', unit: 'м.п.', price: 250, icon: 'drill', desc: 'Заделка кабельных штроб гипсовым или цементным раствором.', active: true },
+
+        // 3. Прокладка кабеля, СИП и кабель-каналов (20 поз.)
+        { id: 'w40', cat: 'cable', name: 'Прокладка кабеля в штробе сечением до 4 мм²', unit: 'м.п.', price: 130, icon: 'cable', desc: 'Укладка и фиксация силового кабеля ВВГнг-LS в готовой штробе.', active: true },
+        { id: 'w41', cat: 'cable', name: 'Прокладка кабеля открытым способом сечением от 4 мм²', unit: 'м.п.', price: 160, icon: 'cable', desc: 'Открытая прокладка силового кабеля на клипсах или скобах.', active: true },
+        { id: 'w42', cat: 'cable', name: 'Прокладка кабеля в гофре сечением до 4 мм² (включая протяжку)', unit: 'м.п.', price: 210, icon: 'cable', desc: 'Затяжка кабеля в гофротрубу и монтаж трассы на клипсы/площадки.', active: true },
+        { id: 'w43', cat: 'cable', name: 'Прокладка кабеля в гофре сечением от 4 мм² до 10 мм² включительно (включая протяжку)', unit: 'м.п.', price: 260, icon: 'cable', desc: 'Затяжка усиленного силового кабеля 4–10 мм² в гофру и крепление.', active: true },
+        { id: 'w44', cat: 'cable', name: 'Протяжка кабеля в гофре', unit: 'м.п.', price: 120, icon: 'cable', desc: 'Затяжка кабельной линии в защитную гофрированную трубу по зонду.', active: true },
+        { id: 'w45', cat: 'cable', name: 'Прокладка кабеля в кабель-канале сечением до 4 мм² (без учета монтажа кабель-канала)', unit: 'м.п.', price: 130, icon: 'cable', desc: 'Укладка силового кабеля до 4 мм² внутри установленного короба.', active: true },
+        { id: 'w46', cat: 'cable', name: 'Прокладка кабеля в кабель-канале сечением более 4 мм² (без учета монтажа кабель-канала)', unit: 'м.п.', price: 150, icon: 'cable', desc: 'Укладка силового кабеля свыше 4 мм² внутри кабель-канала.', active: true },
+        { id: 'w47', cat: 'cable', name: 'Монтаж короба (кабель-канала) 40 х 40 мм', unit: 'м.п.', price: 200, icon: 'cable', desc: 'Разметка по лазеру и крепление пластикового короба 40х40 мм.', active: true },
+        { id: 'w48', cat: 'cable', name: 'Монтаж короба (кабель-канала) 60 х 40 мм', unit: 'м.п.', price: 230, icon: 'cable', desc: 'Монтаж магистрального кабель-канала сечением 60х40 мм.', active: true },
+        { id: 'w49', cat: 'cable', name: 'Монтаж короба (кабель-канала) 100 х 40 мм', unit: 'м.п.', price: 280, icon: 'cable', desc: 'Монтаж широкого электротехнического короба 100х40 мм.', active: true },
+        { id: 'w50', cat: 'cable', name: 'Монтаж короба (кабель-канала) 100 х 60 мм', unit: 'м.п.', price: 350, icon: 'cable', desc: 'Монтаж силового магистрального короба 100х60 мм.', active: true },
+        { id: 'w51', cat: 'cable', name: 'Монтаж готовой ретро проводки на изоляторах', unit: 'м.п.', price: 230, icon: 'cable', desc: 'Установка керамических роликов-изоляторов и натяжка витого ретро-кабеля.', active: true },
+        { id: 'w52', cat: 'cable', name: 'Монтаж слаботочных проводов (телефон, интернет, телевизионный кабель)', unit: 'м.п.', price: 120, icon: 'cable', desc: 'Прокладка витой пары UTP/FTP или коаксиального ТВ-кабеля.', active: true },
+        { id: 'w53', cat: 'cable', name: 'Подключение силового кабеля', unit: 'шт.', price: 970, icon: 'cable', desc: 'Разделка, оконцовка и подключение вводного или силового кабеля.', active: true },
+        { id: 'w54', cat: 'cable', name: 'Прокладка кабеля СИП-4 (2х16)', unit: 'м.п.', price: 180, icon: 'cable', desc: 'Монтаж и натяжка двухжильного самонесущего провода СИП-4 2х16.', active: true },
+        { id: 'w55', cat: 'cable', name: 'Прокладка кабеля СИП-4 (4х16)', unit: 'м.п.', price: 200, icon: 'cable', desc: 'Монтаж и натяжка четырёхжильного вводного провода СИП-4 4х16.', active: true },
+        { id: 'w56', cat: 'cable', name: 'Опрессовка гильзы изолированной для СИП сечением до 35 мм', unit: 'шт.', price: 300, icon: 'cable', desc: 'Опрессовка соединения СИП до 35 мм² специализированным прессом.', active: true },
+        { id: 'w57', cat: 'cable', name: 'Опрессовка гильзы изолированной для СИП сечением от 50 мм', unit: 'шт.', price: 340, icon: 'cable', desc: 'Опрессовка гильзы СИП сечением от 50 мм² гексагональной матрицей.', active: true },
+        { id: 'w58', cat: 'cable', name: 'Опрессовка наконечника изолированного для СИП сечением до 35 мм', unit: 'шт.', price: 300, icon: 'cable', desc: 'Оконцовка жилы СИП изолированным наконечником под вводной автомат.', active: true },
+        { id: 'w59', cat: 'cable', name: 'Устройство контура защитного заземления', unit: 'шт.', price: 17100, icon: 'shield', desc: 'Монтаж заземляющего контура с выводом шины и проверкой сопротивления.', active: true },
+
+        // 4. Электрощиты, автоматы, УЗО и счётчики (26 поз.)
+        { id: 'w60', cat: 'shield', name: 'Монтаж наружного электрощита', unit: 'шт.', price: 1850, icon: 'shield', desc: 'Крепление и ввод кабелей в накладной распределительный электрощит.', active: true },
+        { id: 'w61', cat: 'shield', name: 'Монтаж внутреннего электрощита на 8 модулей в гипсокартоне', unit: 'шт.', price: 2350, icon: 'shield', desc: 'Вырез ниши и установка встраиваемого щита 8 мод. в ГКЛ.', active: true },
+        { id: 'w62', cat: 'shield', name: 'Монтаж внутреннего электрощита на 8 модулей в кирпиче', unit: 'шт.', price: 2900, icon: 'shield', desc: 'Выборка ниши и вмазка встраиваемого бокса на 8 модулей в кирпиче.', active: true },
+        { id: 'w63', cat: 'shield', name: 'Монтаж внутреннего электрощита на 8 модулей в бетоне', unit: 'шт.', price: 3600, icon: 'shield', desc: 'Алмазная выборка ниши и монтаж бокса на 8 модулей в бетоне.', active: true },
+        { id: 'w64', cat: 'shield', name: 'Монтаж внутреннего электрощита на 12 модулей в гипсокартоне', unit: 'шт.', price: 3050, icon: 'shield', desc: 'Установка встраиваемого электрощита на 12 модулей в перегородку ГКЛ.', active: true },
+        { id: 'w65', cat: 'shield', name: 'Монтаж внутреннего электрощита на 12 модулей в кирпиче', unit: 'шт.', price: 3800, icon: 'shield', desc: 'Устройство ниши и монтаж внутреннего щита на 12 модулей в кирпиче.', active: true },
+        { id: 'w66', cat: 'shield', name: 'Монтаж внутреннего электрощита на 12 модулей в бетоне', unit: 'шт.', price: 4800, icon: 'shield', desc: 'Алмазная резка ниши и установка щита на 12 модулей в бетоне.', active: true },
+        { id: 'w67', cat: 'shield', name: 'Монтаж внутреннего электрощита на 18 модулей в гипсокартоне', unit: 'шт.', price: 3450, icon: 'shield', desc: 'Монтаж встраиваемого щита на 18 модулей в гипсокартон.', active: true },
+        { id: 'w68', cat: 'shield', name: 'Монтаж внутреннего электрощита на 18 модулей в кирпиче', unit: 'шт.', price: 4650, icon: 'shield', desc: 'Устройство ниши и установка щита на 18 модулей в кирпичной стене.', active: true },
+        { id: 'w69', cat: 'shield', name: 'Монтаж внутреннего электрощита на 18 модулей в бетоне', unit: 'шт.', price: 6100, icon: 'shield', desc: 'Алмазное устройство ниши и монтаж щита на 18 модулей в бетоне.', active: true },
+        { id: 'w70', cat: 'shield', name: 'Монтаж внутреннего электрощита на 24 модуля в гипсокартоне', unit: 'шт.', price: 4000, icon: 'shield', desc: 'Установка двухрядного встраиваемого щита на 24 модуля в ГКЛ.', active: true },
+        { id: 'w71', cat: 'shield', name: 'Монтаж внутреннего электрощита на 24 модуля в кирпиче', unit: 'шт.', price: 5400, icon: 'shield', desc: 'Выборка ниши и установка внутреннего щита на 24 модуля в кирпиче.', active: true },
+        { id: 'w72', cat: 'shield', name: 'Монтаж внутреннего электрощита на 24 модуля в бетоне', unit: 'шт.', price: 7000, icon: 'shield', desc: 'Алмазная выборка ниши и монтаж щита на 24 модуля в бетоне.', active: true },
+        { id: 'w73', cat: 'shield', name: 'Монтаж внутреннего электрощита на 36 модулей в гипсокартоне', unit: 'шт.', price: 4550, icon: 'shield', desc: 'Установка трёхрядного встраиваемого электрощита на 36 модулей в ГКЛ.', active: true },
+        { id: 'w74', cat: 'shield', name: 'Монтаж внутреннего электрощита на 36 модулей в кирпиче', unit: 'шт.', price: 6500, icon: 'shield', desc: 'Устройство ниши и монтаж внутреннего щита на 36 модулей в кирпиче.', active: true },
+        { id: 'w75', cat: 'shield', name: 'Монтаж внутреннего электрощита на 36 модулей в бетоне', unit: 'шт.', price: 8500, icon: 'shield', desc: 'Алмазная резка ниши и установка щита на 36 модулей в бетоне.', active: true },
+        { id: 'w76', cat: 'shield', name: 'Монтаж внутреннего электрощита на 54 модуля в гипсокартоне', unit: 'шт.', price: 5150, icon: 'shield', desc: 'Установка большого распределительного щита на 54 модуля в ГКЛ.', active: true },
+        { id: 'w77', cat: 'shield', name: 'Монтаж внутреннего электрощита на 54 модуля в кирпиче', unit: 'шт.', price: 8350, icon: 'shield', desc: 'Выборка ниши и монтаж внутреннего щита на 54 модуля в кирпиче.', active: true },
+        { id: 'w78', cat: 'shield', name: 'Монтаж внутреннего электрощита на 54 модуля в бетоне', unit: 'шт.', price: 11000, icon: 'shield', desc: 'Алмазная выборка ниши и установка щита на 54 модуля в бетоне.', active: true },
+        { id: 'w79', cat: 'shield', name: 'Установка автомата однополюсного', unit: 'шт.', price: 550, icon: 'shield', desc: 'Монтаж на DIN-рейку и подключение однополюсного автоматического выключателя.', active: true },
+        { id: 'w80', cat: 'shield', name: 'Установка автомата двухполюсного', unit: 'шт.', price: 770, icon: 'shield', desc: 'Монтаж и подключение двухполюсного вводного или группового автомата.', active: true },
+        { id: 'w81', cat: 'shield', name: 'Установка автомата трехполюсного', unit: 'шт.', price: 930, icon: 'shield', desc: 'Монтаж и подключение трёхфазного (3P) автоматического выключателя.', active: true },
+        { id: 'w82', cat: 'shield', name: 'Установка УЗО двухполюсного', unit: 'шт.', price: 850, icon: 'shield', desc: 'Установка и подключение однофазного УЗО / дифференциального автомата.', active: true },
+        { id: 'w83', cat: 'shield', name: 'Установка УЗО четырехполюсного', unit: 'шт.', price: 1100, icon: 'shield', desc: 'Установка и подключение трёхфазного четырёхполюсного УЗО.', active: true },
+        { id: 'w84', cat: 'shield', name: 'Установка электросчетчика однофазного', unit: 'шт.', price: 2850, icon: 'shield', desc: 'Монтаж и подключение однофазного прибора учёта электроэнергии.', active: true },
+        { id: 'w85', cat: 'shield', name: 'Установка электросчетчика трехфазного', unit: 'шт.', price: 3850, icon: 'shield', desc: 'Монтаж и подключение трёхфазного прибора учёта электроэнергии.', active: true },
+
+        // 5. Освещение, люстры и тёплый пол (13 поз.)
+        { id: 'w86', cat: 'lighting', name: 'Монтаж крюка под люстру', unit: 'шт.', price: 680, icon: 'light', desc: 'Бурение перекрытия и установка анкерного потолочного крюка под люстру.', active: true },
+        { id: 'w87', cat: 'lighting', name: 'Сборка простой люстры', unit: 'шт.', price: 1400, icon: 'light', desc: 'Сборка корпуса и электрической схемы рожковой или потолочной люстры.', active: true },
+        { id: 'w88', cat: 'lighting', name: 'Сборка сложной люстры', unit: 'шт.', price: 2350, icon: 'light', desc: 'Сборка многоярусной, хрустальной или дизайнерской люстры с подвесами.', active: true },
+        { id: 'w89', cat: 'lighting', name: 'Монтаж простой люстры на крюк', unit: 'шт.', price: 1600, icon: 'light', desc: 'Навеска и подключение собранной простой люстры на потолочный крюк.', active: true },
+        { id: 'w90', cat: 'lighting', name: 'Монтаж сложной люстры на крюк', unit: 'шт.', price: 3250, icon: 'light', desc: 'Навеска, центровка и подключение тяжёлой или сложной люстры.', active: true },
+        { id: 'w91', cat: 'lighting', name: 'Монтаж настенного светильника Бра', unit: 'шт.', price: 1300, icon: 'light', desc: 'Крепление монтажной планки и подключение настенного бра.', active: true },
+        { id: 'w92', cat: 'lighting', name: 'Монтаж светильника Армстронг', unit: 'шт.', price: 1100, icon: 'light', desc: 'Установка и подключение растрового или светодиодного светильника 600х600.', active: true },
+        { id: 'w93', cat: 'lighting', name: 'Монтаж светодиодной ленты', unit: 'м.п.', price: 400, icon: 'light', desc: 'Наклейка и пайка светодиодной LED-ленты в профиль или нишу.', active: true },
+        { id: 'w94', cat: 'lighting', name: 'Монтаж трансформатора для галогеновых светильников', unit: 'шт.', price: 650, icon: 'light', desc: 'Установка и подключение блока питания / драйвера / трансформатора.', active: true },
+        { id: 'w95', cat: 'lighting', name: 'Монтаж электрического теплого пола', unit: 'м²', price: 1100, icon: 'stove', desc: 'Раскладка нагревательного мата тёплого пола с замером сопротивления.', active: true },
+        { id: 'w96', cat: 'lighting', name: 'Устройство штробы в цементно-песчаной стяжке под укладку нагревательного кабеля теплого пола', unit: 'м.п.', price: 480, icon: 'drill', desc: 'Штробление канала в стяжке под гофротрубку датчика и кабель пола.', active: true },
+        { id: 'w97', cat: 'lighting', name: 'Монтаж нагревательного кабеля теплого пола в подготовленную штробу', unit: 'м.п.', price: 150, icon: 'cable', desc: 'Укладка греющего кабеля и термодатчика в подготовленную штробу.', active: true },
+        { id: 'w98', cat: 'lighting', name: 'Установка реостата для теплого пола', unit: 'шт.', price: 1150, icon: 'switch', desc: 'Монтаж и подключение терморегулятора (реостата) и датчика температуры.', active: true },
+
+        // 6. Подключение бытовой техники и вентиляции (7 поз.)
+        { id: 'w99', cat: 'appliances', name: 'Установка и подключение электроплиты', unit: 'шт.', price: 2650, icon: 'stove', desc: 'Силовое подключение отдельностоящей электроплиты с проверкой фазировки.', active: true },
+        { id: 'w100', cat: 'appliances', name: 'Установка и подключение варочной панели (без учета вырезания отверстия в столешнице)', unit: 'шт.', price: 2600, icon: 'stove', desc: 'Подключение индукционной или электрической варочной поверхности.', active: true },
+        { id: 'w101', cat: 'appliances', name: 'Установка и подключение духового шкафа', unit: 'шт.', price: 2650, icon: 'stove', desc: 'Установка в нишу и подключение встраиваемого духового шкафа.', active: true },
+        { id: 'w102', cat: 'appliances', name: 'Установка и подключение кухонной вытяжки', unit: 'шт.', price: 3000, icon: 'stove', desc: 'Навеска и подключение электрической кухонной вытяжки.', active: true },
+        { id: 'w103', cat: 'appliances', name: 'Установка и подключение встраиваемой стиральной машины', unit: 'шт.', price: 2800, icon: 'stove', desc: 'Установка и подключение к выделенной электролинии стиральной машины.', active: true },
+        { id: 'w104', cat: 'appliances', name: 'Установка и подключение встраиваемой посудомоечной машины', unit: 'шт.', price: 2800, icon: 'stove', desc: 'Установка и подключение встраиваемой посудомоечной машины.', active: true },
+        { id: 'w105', cat: 'appliances', name: 'Монтаж накладного канального вентилятора', unit: 'шт.', price: 1450, icon: 'light', desc: 'Установка и подключение вытяжного вентилятора в санузле или кухне.', active: true },
+
+        // 7. Видеонаблюдение и видеодомофоны (6 поз.)
+        { id: 'w106', cat: 'security', name: 'Установка видеодомофона', unit: 'шт.', price: 3150, icon: 'diagnostic', desc: 'Монтаж монитора видеодомофона и вызывной панели с настройкой.', active: true },
+        { id: 'w107', cat: 'security', name: 'Монтаж камеры видеонаблюдения (аналоговой)', unit: 'шт.', price: 1900, icon: 'diagnostic', desc: 'Установка и юстировка аналоговой/AHD-камеры видеонаблюдения.', active: true },
+        { id: 'w108', cat: 'security', name: 'Монтаж камеры видеонаблюдения (IP)', unit: 'шт.', price: 2450, icon: 'diagnostic', desc: 'Установка, обжим RJ-45 и настройка цифровой IP-камеры.', active: true },
+        { id: 'w109', cat: 'security', name: 'Монтаж камеры видеонаблюдения (беспроводной)', unit: 'шт.', price: 1450, icon: 'diagnostic', desc: 'Монтаж и подключение к питанию и сети Wi-Fi беспроводной камеры.', active: true },
+        { id: 'w110', cat: 'security', name: 'Монтаж аналогового видеорегистратора (DVR)', unit: 'шт.', price: 2850, icon: 'diagnostic', desc: 'Подключение и настройка видеорегистратора DVR с архивом записи.', active: true },
+        { id: 'w111', cat: 'security', name: 'Монтаж сетевого IP-видеорегистратора (NVR)', unit: 'шт.', price: 3950, icon: 'diagnostic', desc: 'Установка и конфигурация сетевого видеорегистратора NVR и камер.', active: true }
       ],
       materials: [
         { id: 'm1', name: 'Кабель силовой ВВГнг(А)-LS 3×2.5 (ГОСТ)', unit: 'м.п.', price: 135, active: true },
@@ -2471,6 +2669,10 @@
             if (data && data.files && data.files['electro_config.json'] && data.files['electro_config.json'].content) {
               const remote = JSON.parse(data.files['electro_config.json'].content);
               if (remote && remote.brand) {
+                if (!remote.catalogVersion || remote.catalogVersion < 3 || !Array.isArray(remote.services) || remote.services.length < 30) {
+                  remote.services = deepClone(DEFAULT_CONFIG.services);
+                  remote.catalogVersion = 3;
+                }
                 remote.cloud = { binId: gistId, apiKey: savedKey };
                 self.saveConfig(remote, true);
                 return true;
@@ -2686,22 +2888,61 @@
       function setW(idx, qty) { if (srvs[idx]) calcState.works[srvs[idx].id] = qty; }
       function setM(idx, qty) { if (mats[idx]) calcState.materials[mats[idx].id] = qty; }
 
+      function setWorkId(id, fallbackIdx, qty) {
+        const found = activeWorks.find(function (w) { return w.id === id; }) || activeWorks[fallbackIdx];
+        if (found) calcState.works[found.id] = qty;
+      }
+
       if (presetKey === 'flat1') {
-        setW(0, 180); setW(1, 28); setW(2, 6); setW(4, 18); setW(5, 22);
-        setM(0, 120); setM(1, 60); setM(2, 34); setM(3, 10); setM(4, 1);
+        setWorkId('w23', 0, 18);
+        setWorkId('w21', 1, 18);
+        setWorkId('w1', 2, 14);
+        setWorkId('w4', 3, 4);
+        setWorkId('w40', 4, 45);
+        setWorkId('w65', 5, 1);
+        setWorkId('w79', 6, 6);
+        setWorkId('w82', 7, 2);
+        setM(0, 45); setM(1, 25); setM(2, 18); setM(3, 6); setM(4, 1);
       } else if (presetKey === 'flat2') {
-        setW(0, 360); setW(1, 48); setW(2, 10); setW(4, 28); setW(5, 38);
-        setM(0, 240); setM(1, 120); setM(2, 58); setM(3, 16); setM(4, 1);
+        setWorkId('w24', 0, 32);
+        setWorkId('w21', 1, 32);
+        setWorkId('w1', 2, 26);
+        setWorkId('w5', 3, 6);
+        setWorkId('w30', 4, 35);
+        setWorkId('w40', 5, 85);
+        setWorkId('w72', 6, 1);
+        setWorkId('w79', 7, 10);
+        setWorkId('w82', 8, 3);
+        setM(0, 85); setM(1, 45); setM(2, 32); setM(3, 10); setM(4, 1);
       } else if (presetKey === 'kitchen') {
-        setW(0, 35); setW(1, 9); setW(5, 8); setW(7, 2);
-        setM(0, 35); setM(2, 9); setM(3, 3);
+        setWorkId('w24', 0, 10);
+        setWorkId('w21', 1, 10);
+        setWorkId('w1', 2, 10);
+        setWorkId('w42', 3, 25);
+        setWorkId('w100', 4, 1);
+        setWorkId('w101', 5, 1);
+        setWorkId('w102', 6, 1);
+        setWorkId('w104', 7, 1);
+        setM(0, 25); setM(2, 10); setM(3, 4);
       } else if (presetKey === 'shield') {
-        setW(4, 24);
+        setWorkId('w71', 0, 1);
+        setWorkId('w79', 1, 10);
+        setWorkId('w80', 2, 2);
+        setWorkId('w82', 3, 3);
+        setWorkId('w84', 4, 1);
         setM(3, 12); setM(4, 1);
       }
 
       document.querySelectorAll('[data-preset]').forEach(function (b) {
         b.classList.toggle('active', b === btnEl);
+      });
+
+      calcFilterCat = 'selected';
+      calcSearchQuery = '';
+      const calcSearchEl = document.getElementById('calc-search-input');
+      if (calcSearchEl) calcSearchEl.value = '';
+      document.querySelectorAll('#calc-cat-pills .cat-pill').forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-cat') === 'selected');
       });
 
       renderServices(cfg.services || []);
@@ -2795,20 +3036,99 @@
       }).join('');
     }
 
+    let srvFilterCat = 'all';
+    let srvSearchQuery = '';
+    let srvShowAll = false;
+    let calcFilterCat = 'sockets';
+    let calcSearchQuery = '';
+
+    const CAT_LABELS = {
+      sockets: 'Розетки и коробки',
+      drilling: 'Штробление и сверление',
+      cable: 'Кабель и короба',
+      shield: 'Электрощиты и УЗО',
+      lighting: 'Люстры и тёплый пол',
+      appliances: 'Бытовая техника',
+      security: 'Видео и домофоны'
+    };
+
+    function detectServiceCategory(s) {
+      if (s.cat && CAT_LABELS[s.cat]) return s.cat;
+      const n = (s.name || '').toLowerCase();
+      if (n.indexOf('электрощит') !== -1 || n.indexOf('автомат') !== -1 || n.indexOf('узо') !== -1 || n.indexOf('электросчетчик') !== -1) return 'shield';
+      if (n.indexOf('штроб') !== -1 || n.indexOf('высверливан') !== -1 || n.indexOf('штукатурк') !== -1) return 'drilling';
+      if (n.indexOf('кабел') !== -1 || n.indexOf('короба') !== -1 || n.indexOf('гофр') !== -1 || n.indexOf('сип') !== -1 || n.indexOf('слаботоч') !== -1 || n.indexOf('заземлен') !== -1 || n.indexOf('изолятор') !== -1) return 'cable';
+      if (n.indexOf('люстр') !== -1 || n.indexOf('светильник') !== -1 || n.indexOf('лент') !== -1 || n.indexOf('трансформатор') !== -1 || n.indexOf('теплого пола') !== -1 || n.indexOf('тёплого пола') !== -1) return 'lighting';
+      if (n.indexOf('плит') !== -1 || n.indexOf('варочн') !== -1 || n.indexOf('духов') !== -1 || n.indexOf('вытяжк') !== -1 || n.indexOf('стиральн') !== -1 || n.indexOf('посудомо') !== -1 || n.indexOf('вентилятор') !== -1) return 'appliances';
+      if (n.indexOf('камер') !== -1 || n.indexOf('видео') !== -1 || n.indexOf('домофон') !== -1) return 'security';
+      return 'sockets';
+    }
+
+    function filterCalcRowsDOM() {
+      const worksBox = document.getElementById('calc-works-list');
+      if (!worksBox) return;
+      const q = calcSearchQuery.trim().toLowerCase();
+      worksBox.querySelectorAll('.calc-row').forEach(function (row) {
+        const id = row.getAttribute('data-work-id') || '';
+        const cat = row.getAttribute('data-cat') || 'sockets';
+        const name = row.getAttribute('data-name') || '';
+        const qty = Number(calcState.works[id]) || 0;
+        let hide = false;
+        if (q) {
+          if (name.indexOf(q) === -1) hide = true;
+        } else if (calcFilterCat === 'selected') {
+          if (qty <= 0) hide = true;
+        } else if (calcFilterCat !== 'all' && cat !== calcFilterCat) {
+          hide = true;
+        }
+        row.classList.toggle('is-hidden', hide);
+      });
+    }
+
     function renderServices(services) {
       const grid = document.getElementById('services-grid');
       if (!grid) return;
       const activeList = services.filter(function (s) { return s.active !== false; });
+      const q = srvSearchQuery.trim().toLowerCase();
 
-      grid.innerHTML = activeList.map(function (s) {
+      const filtered = activeList.filter(function (s) {
+        const cat = detectServiceCategory(s);
+        if (srvFilterCat !== 'all' && cat !== srvFilterCat) return false;
+        if (q && (s.name || '').toLowerCase().indexOf(q) === -1 && (s.desc || '').toLowerCase().indexOf(q) === -1) return false;
+        return true;
+      });
+
+      const limit = (srvFilterCat === 'all' && !q && !srvShowAll) ? 12 : filtered.length;
+      const visibleItems = filtered.slice(0, limit);
+
+      const moreWrap = document.getElementById('services-more-wrap');
+      const toggleBtn = document.getElementById('services-toggle-all-btn');
+      if (moreWrap && toggleBtn) {
+        if (srvFilterCat === 'all' && !q && filtered.length > 12) {
+          moreWrap.classList.remove('is-hidden');
+          toggleBtn.textContent = srvShowAll
+            ? 'Свернуть полный список ↑'
+            : 'Показать все позиции прайса (ещё ' + (filtered.length - 12) + ' из ' + filtered.length + ') ↓';
+        } else {
+          moreWrap.classList.add('is-hidden');
+        }
+      }
+
+      if (visibleItems.length === 0) {
+        grid.innerHTML = '<div class="bento-card" style="padding:20px;grid-column:1/-1;color:var(--text-secondary);">По вашему запросу ничего не найдено. Выберите «Все работы (111)» или измените запрос.</div>';
+        return;
+      }
+
+      grid.innerHTML = visibleItems.map(function (s) {
         const iconSvg = SERVICE_ICONS[s.icon] || SERVICE_ICONS.shield;
         const inCartQty = Number(calcState.works[s.id]) || 0;
+        const catName = CAT_LABELS[detectServiceCategory(s)] || 'Электромонтаж';
         return `
           <article class="bento-card service-card ${inCartQty > 0 ? 'in-cart' : ''}" id="srv-card-${escapeHtml(s.id)}">
             <div>
               <div class="service-card-top">
                 <div class="service-icon-box" aria-hidden="true">${iconSvg}</div>
-                <span class="service-unit-tag">за ${escapeHtml(s.unit)}</span>
+                <span class="service-unit-tag">${escapeHtml(catName)} • за ${escapeHtml(s.unit)}</span>
               </div>
               <h3 class="service-title">${escapeHtml(s.name)}</h3>
               <p class="service-desc">${escapeHtml(s.desc || '')}</p>
@@ -2826,7 +3146,6 @@
         `;
       }).join('');
 
-      // Прямая привязка событий к каждой кнопке карточки услуги (срабатывает в любой точке экрана без прыжка скролла)
       grid.querySelectorAll('.js-pick-service').forEach(function (btn) {
         btn.addEventListener('click', function (e) {
           e.preventDefault();
@@ -2864,8 +3183,18 @@
       const activeWorks = (cfg.services || []).filter(function (s) { return s.active !== false; });
       worksBox.innerHTML = activeWorks.map(function (s) {
         const qty = Number(calcState.works[s.id]) || 0;
+        const cat = detectServiceCategory(s);
+        const q = calcSearchQuery.trim().toLowerCase();
+        let hide = false;
+        if (q) {
+          if ((s.name || '').toLowerCase().indexOf(q) === -1) hide = true;
+        } else if (calcFilterCat === 'selected') {
+          if (qty <= 0) hide = true;
+        } else if (calcFilterCat !== 'all' && cat !== calcFilterCat) {
+          hide = true;
+        }
         return `
-          <div class="calc-row ${qty > 0 ? 'is-active' : ''}" id="calc-row-work-${escapeHtml(s.id)}">
+          <div class="calc-row ${qty > 0 ? 'is-active' : ''} ${hide ? 'is-hidden' : ''}" id="calc-row-work-${escapeHtml(s.id)}" data-work-id="${escapeHtml(s.id)}" data-cat="${escapeHtml(cat)}" data-name="${escapeHtml((s.name || '').toLowerCase())}">
             <div class="calc-row-title">${escapeHtml(s.name)}</div>
             <div class="calc-row-controls">
               <div class="calc-row-meta">${formatRub(s.price)} / ${escapeHtml(s.unit)}</div>
@@ -3795,6 +4124,12 @@
         calcState.works = {};
         calcState.materials = {};
         calcState.urgent = false;
+        if (calcFilterCat === 'selected') {
+          calcFilterCat = 'sockets';
+          document.querySelectorAll('#calc-cat-pills .cat-pill').forEach(function (b) {
+            b.classList.toggle('active', b.getAttribute('data-cat') === 'sockets');
+          });
+        }
         document.querySelectorAll('[data-preset]').forEach(function (b) { b.classList.remove('active'); });
         document.getElementById('urg-normal').click();
         renderServices(window.Store.getConfig().services || []);
@@ -3802,6 +4137,63 @@
         recalcEstimate();
         showToast('Смета очищена');
       });
+
+      // Фильтры категорий и поиск в блоке «Услуги и прайс-лист»
+      document.querySelectorAll('#services-cat-pills .cat-pill').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('#services-cat-pills .cat-pill').forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          srvFilterCat = btn.getAttribute('data-cat') || 'all';
+          renderServices(window.Store.getConfig().services || []);
+        });
+      });
+
+      const srvSearchInput = document.getElementById('services-search-input');
+      if (srvSearchInput) {
+        srvSearchInput.addEventListener('input', function () {
+          srvSearchQuery = srvSearchInput.value || '';
+          renderServices(window.Store.getConfig().services || []);
+        });
+      }
+
+      const srvToggleAllBtn = document.getElementById('services-toggle-all-btn');
+      if (srvToggleAllBtn) {
+        srvToggleAllBtn.addEventListener('click', function () {
+          srvShowAll = !srvShowAll;
+          renderServices(window.Store.getConfig().services || []);
+        });
+      }
+
+      // Фильтры категорий и поиск в Калькуляторе
+      document.querySelectorAll('#calc-cat-pills .cat-pill').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('#calc-cat-pills .cat-pill').forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          calcFilterCat = btn.getAttribute('data-cat') || 'all';
+          filterCalcRowsDOM();
+        });
+      });
+
+      const calcSearchInput = document.getElementById('calc-search-input');
+      if (calcSearchInput) {
+        calcSearchInput.addEventListener('input', function () {
+          calcSearchQuery = calcSearchInput.value || '';
+          filterCalcRowsDOM();
+        });
+      }
+
+      // Поиск по 111 работам в Админ-панели (скрывает карточки через is-hidden без потери при сохранении)
+      const adminSrvSearch = document.getElementById('admin-srv-search');
+      if (adminSrvSearch) {
+        adminSrvSearch.addEventListener('input', function () {
+          const q = (adminSrvSearch.value || '').trim().toLowerCase();
+          document.querySelectorAll('#admin-services-list [data-srv-row]').forEach(function (card) {
+            const nameEl = card.querySelector('.srv-name');
+            const nameVal = nameEl ? (nameEl.value || '').toLowerCase() : '';
+            card.classList.toggle('is-hidden', Boolean(q && nameVal.indexOf(q) === -1));
+          });
+        });
+      }
 
       document.getElementById('copy-phone-btn').addEventListener('click', function () {
         const phone = window.Store.getConfig().contacts.phone;
