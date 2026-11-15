@@ -652,8 +652,6 @@
     /* ==========================================================================
        Услуги (Bento Grid)
        ========================================================================== */
-
-    /* Фильтры категорий и живой поиск по 111 позициям прайса */
     .catalog-controls {
       display: flex;
       flex-direction: column;
@@ -857,7 +855,6 @@
       border-color: var(--border-amber);
     }
 
-    /* На мобильном у каждой услуги калькулятора название занимает 100% ширины, а цена и степпер — под ним */
     .calc-row {
       display: flex;
       flex-direction: column;
@@ -1254,15 +1251,28 @@
       padding: 11px 13px;
       color: var(--text-main);
       font-size: 0.92rem;
-      line-height: 1.4;
+      line-height: 1.5;
       transition: border-color 0.15s;
     }
 
     .textarea {
       resize: vertical;
-      min-height: 54px;
+      min-height: 120px;
       white-space: pre-wrap;
       word-wrap: break-word;
+    }
+
+    #lead-comment {
+      min-height: 270px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      line-height: 1.55;
+    }
+
+    .admin-item-card .textarea {
+      min-height: 135px;
+      font-size: 0.9rem;
+      line-height: 1.5;
     }
 
     .input:focus, .textarea:focus { border-color: var(--amber); outline: none; }
@@ -1661,7 +1671,7 @@
           <button type="button" class="preset-chip" data-preset="shield">🛡 Сборка электрощита</button>
         </div>
 
-        <!-- Верхнее живое табло сметы (сразу видно на экране смартфона при нажатии кнопок!) -->
+        <!-- Верхнее живое табло сметы -->
         <div class="calc-live-banner" id="calc-top-banner">
           <div>
             <div style="font-size:0.75rem;color:var(--text-secondary);" id="calc-top-count">Выбрано позиций: 0 (выберите работы ниже)</div>
@@ -1806,7 +1816,7 @@
 
           <div class="field">
             <label for="rev-text">Текст отзыва *</label>
-            <textarea id="rev-text" class="textarea" rows="3" placeholder="Поделитесь впечатлениями о чистоте монтажа и соблюдении сроков..." required></textarea>
+            <textarea id="rev-text" class="textarea" rows="4" placeholder="Поделитесь впечатлениями о чистоте монтажа и соблюдении сроков..." required></textarea>
             <div class="field-error" id="rev-error"></div>
           </div>
 
@@ -1885,7 +1895,7 @@
 
             <div class="field">
               <label for="lead-comment">Описание задачи или расчёт из калькулятора</label>
-              <textarea id="lead-comment" class="textarea" rows="4" placeholder="Опишите задачу или рассчитайте смету в калькуляторе выше..."></textarea>
+              <textarea id="lead-comment" class="textarea" rows="10" placeholder="Опишите задачу или рассчитайте смету в калькуляторе выше..."></textarea>
             </div>
 
             <div class="field" style="display:flex;align-items:flex-start;gap:10px;">
@@ -2035,7 +2045,7 @@
           </aside>
 
           <div class="bento-card" style="padding:16px;">
-            <!-- Вкладка 1: Все длинные поля сделаны многострочными textarea, чтобы слова никогда не обрезались! -->
+            <!-- Вкладка 1 -->
             <div class="admin-tab-pane" id="tab-brand">
               <h2 style="margin-bottom:14px;font-size:1.2rem;">Бренд, город и первый экран</h2>
               <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
@@ -2043,12 +2053,12 @@
                 <div class="field"><label>Имя и фамилия мастера</label><input type="text" id="b-master" class="input"></div>
                 <div class="field"><label>Город</label><input type="text" id="b-city" class="input"></div>
               </div>
-              <div class="field"><label>Зона выезда (регион)</label><textarea id="b-region" class="textarea" rows="2"></textarea></div>
-              <div class="field"><label>Главный заголовок H1 на первом экране</label><textarea id="b-tagline" class="textarea" rows="2"></textarea></div>
-              <div class="field"><label>Подзаголовок после имени мастера</label><textarea id="b-hero-subtitle" class="textarea" rows="3"></textarea></div>
-              <div class="field"><label>Подпись под блоком «Технический регламент»</label><textarea id="b-hero-caption" class="textarea" rows="2"></textarea></div>
-              <div class="field"><label>Районы обслуживания</label><textarea id="b-districts" class="textarea" rows="2"></textarea></div>
-              <div class="field"><label>График работы</label><textarea id="b-schedule" class="textarea" rows="2"></textarea></div>
+              <div class="field"><label>Зона выезда (регион)</label><textarea id="b-region" class="textarea" rows="3"></textarea></div>
+              <div class="field"><label>Главный заголовок H1 на первом экране</label><textarea id="b-tagline" class="textarea" rows="3"></textarea></div>
+              <div class="field"><label>Подзаголовок после имени мастера</label><textarea id="b-hero-subtitle" class="textarea" rows="4"></textarea></div>
+              <div class="field"><label>Подпись под блоком «Технический регламент»</label><textarea id="b-hero-caption" class="textarea" rows="3"></textarea></div>
+              <div class="field"><label>Районы обслуживания</label><textarea id="b-districts" class="textarea" rows="3"></textarea></div>
+              <div class="field"><label>График работы</label><textarea id="b-schedule" class="textarea" rows="3"></textarea></div>
 
               <div class="admin-row-2col">
                 <div class="field"><label>Стаж (плашка 1)</label><input type="text" id="b-exp" class="input"></div>
@@ -2150,7 +2160,7 @@
                     <option value="3">Оценка: 3 ★</option>
                   </select>
                 </div>
-                <textarea id="adm-rev-text" class="textarea" rows="3" placeholder="Текст отзыва *"></textarea>
+                <textarea id="adm-rev-text" class="textarea" rows="4" placeholder="Текст отзыва *"></textarea>
                 <button type="button" class="btn btn-primary" id="adm-add-rev-btn" style="width:100%;">Опубликовать отзыв</button>
               </div>
               <div id="admin-reviews-list" style="display:grid;gap:12px;"></div>
@@ -2780,14 +2790,15 @@
     window.Store = Store;
 
     /* ==========================================================================
-       КЛИЕНТСКАЯ ЛОГИКА И КАЛЬКУЛЯТОР (С ПРЯМОЙ ПРИВЯЗКОЙ КНОПОК ДЛЯ ВСЕХ МОБИЛЬНЫХ БРАУЗЕРОВ)
+       КЛИЕНТСКАЯ ЛОГИКА И КАЛЬКУЛЯТОР
        ========================================================================== */
     const calcState = {
       works: {},
       materials: {},
       matMode: 'own',
       urgent: false,
-      selectedRating: 5
+      selectedRating: 5,
+      hasActiveTotal: false
     };
 
     const SERVICE_ICONS = {
@@ -2803,6 +2814,41 @@
 
     function formatRub(num) {
       return Math.round(Number(num) || 0).toLocaleString('ru-RU') + ' ₽';
+    }
+
+    function autoResizeTextarea(el, minH) {
+      if (!el) return;
+      el.style.height = 'auto';
+      const targetH = Math.max(minH || 135, el.scrollHeight + 14);
+      el.style.height = targetH + 'px';
+    }
+
+    function autoResizeAdminTextareas() {
+      const overlay = document.getElementById('admin-overlay');
+      if (!overlay || !overlay.classList.contains('is-open')) return;
+      overlay.querySelectorAll('textarea').forEach(function (ta) {
+        if (ta.offsetParent !== null) {
+          autoResizeTextarea(ta, 135);
+        }
+      });
+    }
+
+    function updateMobileDockVisibility() {
+      const mobDock = document.getElementById('mobile-calc-dock');
+      if (!mobDock) return;
+      if (!calcState.hasActiveTotal) {
+        mobDock.classList.remove('is-visible');
+        return;
+      }
+      const reqSection = document.getElementById('request-section');
+      if (reqSection) {
+        const rect = reqSection.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          mobDock.classList.remove('is-visible');
+          return;
+        }
+      }
+      mobDock.classList.add('is-visible');
     }
 
     function showToast(msg) {
@@ -2876,7 +2922,7 @@
       return items.join('');
     }
 
-    // Применение готового сценария (по индексам активных услуг, чтобы работало при любых изменениях в админке)
+    // Применение готового сценария
     function applyCalculatorPreset(presetKey, btnEl) {
       const cfg = window.Store.getConfig();
       const srvs = (cfg.services || []).filter(function (s) { return s.active !== false; });
@@ -2885,11 +2931,10 @@
       calcState.works = {};
       calcState.materials = {};
 
-      function setW(idx, qty) { if (srvs[idx]) calcState.works[srvs[idx].id] = qty; }
       function setM(idx, qty) { if (mats[idx]) calcState.materials[mats[idx].id] = qty; }
 
       function setWorkId(id, fallbackIdx, qty) {
-        const found = activeWorks.find(function (w) { return w.id === id; }) || activeWorks[fallbackIdx];
+        const found = srvs.find(function (w) { return w.id === id; }) || srvs[fallbackIdx];
         if (found) calcState.works[found.id] = qty;
       }
 
@@ -3226,7 +3271,6 @@
         `;
       }).join('');
 
-      // Прямая привязка ко всем кнопкам - / + и полям ввода без перерисовки DOM под пальцем
       const allContainers = [worksBox, matsBox];
       allContainers.forEach(function (container) {
         container.querySelectorAll('.js-step').forEach(function (btn) {
@@ -3340,14 +3384,11 @@
       setText('sum-total-range', rangeStr);
       setText('mob-dock-range', rangeStr);
 
-// Обновляем верхнее табло калькулятора
       setText('calc-top-count', summaryLines.length > 0 ? `Выбрано позиций в смете: ${summaryLines.length}` : 'Выбрано позиций: 0 (нажмите «+» ниже)');
       setText('calc-top-range', rawTotal > 0 ? `Ориентир: ${rangeStr}` : 'Итого: 0 ₽');
 
-      const mobDock = document.getElementById('mobile-calc-dock');
-      if (mobDock) {
-        mobDock.classList.toggle('is-visible', rawTotal > 0);
-      }
+      calcState.hasActiveTotal = rawTotal > 0;
+      updateMobileDockVisibility();
 
       calcState._formattedText = summaryLines.length > 0
         ? [
@@ -3365,12 +3406,23 @@
             '━━━━━━━━━━━━━━━━━━━━━━'
           ].filter(Boolean).join('\n')
         : '';
+
+      const commentBox = document.getElementById('lead-comment');
+      if (commentBox) {
+        if (calcState._formattedText) {
+          commentBox.value = calcState._formattedText;
+          autoResizeTextarea(commentBox, 270);
+        } else if (commentBox.value.indexOf('ТАБЛИЦА РАСЧЁТОВ И ЗАДАЧ') !== -1) {
+          commentBox.value = '';
+          commentBox.style.height = '270px';
+        }
+      }
     }
 
     function renderCases(cases) {
       const grid = document.getElementById('cases-grid');
       if (!grid) return;
-      
+
       grid.innerHTML = cases.map(function (c, idx) {
         const photoHtml = c.customPhoto
           ? `<div class="case-photo-box"><img src="${escapeHtml(c.customPhoto)}" alt="${escapeHtml(c.title)}" loading="lazy"></div>`
@@ -3418,6 +3470,7 @@
           const commentEl = document.getElementById('lead-comment');
           if (commentEl) {
             commentEl.value = `Здравствуйте! Интересует аналогичный объект: «${title}». Прошу сориентировать по стоимости и срокам.`;
+            autoResizeTextarea(commentEl, 270);
           }
           document.getElementById('request-section').scrollIntoView({ behavior: 'smooth' });
           setTimeout(function () { document.getElementById('lead-name').focus(); }, 450);
@@ -3527,12 +3580,14 @@
 
     function initScrollLaser() {
       const bar = document.getElementById('scroll-laser-bar');
-      if (!bar) return;
       function updateLaser() {
-        const scrollTop = window.scrollY || document.documentElement.scrollTop;
-        const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-        const p = Math.min(1, Math.max(0.02, scrollTop / maxScroll));
-        bar.style.transform = `scaleX(${p.toFixed(4)})`;
+        if (bar) {
+          const scrollTop = window.scrollY || document.documentElement.scrollTop;
+          const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+          const p = Math.min(1, Math.max(0.02, scrollTop / maxScroll));
+          bar.style.transform = `scaleX(${p.toFixed(4)})`;
+        }
+        updateMobileDockVisibility();
       }
       window.addEventListener('scroll', updateLaser, { passive: true });
       window.addEventListener('resize', updateLaser, { passive: true });
@@ -3544,6 +3599,7 @@
       const commentEl = document.getElementById('lead-comment');
       if (commentEl && calcState._formattedText) {
         commentEl.value = calcState._formattedText;
+        autoResizeTextarea(commentEl, 270);
       }
       document.getElementById('request-section').scrollIntoView({ behavior: 'smooth' });
       setTimeout(function () {
@@ -3552,7 +3608,7 @@
     }
 
     /* ==========================================================================
-       ЛОГИКА ВСТРОЕННОЙ CMS АДМИН-ПАНЕЛИ (ПОЛНОСТЬЮ МНОГОСТРОЧНЫЕ ПОЛЯ БЕЗ ОБРЕЗАНИЯ СЛОВ)
+       ЛОГИКА ВСТРОЕННОЙ CMS АДМИН-ПАНЕЛИ
        ========================================================================== */
     let workingConfig = null;
     const ICON_OPTIONS = [
@@ -3642,9 +3698,9 @@
       renderAdminFaqs();
       renderAdminReviews();
       renderAdminRequests();
+      setTimeout(autoResizeAdminTextareas, 60);
     }
 
-    // Вкладка 3: Услуги — каждое длинное поле на всю ширину с переносом текста
     function renderAdminServices() {
       const box = document.getElementById('admin-services-list');
       if (!box) return;
@@ -3653,7 +3709,7 @@
           return `<option value="${o.val}" ${s.icon === o.val ? 'selected' : ''}>${o.label}</option>`;
         }).join('');
         return `
-          <div class="admin-item-card">
+          <div class="admin-item-card" data-srv-row>
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
               <strong style="color:var(--amber-bright);font-size:0.86rem;">Услуга #${idx + 1}</strong>
               <div style="display:flex;align-items:center;gap:10px;">
@@ -3666,7 +3722,7 @@
             </div>
             <div>
               <label style="font-size:0.75rem;color:var(--text-secondary);">Название услуги</label>
-              <textarea class="textarea js-srv-name" data-idx="${idx}" rows="2">${escapeHtml(s.name)}</textarea>
+              <textarea class="textarea js-srv-name" data-idx="${idx}" rows="3">${escapeHtml(s.name)}</textarea>
             </div>
             <div class="admin-row-2col">
               <div>
@@ -3684,14 +3740,14 @@
             </div>
             <div>
               <label style="font-size:0.75rem;color:var(--text-secondary);">Описание в карточке</label>
-              <textarea class="textarea js-srv-desc" data-idx="${idx}" rows="2">${escapeHtml(s.desc || '')}</textarea>
+              <textarea class="textarea js-srv-desc" data-idx="${idx}" rows="3">${escapeHtml(s.desc || '')}</textarea>
             </div>
           </div>
         `;
       }).join('');
+      setTimeout(autoResizeAdminTextareas, 40);
     }
 
-    // Вкладка 4: Материалы — название на всю ширину сверху, цена и ед. изм. снизу (ничего не сжимается!)
     function renderAdminMaterials() {
       const box = document.getElementById('admin-materials-list');
       if (!box) return;
@@ -3704,7 +3760,7 @@
             </div>
             <div>
               <label style="font-size:0.75rem;color:var(--text-secondary);">Наименование материала</label>
-              <textarea class="textarea js-mat-name" data-idx="${idx}" rows="2">${escapeHtml(m.name)}</textarea>
+              <textarea class="textarea js-mat-name" data-idx="${idx}" rows="3">${escapeHtml(m.name)}</textarea>
             </div>
             <div class="admin-row-2col">
               <div>
@@ -3719,9 +3775,9 @@
           </div>
         `;
       }).join('');
+      setTimeout(autoResizeAdminTextareas, 40);
     }
 
-    // Вкладка 5: Паспорта объектов — все длинные строки через textarea
     function renderAdminCases() {
       const box = document.getElementById('admin-cases-list');
       if (!box) return;
@@ -3743,7 +3799,7 @@
             </div>
             <div>
               <label style="font-size:0.75rem;color:var(--text-secondary);">Заголовок выполненной работы</label>
-              <textarea class="textarea js-case-title" data-idx="${idx}" rows="2">${escapeHtml(c.title)}</textarea>
+              <textarea class="textarea js-case-title" data-idx="${idx}" rows="3">${escapeHtml(c.title)}</textarea>
             </div>
             <div class="admin-row-2col">
               <div>
@@ -3757,11 +3813,11 @@
             </div>
             <div>
               <label style="font-size:0.75rem;color:var(--text-secondary);">Подробное описание работ</label>
-              <textarea class="textarea js-case-done" data-idx="${idx}" rows="3">${escapeHtml(c.done)}</textarea>
+              <textarea class="textarea js-case-done" data-idx="${idx}" rows="5">${escapeHtml(c.done)}</textarea>
             </div>
             <div>
               <label style="font-size:0.75rem;color:var(--text-secondary);">Чек-лист проверок (каждый пункт с новой строки)</label>
-              <textarea class="textarea js-case-checklist" data-idx="${idx}" rows="3">${escapeHtml(checklistStr)}</textarea>
+              <textarea class="textarea js-case-checklist" data-idx="${idx}" rows="4">${escapeHtml(checklistStr)}</textarea>
             </div>
             <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;">
               <label class="btn btn-glass" style="width:100%;font-size:0.82rem;cursor:pointer;">
@@ -3773,9 +3829,9 @@
           </div>
         `;
       }).join('');
+      setTimeout(autoResizeAdminTextareas, 40);
     }
 
-    // Вкладка 6: Этапы работы и FAQ — вертикальные карточки на всю ширину
     function renderAdminSteps() {
       const box = document.getElementById('admin-steps-list');
       if (!box) return;
@@ -3792,11 +3848,12 @@
             </div>
             <div>
               <label style="font-size:0.75rem;color:var(--text-secondary);">Описание действий мастера</label>
-              <textarea class="textarea js-step-desc" data-idx="${idx}" rows="2">${escapeHtml(st.desc)}</textarea>
+              <textarea class="textarea js-step-desc" data-idx="${idx}" rows="3">${escapeHtml(st.desc)}</textarea>
             </div>
           </div>
         `;
       }).join('');
+      setTimeout(autoResizeAdminTextareas, 40);
     }
 
     function renderAdminFaqs() {
@@ -3811,15 +3868,16 @@
             </div>
             <div>
               <label style="font-size:0.75rem;color:var(--text-secondary);">Текст вопроса</label>
-              <textarea class="textarea js-faq-q" data-idx="${idx}" rows="2">${escapeHtml(f.q)}</textarea>
+              <textarea class="textarea js-faq-q" data-idx="${idx}" rows="3">${escapeHtml(f.q)}</textarea>
             </div>
             <div>
               <label style="font-size:0.75rem;color:var(--text-secondary);">Ответ мастера</label>
-              <textarea class="textarea js-faq-a" data-idx="${idx}" rows="3">${escapeHtml(f.a)}</textarea>
+              <textarea class="textarea js-faq-a" data-idx="${idx}" rows="6">${escapeHtml(f.a)}</textarea>
             </div>
           </div>
         `;
       }).join('');
+      setTimeout(autoResizeAdminTextareas, 40);
     }
 
     function renderAdminReviews() {
@@ -3848,10 +3906,11 @@
               </select>
             </div>
             <input type="text" class="input js-rev-service" data-idx="${idx}" value="${escapeHtml(r.service)}" placeholder="Услуга">
-            <textarea class="textarea js-rev-text" data-idx="${idx}" rows="3">${escapeHtml(r.text)}</textarea>
+            <textarea class="textarea js-rev-text" data-idx="${idx}" rows="5">${escapeHtml(r.text)}</textarea>
           </div>
         `;
       }).join('');
+      setTimeout(autoResizeAdminTextareas, 40);
     }
 
     function renderAdminRequests() {
@@ -4086,7 +4145,6 @@
        ОБРАБОТЧИКИ СОБЫТИЙ
        ========================================================================== */
     function bindEvents() {
-      // Прямая привязка к кнопкам пресетов калькулятора
       document.querySelectorAll('[data-preset]').forEach(function (btn) {
         btn.addEventListener('click', function () {
           applyCalculatorPreset(btn.getAttribute('data-preset'), btn);
@@ -4096,6 +4154,13 @@
       document.getElementById('calc-top-order-btn').addEventListener('click', transferEstimateToOrder);
       document.getElementById('calc-to-order-btn').addEventListener('click', transferEstimateToOrder);
       document.getElementById('mob-dock-order-btn').addEventListener('click', transferEstimateToOrder);
+
+      const leadCommentEl = document.getElementById('lead-comment');
+      if (leadCommentEl) {
+        leadCommentEl.addEventListener('input', function () {
+          autoResizeTextarea(leadCommentEl, 270);
+        });
+      }
 
       document.getElementById('mat-mode-own').addEventListener('click', function () {
         calcState.matMode = 'own';
@@ -4145,7 +4210,6 @@
         showToast('Смета очищена');
       });
 
-      // Фильтры категорий и поиск в блоке «Услуги и прайс-лист»
       document.querySelectorAll('#services-cat-pills .cat-pill').forEach(function (btn) {
         btn.addEventListener('click', function () {
           document.querySelectorAll('#services-cat-pills .cat-pill').forEach(function (b) { b.classList.remove('active'); });
@@ -4171,7 +4235,6 @@
         });
       }
 
-      // Фильтры категорий и поиск в Калькуляторе
       document.querySelectorAll('#calc-cat-pills .cat-pill').forEach(function (btn) {
         btn.addEventListener('click', function () {
           document.querySelectorAll('#calc-cat-pills .cat-pill').forEach(function (b) { b.classList.remove('active'); });
@@ -4189,16 +4252,16 @@
         });
       }
 
-      // Поиск по 111 работам в Админ-панели (скрывает карточки через is-hidden без потери при сохранении)
       const adminSrvSearch = document.getElementById('admin-srv-search');
       if (adminSrvSearch) {
         adminSrvSearch.addEventListener('input', function () {
           const q = (adminSrvSearch.value || '').trim().toLowerCase();
           document.querySelectorAll('#admin-services-list [data-srv-row]').forEach(function (card) {
-            const nameEl = card.querySelector('.srv-name');
+            const nameEl = card.querySelector('.js-srv-name');
             const nameVal = nameEl ? (nameEl.value || '').toLowerCase() : '';
             card.classList.toggle('is-hidden', Boolean(q && nameVal.indexOf(q) === -1));
           });
+          setTimeout(autoResizeAdminTextareas, 20);
         });
       }
 
@@ -4382,7 +4445,14 @@
           document.querySelectorAll('.admin-tab-pane').forEach(function (p) { p.classList.add('is-hidden'); });
           btn.classList.add('active');
           document.getElementById(btn.getAttribute('data-tab')).classList.remove('is-hidden');
+          setTimeout(autoResizeAdminTextareas, 30);
         });
+      });
+
+      document.getElementById('admin-overlay').addEventListener('input', function (e) {
+        if (e.target && e.target.tagName === 'TEXTAREA') {
+          autoResizeTextarea(e.target, 135);
+        }
       });
 
       document.querySelectorAll('.js-save-all').forEach(function (btn) {
@@ -4465,7 +4535,6 @@
         showToast('✓ Отзыв опубликован!');
       });
 
-      // Делегирование в админке с защитой для всех мобильных браузеров
       document.getElementById('admin-overlay').addEventListener('click', function (e) {
         const target = (e.target && e.target.nodeType === 1) ? e.target : (e.target && e.target.parentElement ? e.target.parentElement : null);
         if (!target || !target.closest) return;
